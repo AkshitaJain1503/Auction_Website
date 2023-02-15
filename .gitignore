@@ -70,7 +70,7 @@ typings/
 # Yarn Integrity file
 .yarn-integrity
 
-# dotenv environment variables file (test commit)
+# dotenv environment variables file. (checking for branch)
 # .env
 # .env.test
 
