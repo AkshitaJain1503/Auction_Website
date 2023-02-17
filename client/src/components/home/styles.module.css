@@ -3,25 +3,58 @@
 	height: 70px;
 	background-color: #3bb19b;
 	display: flex;
+	flex-direction: row-reverse;
 	align-items: center;
-	justify-content: space-between;
+	
 }
 
 .navbar h1 {
 	color: white;
 	font-size: 25px;
 	margin-left: 20px;
+	margin-right: auto;
 }
 
-.white_btn {
+.white_btn{
 	border: none;
 	outline: none;
-	padding: 12px 0;
+	padding: 10px 0;
 	background-color: white;
 	border-radius: 20px;
-	width: 120px;
+	width: 110px;
 	font-weight: bold;
 	font-size: 14px;
 	cursor: pointer;
-	margin-right: 20px;
+	margin-right: 10px;
+	margin-left:auto;
+
+
+}
+.search_bar{
+	width:30%;
+	max-width:300px;
+	background: rgba(255,255,255,0.4);
+	border-radius:60px;
+	padding:10px 20px;
+	backdrop-filter: blur (4px) saturate(180%);
+}
+
+.search_bar input{
+	background: transparent;
+	flex:1;
+	border:0;
+	outline:none;
+	padding : 2px 1px;
+	font-size:20px;
+	color:#151162;
+}
+.search_bar button img{
+	width: 10px;
+}
+.search_bar button img{
+	border:0;
+	border-radius:10%;
+	width: 15px;
+	background: #58629b;
+	cursor: pointor;
 }
