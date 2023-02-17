@@ -1,5 +1,7 @@
 const mongoose = require('mongoose');
 
+mongoose.set('strictQuery', false);
+
 module.exports = () => {
     const connectionParams = {
         useNewUrlParser: true,
