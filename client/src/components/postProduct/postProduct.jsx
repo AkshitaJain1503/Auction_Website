@@ -32,6 +32,9 @@ const PostProduct = () => {
     productBasePrice: "",
     shipmentFrom: "",
     productImage: "",
+    auctionStartDate: "",
+    auctionStartTime: "",
+    auctionDuration: ""
   });
   let name, value;
   const handleInput = (e) => {
@@ -59,6 +62,9 @@ const PostProduct = () => {
       productBasePrice,
       shipmentFrom,
       productImage,
+      auctionStartDate,
+      auctionStartTime,
+      auctionDuration
     } = user;
 
     const res = await fetch("http://localhost:3001/api/postProduct", {
@@ -72,6 +78,9 @@ const PostProduct = () => {
         productBasePrice,
         shipmentFrom,
         productImage,
+        auctionStartDate,
+        auctionStartTime,
+        auctionDuration
       }),
     });
     console.log(res);
@@ -132,6 +141,40 @@ const PostProduct = () => {
                 />
               </div>
               <div className="my-3">
+                <Label for="startDate">Start Date*</Label>
+                <Input 
+                 id="startDate"
+                 name="auctionStartDate"
+                 type="date"
+                 value={user.auctionStartDate}
+                 onChange={handleInput}
+                 className="rounded-0"
+                /> 
+              </div>
+              <div className="my-3">
+                <Label for="startTime">Start Time*</Label>
+                <Input 
+                 id="startTime"
+                 name="auctionStartTime"
+                 type="time"
+                 value={user.auctionStartTime}
+                 onChange={handleInput}
+                 className="rounded-0"
+                /> 
+              </div>
+              <div className="my-3">
+                <Label for="duration">Duration in minutes*</Label>
+                <Input 
+                 id="duration"
+                 name="auctionDuration"
+                 type="text"
+                 value={user.auctionDuration}
+                 placeholder="Enter duration in minutes"
+                 onChange={handleInput}
+                 className="rounded-0"
+                /> 
+              </div>
+              <div className="my-3">
                 <Label for="place">Shipment from*</Label>
                 <Input
                   id="place"
@@ -147,6 +190,11 @@ const PostProduct = () => {
                   <option>Hyderabad</option>
                   <option>Kolkata</option>
                   <option>Mumbai</option>
+                  <option>Delhi</option>
+                  <option>Chennai</option>
+                  <option>Ahmedabad</option>
+                  <option>Pune</option>
+                  <option>Surat</option>
                 </Input>
               </div>
               <div className="my-3">

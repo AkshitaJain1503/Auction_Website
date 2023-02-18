@@ -4,7 +4,7 @@ import Signup from "./components/loginAndSignup/signup";
 import Login from "./components/loginAndSignup/login";
 import MyProfile from "./components/myProfile";
 import PostProduct from "./components/postProduct/postProduct";
-import ProductPage from "./components/postProduct/productPage";
+import ProductPage from "./components/productDetails/productPage";
 function App() {
 	const user = localStorage.getItem("token");
 
