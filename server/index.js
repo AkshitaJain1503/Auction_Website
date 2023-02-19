@@ -21,10 +21,10 @@ app.use(cors());
 //routes
 app.use("/api/register", registerRoute);
 app.use("/api/authLogin", authLoginRoute);
-app.use("/api/postProduct", postProduct);
 
 //protected route with middleware checkAuthLogin
 app.use("/api/myProfile", checkAuthLogin, myProfile);
+app.use("/api/postProduct", checkAuthLogin, postProduct);
 
 const port = process.env.PORT || 3001;
 app.listen(port, function () {

@@ -1,14 +1,14 @@
 const jwt = require('jsonwebtoken');
 const {User} = require('../models/user');  
+var ObjectId = require('mongoose').Types.ObjectId;
 
 const checkAuthLogin = async (req, res, next) => {
-    try {
+    try { 
         const token = req.header('Authorization').replace('Bearer ', '');
         const decoded = jwt.verify(token, process.env.JWTPRIVATEKEY);
+        const rootUser = await User.findOne({_id: ObjectId(decoded._id)});
 
-        const rootUser = await User.findOne({_id: decoded._id, 'tokens.token': token});
-
-        if (!rootUser) {
+        if (!rootUser || rootUser==null) {
             res.status(404).send({error: 'User not found'})
         }
 

@@ -3,10 +3,48 @@ const mongoose = require('mongoose');
 const jwt = require('jsonwebtoken');
 
 const userSchema = new mongoose.Schema({
-    firstName: {type: 'string', required: true},
-    lastName: {type: 'string', required: true},
-    email: {type: 'string', required: true},
-    password: {type: 'string', required: true},
+    firstName: {
+        type: String, 
+        required: true
+    },
+    lastName: {
+        type: String, 
+        required: true
+    },
+    email: {
+        type: String, 
+        required: true
+    },
+    password: {
+        type: String, 
+        required: true
+    },
+    // phone: {
+    //     type: String,
+    //     required: true,
+    // },
+    address: {
+        type: String,
+        required: true,
+    },
+    purchasedProducts: [
+        {
+          type: mongoose.Types.ObjectId,
+          ref: 'Product',
+        },
+    ],
+    postedProducts: [
+        {
+          type: mongoose.Types.ObjectId,
+          ref: 'Product',
+        },
+    ],
+    //   bids: [
+    //     {
+    //       type: mongoose.Types.ObjectId,
+    //       ref: 'Product',
+    //     },
+    // ]
 });
 
 //generate jwt 

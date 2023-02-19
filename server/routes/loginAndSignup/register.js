@@ -7,7 +7,7 @@ const Joi = require('joi');
 
 router.post("/", async (req, res) => {
 	try {
-		const {error} = validate(req.body);
+		const {error} = validate(req.email, req.password);
 		if (error)
 			return res.status(400).send({message: error.details[0].message});
 
@@ -36,10 +36,11 @@ router.post("/", async (req, res) => {
 //validate data entered by user using joi and passwordComplexity
 const validate = (data) => {
     const schema = Joi.object({
-        firstName: Joi.string().trim().required().label('First Name'),
-        lastName: Joi.string().trim().required().label('Last Name'),
+        // firstName: Joi.string().trim().required().label('First Name'),
+        // lastName: Joi.string().trim().required().label('Last Name'),
         email: Joi.string().trim().email().required().label('Email'),
-        password: passwordComplexity().required().label("Password")
+        password: passwordComplexity().required().label("Password"),
+		// phone: Joi.string().length(10).pattern(/^[0-9]+$/).required(),
     });
     return schema.validate(data);
 };
