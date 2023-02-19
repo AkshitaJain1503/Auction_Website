@@ -19,7 +19,11 @@ const ProductSchema = new mongoose.Schema({
     },
     productImage: {
         type: String
-    }
+    },
+    seller: {
+        type: mongoose.Types.ObjectId,
+        ref: 'User',
+    },
 });
 
 const Product = mongoose.model("PRODUCTS", ProductSchema);
