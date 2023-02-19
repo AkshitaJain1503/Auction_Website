@@ -163,13 +163,12 @@ const PostProduct = () => {
                 /> 
               </div>
               <div className="my-3">
-                <Label for="duration">Duration in minutes*</Label>
+                <Label for="duration">Duration in hh:mm format (in hours and minutes)*</Label>
                 <Input 
                  id="duration"
                  name="auctionDuration"
-                 type="text"
+                 type="time"
                  value={user.auctionDuration}
-                 placeholder="Enter duration in minutes"
                  onChange={handleInput}
                  className="rounded-0"
                 /> 
