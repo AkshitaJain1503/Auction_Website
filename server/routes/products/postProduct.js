@@ -1,16 +1,23 @@
 // post product details
 const router = require("express").Router();
 const {Product} = require("../../models/product");
+const {User} = require("../../models/user");
+var ObjectId = require('mongoose').Types.ObjectId;
 
 router.post("/", async (req, res) => {
-    const {productName, productDescription, productBasePrice, shipmentFrom, productImage} = req.body;
+
     console.log("data fetched");
-    const product = new Product({ productName, productDescription, productBasePrice, shipmentFrom, productImage});
-    console.log(product);
-    // await new Product({...req.body, productImage: productImage}).save();
+    const sellerId = req.id 
     
-    product.save();
+//Adding product details and sellerID in the product model.
+    const product = await new Product({ ... req.body, seller: sellerId}).save();
+
+//adding ProductID against the specific seller in the user model. 
+    await User.findOneAndUpdate(
+        { _id: ObjectId(sellerId) }, 
+        { $push: { postedProducts: ObjectId(product._id) }}
+    );
+
     res.json(req.body);
 });
-
 module.exports = router;

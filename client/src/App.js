@@ -10,11 +10,10 @@ function App() {
 
 	return (
 		<Routes>
-			{user && <Route path="/" exact element={<Home />} />}
 			<Route path="/signup" exact element={<Signup />} />
 			<Route path="/login" exact element={<Login />} />
-			<Route path="/" element={<Navigate replace to="/login" />} />
-			{ user && <Route path="/myProfile" exact element={<MyProfile />}/>}
+			<Route path="/" exact element={<Home />} />
+			{user && <Route path="/myProfile" exact element={<MyProfile />} />}
 			{user && <Route path="/postProduct" exact element={<PostProduct/>}/>}
 			{user && <Route path="/productPage" exact element={<ProductPage/>}/>}
 		</Routes>

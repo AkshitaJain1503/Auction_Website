@@ -65,6 +65,7 @@ const PostProduct = () => {
       method: "POST",
       headers: {
         "content-type": "application/json",
+        "Authorization": "Bearer "+localStorage.getItem("token")
       },
       body: JSON.stringify({
         productName,
@@ -74,14 +75,15 @@ const PostProduct = () => {
         productImage,
       }),
     });
-    console.log(res);
+    //console.log(res);
 
     // console.log(res);
     const data = await res.json();
-    if (data.status === 422 || !data) {
-      console.log("error");
+
+    if (data.status === 404 || !data) {
+      window.location = "/signup";
     } else {
-      console.log("data fetched!");
+      //console.log("data fetched!");
       // <Redirect to="/"></Redirect>
       alert('Product details submitted!');
       navigate("/productPage");
