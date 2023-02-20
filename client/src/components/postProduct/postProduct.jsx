@@ -103,7 +103,8 @@ const PostProduct = () => {
         <Card className="shadow-sm">
           <CardBody>
             <h3>Post your product details for the advertisement</h3>
-            <Form method="POST" encType="multipart/form-data">
+            <p>The fields marked with * symbol are required fields, kindly fill those before submitting the form.</p>
+            <Form onSubmit={postData} method="POST" encType="multipart/form-data">
               <div className="my-3">
                 <Label for="productName">Product Name*</Label>
                 <Input
@@ -114,6 +115,7 @@ const PostProduct = () => {
                   value={user.productName}
                   onChange={handleInput}
                   className="rounded-0"
+                  required
                 />
               </div>
               <div className="my-3">
@@ -139,6 +141,7 @@ const PostProduct = () => {
                   value={user.productBasePrice}
                   onChange={handleInput}
                   className="rounded-0"
+                  required
                 />
               </div>
               <div className="my-3">
@@ -150,6 +153,7 @@ const PostProduct = () => {
                  value={user.auctionStartDate}
                  onChange={handleInput}
                  className="rounded-0"
+                 required
                 /> 
               </div>
               <div className="my-3">
@@ -161,6 +165,7 @@ const PostProduct = () => {
                  value={user.auctionStartTime}
                  onChange={handleInput}
                  className="rounded-0"
+                 required
                 /> 
               </div>
               <div className="my-3">
@@ -172,6 +177,7 @@ const PostProduct = () => {
                  value={user.auctionDuration}
                  onChange={handleInput}
                  className="rounded-0"
+                 required
                 /> 
               </div>
               <div className="my-3">
@@ -184,6 +190,7 @@ const PostProduct = () => {
                   onChange={handleInput}
                   placeholder="Enter here"
                   className="rounded-0"
+                  required
                 >
                   <option value="choose location">Choose location</option>
                   <option>Bangalore</option>
@@ -212,7 +219,6 @@ const PostProduct = () => {
                   type="submit"
                   className="rounded-0"
                   color="primary"
-                  onClick={postData}
                 >
                   Post your product
                 </Button>
