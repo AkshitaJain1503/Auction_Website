@@ -10,6 +10,7 @@ import {
   Button,
   Container,
 } from "reactstrap";
+import ProductPage from "../productDetails/productPage";
 
 const convertToBase64 = (file) => {
   return new Promise((resolve, reject) => {
@@ -26,7 +27,7 @@ const convertToBase64 = (file) => {
 
 const PostProduct = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({
+  const [product, setProduct] = useState({
     productName: "",
     productDescription: "",
     productBasePrice: "",
@@ -41,7 +42,7 @@ const PostProduct = () => {
     // console.log(e);
     name = e.target.name;
     value = e.target.value;
-    setUser({ ...user, [name]: value });
+    setProduct({ ...product, [name]: value });
     // console.log(user.productImage);
   };
   const handlePhoto = async (e) => {
@@ -50,7 +51,7 @@ const PostProduct = () => {
     // let nvalue = JSON.stringify(value);
     console.log(value);
     // console.log(value.);
-    setUser({ ...user, [photo]: value });
+    setProduct({ ...product, [photo]: value });
     // console.log(e.target.files[0]);
   };
 
@@ -65,7 +66,7 @@ const PostProduct = () => {
       auctionStartDate,
       auctionStartTime,
       auctionDuration
-    } = user;
+    } = product;
 
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
@@ -85,16 +86,16 @@ const PostProduct = () => {
       }),
     });
 
-    // console.log(res);
     const data = await res.json();
-
+    
     if (data.status === 404 || !data) {
       window.location = "/signup";
     } else {
       //console.log("data fetched!");
       // <Redirect to="/"></Redirect>
       alert('Product details submitted!');
-      navigate("/productPage");
+      // const element = <ProductPage name="90"/>
+      navigate('/productPage', {state : {data : data}});
     }
   };
   return (
@@ -112,7 +113,7 @@ const PostProduct = () => {
                   name="productName"
                   type="text"
                   placeholder="Enter the product name here"
-                  value={user.productName}
+                  value={product.productName}
                   onChange={handleInput}
                   className="rounded-0"
                   required
@@ -124,7 +125,7 @@ const PostProduct = () => {
                   id="description"
                   name="productDescription"
                   type="textarea"
-                  value={user.productDescription}
+                  value={product.productDescription}
                   onChange={handleInput}
                   placeholder="Enter your product details here"
                   className="rounded-0"
@@ -138,7 +139,7 @@ const PostProduct = () => {
                   name="productBasePrice"
                   type="text"
                   placeholder="Enter the base price of the product here"
-                  value={user.productBasePrice}
+                  value={product.productBasePrice}
                   onChange={handleInput}
                   className="rounded-0"
                   required
@@ -150,7 +151,7 @@ const PostProduct = () => {
                  id="startDate"
                  name="auctionStartDate"
                  type="date"
-                 value={user.auctionStartDate}
+                 value={product.auctionStartDate}
                  onChange={handleInput}
                  className="rounded-0"
                  required
@@ -162,7 +163,7 @@ const PostProduct = () => {
                  id="startTime"
                  name="auctionStartTime"
                  type="time"
-                 value={user.auctionStartTime}
+                 value={product.auctionStartTime}
                  onChange={handleInput}
                  className="rounded-0"
                  required
@@ -174,7 +175,7 @@ const PostProduct = () => {
                  id="duration"
                  name="auctionDuration"
                  type="time"
-                 value={user.auctionDuration}
+                 value={product.auctionDuration}
                  onChange={handleInput}
                  className="rounded-0"
                  required
@@ -186,7 +187,7 @@ const PostProduct = () => {
                   id="place"
                   name="shipmentFrom"
                   type="select"
-                  value={user.shipmentFrom}
+                  value={product.shipmentFrom}
                   onChange={handleInput}
                   placeholder="Enter here"
                   className="rounded-0"
