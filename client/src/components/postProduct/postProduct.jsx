@@ -47,11 +47,9 @@ const PostProduct = () => {
   };
   const handlePhoto = async (e) => {
     let photo = e.target.name;
-    const value = await convertToBase64(e.target.files[0]);
+    // const value = await convertToBase64(e.target.files[0]);
     // let nvalue = JSON.stringify(value);
-    console.log(value);
-    // console.log(value.);
-    setProduct({ ...product, [photo]: value });
+    setProduct({ ...product, [photo]: e.target.files[0] });
     // console.log(e.target.files[0]);
   };
 
@@ -67,25 +65,28 @@ const PostProduct = () => {
       auctionStartTime,
       auctionDuration
     } = product;
+    const formdata = new FormData();
+    formdata.append("productName", productName);
+    formdata.append("productDescription", productDescription);
+    formdata.append("productBasePrice", productBasePrice);
+    formdata.append("shipmentFrom", shipmentFrom);
+    formdata.append("productImage", productImage);
+    formdata.append("auctionStartDate", auctionStartDate);
+    formdata.append("auctionStartTime", auctionStartTime);
+    formdata.append("auctionDuration", auctionDuration);
+
+    console.log(formdata);
 
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
+        "encType": "multipart/form-data",
         "Authorization": "Bearer "+localStorage.getItem("token")
       },
-      body: JSON.stringify({
-        productName,
-        productDescription,
-        productBasePrice,
-        shipmentFrom,
-        productImage,
-        auctionStartDate,
-        auctionStartTime,
-        auctionDuration
-      }),
+      body: formdata
     });
 
+    console.log(formdata);
     const data = await res.json();
     
     if (data.status === 404 || !data) {
