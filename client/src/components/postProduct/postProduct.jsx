@@ -10,44 +10,46 @@ import {
   Button,
   Container,
 } from "reactstrap";
+// import ProductPage from "../productDetails/productPage";
 
-const convertToBase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-};
+// const convertToBase64 = (file) => {
+//   return new Promise((resolve, reject) => {
+//     const fileReader = new FileReader();
+//     fileReader.readAsDataURL(file);
+//     fileReader.onload = () => {
+//       resolve(fileReader.result);
+//     };
+//     fileReader.onerror = (error) => {
+//       reject(error);
+//     };
+//   });
+// };
 
 const PostProduct = () => {
   const navigate = useNavigate();
-  const [user, setUser] = useState({
+  const [product, setProduct] = useState({
     productName: "",
     productDescription: "",
     productBasePrice: "",
     shipmentFrom: "",
     productImage: "",
+    auctionStartDate: "",
+    auctionStartTime: "",
+    auctionDuration: ""
   });
   let name, value;
   const handleInput = (e) => {
     // console.log(e);
     name = e.target.name;
     value = e.target.value;
-    setUser({ ...user, [name]: value });
+    setProduct({ ...product, [name]: value });
     // console.log(user.productImage);
   };
   const handlePhoto = async (e) => {
     let photo = e.target.name;
-    const value = await convertToBase64(e.target.files[0]);
+    // const value = await convertToBase64(e.target.files[0]);
     // let nvalue = JSON.stringify(value);
-    console.log(value);
-    // console.log(value.);
-    setUser({ ...user, [photo]: value });
+    setProduct({ ...product, [photo]: e.target.files[0] });
     // console.log(e.target.files[0]);
   };
 
@@ -59,34 +61,39 @@ const PostProduct = () => {
       productBasePrice,
       shipmentFrom,
       productImage,
-    } = user;
+      auctionStartDate,
+      auctionStartTime,
+      auctionDuration
+    } = product;
+    const formdata = new FormData();
+    formdata.append("productName", productName);
+    formdata.append("productDescription", productDescription);
+    formdata.append("productBasePrice", productBasePrice);
+    formdata.append("shipmentFrom", shipmentFrom);
+    formdata.append("productImage", productImage);
+    formdata.append("auctionStartDate", auctionStartDate);
+    formdata.append("auctionStartTime", auctionStartTime);
+    formdata.append("auctionDuration", auctionDuration);
 
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
       headers: {
-        "content-type": "application/json",
+        "encType": "multipart/form-data",
         "Authorization": "Bearer "+localStorage.getItem("token")
       },
-      body: JSON.stringify({
-        productName,
-        productDescription,
-        productBasePrice,
-        shipmentFrom,
-        productImage,
-      }),
+      body: formdata
     });
-    //console.log(res);
-
-    // console.log(res);
+    
     const data = await res.json();
-
+    
     if (data.status === 404 || !data) {
       window.location = "/signup";
     } else {
       //console.log("data fetched!");
       // <Redirect to="/"></Redirect>
       alert('Product details submitted!');
-      navigate("/productPage");
+      // const element = <ProductPage name="90"/>
+      navigate('/productPage', {state : {data : data}});
     }
   };
   return (
@@ -95,7 +102,8 @@ const PostProduct = () => {
         <Card className="shadow-sm">
           <CardBody>
             <h3>Post your product details for the advertisement</h3>
-            <Form method="POST" encType="multipart/form-data">
+            <p>The fields marked with * symbol are required fields, kindly fill those before submitting the form.</p>
+            <Form onSubmit={postData} method="POST" encType="multipart/form-data">
               <div className="my-3">
                 <Label for="productName">Product Name*</Label>
                 <Input
@@ -103,9 +111,10 @@ const PostProduct = () => {
                   name="productName"
                   type="text"
                   placeholder="Enter the product name here"
-                  value={user.productName}
+                  value={product.productName}
                   onChange={handleInput}
                   className="rounded-0"
+                  required
                 />
               </div>
               <div className="my-3">
@@ -114,7 +123,7 @@ const PostProduct = () => {
                   id="description"
                   name="productDescription"
                   type="textarea"
-                  value={user.productDescription}
+                  value={product.productDescription}
                   onChange={handleInput}
                   placeholder="Enter your product details here"
                   className="rounded-0"
@@ -128,10 +137,47 @@ const PostProduct = () => {
                   name="productBasePrice"
                   type="text"
                   placeholder="Enter the base price of the product here"
-                  value={user.productBasePrice}
+                  value={product.productBasePrice}
                   onChange={handleInput}
                   className="rounded-0"
+                  required
                 />
+              </div>
+              <div className="my-3">
+                <Label for="startDate">Start Date*</Label>
+                <Input 
+                 id="startDate"
+                 name="auctionStartDate"
+                 type="date"
+                 value={product.auctionStartDate}
+                 onChange={handleInput}
+                 className="rounded-0"
+                 required
+                /> 
+              </div>
+              <div className="my-3">
+                <Label for="startTime">Start Time*</Label>
+                <Input 
+                 id="startTime"
+                 name="auctionStartTime"
+                 type="time"
+                 value={product.auctionStartTime}
+                 onChange={handleInput}
+                 className="rounded-0"
+                 required
+                /> 
+              </div>
+              <div className="my-3">
+                <Label for="duration">Duration in hh:mm format (in hours and minutes)*</Label>
+                <Input 
+                 id="duration"
+                 name="auctionDuration"
+                 type="time"
+                 value={product.auctionDuration}
+                 onChange={handleInput}
+                 className="rounded-0"
+                 required
+                /> 
               </div>
               <div className="my-3">
                 <Label for="place">Shipment from*</Label>
@@ -139,16 +185,22 @@ const PostProduct = () => {
                   id="place"
                   name="shipmentFrom"
                   type="select"
-                  value={user.shipmentFrom}
+                  value={product.shipmentFrom}
                   onChange={handleInput}
                   placeholder="Enter here"
                   className="rounded-0"
+                  required
                 >
                   <option value="choose location">Choose location</option>
                   <option>Bangalore</option>
                   <option>Hyderabad</option>
                   <option>Kolkata</option>
                   <option>Mumbai</option>
+                  <option>Delhi</option>
+                  <option>Chennai</option>
+                  <option>Ahmedabad</option>
+                  <option>Pune</option>
+                  <option>Surat</option>
                 </Input>
               </div>
               <div className="my-3">
@@ -166,7 +218,6 @@ const PostProduct = () => {
                   type="submit"
                   className="rounded-0"
                   color="primary"
-                  onClick={postData}
                 >
                   Post your product
                 </Button>
