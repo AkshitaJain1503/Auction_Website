@@ -10,20 +10,20 @@ import {
   Button,
   Container,
 } from "reactstrap";
-import ProductPage from "../productDetails/productPage";
+// import ProductPage from "../productDetails/productPage";
 
-const convertToBase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const fileReader = new FileReader();
-    fileReader.readAsDataURL(file);
-    fileReader.onload = () => {
-      resolve(fileReader.result);
-    };
-    fileReader.onerror = (error) => {
-      reject(error);
-    };
-  });
-};
+// const convertToBase64 = (file) => {
+//   return new Promise((resolve, reject) => {
+//     const fileReader = new FileReader();
+//     fileReader.readAsDataURL(file);
+//     fileReader.onload = () => {
+//       resolve(fileReader.result);
+//     };
+//     fileReader.onerror = (error) => {
+//       reject(error);
+//     };
+//   });
+// };
 
 const PostProduct = () => {
   const navigate = useNavigate();
@@ -75,8 +75,6 @@ const PostProduct = () => {
     formdata.append("auctionStartTime", auctionStartTime);
     formdata.append("auctionDuration", auctionDuration);
 
-    console.log(formdata);
-
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
       headers: {
@@ -85,8 +83,7 @@ const PostProduct = () => {
       },
       body: formdata
     });
-
-    console.log(formdata);
+    
     const data = await res.json();
     
     if (data.status === 404 || !data) {
