@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
     userData.firstName = user.firstName;
     userData.lastName = user.lastName;
     userData.email = user.email;
+    userData.address = user.address;
 
     res.status(200).send({data:userData});
 });
