@@ -12,10 +12,17 @@ function App() {
 		<Routes>
 			<Route path="/signup" exact element={<Signup />} />
 			<Route path="/login" exact element={<Login />} />
+			
 			<Route path="/" exact element={<Home />} />
+
 			{user && <Route path="/myProfile" exact element={<MyProfile />} />}
+			{!user && <Route path="/myProfile" exact element={<Signup/>}/>}
+
 			{user && <Route path="/postProduct" exact element={<PostProduct/>}/>}
+			{!user && <Route path="/postProduct" exact element={<Signup/>}/>}
+
 			{user && <Route path="/productPage" exact element={<ProductPage/>}/>}
+			
 		</Routes>
 	);
 }
