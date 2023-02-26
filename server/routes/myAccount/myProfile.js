@@ -12,6 +12,7 @@ router.get("/", async (req, res) => {
     userData.firstName = user.firstName;
     userData.lastName = user.lastName;
     userData.email = user.email;
+    userData.address = user.address;
 
     res.status(200).send({data:userData});
 });
@@ -20,13 +21,13 @@ router.get("/", async (req, res) => {
 //Update my profile data.
 router.patch("/", async (req, res) => {
 
-    const {error} = validateForUpdation(req.body);
-	if (error)
-		return res.status(400).send({message: error.details[0].message});
+    //const {error} = validateForUpdation(req.body);
+	// if (error)
+	// 	return res.status(400).send({message: error.details[0].message});
 
-    var updateFirstName = req.body.firstName.trim();
-    var updateLastName = req.body.lastName.trim();
-    var newValues =  {firstName: updateFirstName, lastName: updateLastName } ;
+    // var updateFirstName = req.body.firstName.trim();
+    // var updateLastName = req.body.lastName.trim();
+    var newValues =  {... req.body} ;
 
     User.findOneAndUpdate({_id: req.id}, newValues, function (err) {
         if (err)
@@ -38,13 +39,13 @@ router.patch("/", async (req, res) => {
 
 
 //Validate data entered by the user.
-const validateForUpdation = (data) => {
-    const schema = Joi.object({
-        firstName: Joi.string().trim().required().label('First Name'),
-        lastName: Joi.string().trim().required().label('Last Name'),
-    });
-    return schema.validate(data);
-};
+// const validateForUpdation = (data) => {
+//     const schema = Joi.object({
+//         firstName: Joi.string().trim().required().label('First Name'),
+//         lastName: Joi.string().trim().required().label('Last Name'),
+//     });
+//     return schema.validate(data);
+// };
 
 module.exports = router;
 

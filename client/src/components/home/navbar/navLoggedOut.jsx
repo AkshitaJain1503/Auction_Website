@@ -16,7 +16,11 @@ const NavLoggedOut = () => {
 						<img src={require("../../../images/search_icon.jpg") } alt=""/>
 					</button>
 				</form>
-				<h1 >BidKaro!!!!!</h1>
+				<h1>
+					<a href="/" style={{textDecoration:"none",color:"inherit"}}>
+						BidKaro!!!!!
+					</a>
+				</h1>
 			</nav>
 		</div>
 	);
