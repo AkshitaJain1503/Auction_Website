@@ -2,7 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import Home from "./components/home";
 import Signup from "./components/loginAndSignup/signup";
 import Login from "./components/loginAndSignup/login";
-import GetProfile from "./components/myProfile/getProfile";
+import {DisplayProfile} from "./components/myProfile/getProfile";
 import EditProfile from "./components/myProfile/editProfile";
 import PastPurchases from "./components/pastPurchases/pastPurchases";
 import PastPosts from "./components/pastPosts/pastPosts";
@@ -18,7 +18,7 @@ function App() {
 			
 			<Route path="/" exact element={<Home />} />
 
-			{user && <Route path="/myProfile" exact element={<GetProfile />} />}
+			{user && <Route path="/myProfile" exact element={<DisplayProfile />} />}
 			{!user && <Route path="/myProfile" exact element={<Signup/>}/>}
 
 			{user && <Route path="/editProfile" exact element={<EditProfile />} />}

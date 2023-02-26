@@ -24,14 +24,14 @@ app.use(cors());
 //routes
 app.use("/api/register", registerRoute);
 app.use("/api/authLogin", authLoginRoute);
+app.use("/api/productDetails", productDetails);
 
 //protected routes with middleware checkAuthLogin
 app.use("/api/myProfile", checkAuthLogin, myProfile);
 app.use("/api/pastPosts", checkAuthLogin, pastPosts);
 app.use("/api/pastPurchases", checkAuthLogin, pastPurchases);
-
 app.use("/api/postProduct", checkAuthLogin, postProduct);
-app.use("/api/productDetails", productDetails);
+
 
 
 const port = process.env.PORT || 3001;
