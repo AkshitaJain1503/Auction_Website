@@ -1,12 +1,76 @@
-import React from 'react'
-import { useLocation } from 'react-router-dom'
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import NavLoggedin from "../home/navbar/navLoggedin";
+import styles from "./styles.module.css";
 
 export default function ProductPage(props) {
-  const {state} = useLocation();
-  const {data} = state;
+  const { state } = useLocation();
+  const { data } = state;
+
+  const [product, setProduct] = useState({
+    productName: "",
+    productDescription: "",
+    productImage: "",
+    shipmentFrom: "",
+    basePrice: "",
+    firstName: "",
+    lastName: ""
+  });
+
+  const getProducts = async () => {
+    const response = await fetch(
+      "http://localhost:3001/api/productDetails?name=" + data.productName
+    );
+    const res = await response.json();
+    console.log(res.data.productName);
+    setProduct((previousState) => {
+      return {
+        ...product,
+        productName: res.data.productName,
+        productDescription: res.data.productDescription,
+        productImage: res.data.productImage,
+        shipmentFrom: res.data.shipmentFrom,
+        basePrice: res.data.productBasePrice,
+        firstName: res.data.sellerFirstName,
+        lastName: res.data.sellerLastName
+      };
+    });
+  };
+
+  useEffect(() => {
+    getProducts();
+  }, []);
+
+  // console.log("product name");
+  // console.log(product.data.productName);
   return (
-    <div>
-      <h1>Individual Product Page {data.productName}</h1>
-    </div>
-  )
+    <>
+      <NavLoggedin />
+      <div>
+        <h1 className={styles.productName}>{product.productName}</h1>
+        <div className={styles.classify}>
+          <div className={styles.img}>
+            <img
+              src={product.productImage}
+              className={styles.image}
+              alt="product"
+            />
+          </div>
+          <div className={styles.details}>
+            <span className={styles.desc}>{product.productDescription}</span>
+            <span className={styles.ship}>
+              Shipment from {product.shipmentFrom}
+            </span>
+            <span> Base Price: {product.basePrice}</span>
+           <span> Seller :  <a href="./" className={styles.links}>{product.firstName} {product.lastName}</a></span>
+           <span> Start Date of auction: 23.10.2003</span>
+           <span> Start time of auction: 12:30 am </span>
+           <span> Duration: 23 hours 2 minutes</span>
+           <span> Status: Upcoming</span>
+           <button className={styles.button}>Auction Space</button>
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }
