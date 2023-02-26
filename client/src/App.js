@@ -13,7 +13,10 @@ function App() {
 
 	return (
 		<Routes>
+			{user && <Route path="/signup" exact element={<Home />} />}
 			<Route path="/signup" exact element={<Signup />} />
+			
+			{user && <Route path="/login" exact element={<Home />} />}
 			<Route path="/login" exact element={<Login />} />
 			
 			<Route path="/" exact element={<Home />} />
