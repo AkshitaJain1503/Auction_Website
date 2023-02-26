@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import NavLoggedin from "../home/navbar/navLoggedin";
+import NavLoggedIn from "../home/navbar/navLoggedIn";
 import styles from "./styles.module.css";
 
 export default function ProductPage(props) {
@@ -22,7 +22,7 @@ export default function ProductPage(props) {
       "http://localhost:3001/api/productDetails?name=" + data.productName
     );
     const res = await response.json();
-    console.log(res.data.productName);
+    //console.log(res.data.productName);
     setProduct((previousState) => {
       return {
         ...product,
@@ -45,7 +45,7 @@ export default function ProductPage(props) {
   // console.log(product.data.productName);
   return (
     <>
-      <NavLoggedin />
+      <NavLoggedIn />
       <div>
         <h1 className={styles.productName}>{product.productName}</h1>
         <div className={styles.classify}>

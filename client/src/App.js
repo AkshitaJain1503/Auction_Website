@@ -1,8 +1,11 @@
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Home from "./components/home";
 import Signup from "./components/loginAndSignup/signup";
 import Login from "./components/loginAndSignup/login";
-import MyProfile from "./components/myProfile";
+import {DisplayProfile} from "./components/myProfile/getProfile";
+import EditProfile from "./components/myProfile/editProfile";
+import PastPurchases from "./components/pastPurchases/pastPurchases";
+import PastPosts from "./components/pastPosts/pastPosts";
 import PostProduct from "./components/postProduct/postProduct";
 import ProductPage from "./components/productDetails/productPage";
 function App() {
@@ -10,13 +13,25 @@ function App() {
 
 	return (
 		<Routes>
+			{user && <Route path="/signup" exact element={<Home />} />}
 			<Route path="/signup" exact element={<Signup />} />
+			
+			{user && <Route path="/login" exact element={<Home />} />}
 			<Route path="/login" exact element={<Login />} />
 			
 			<Route path="/" exact element={<Home />} />
 
-			{user && <Route path="/myProfile" exact element={<MyProfile />} />}
+			{user && <Route path="/myProfile" exact element={<DisplayProfile />} />}
 			{!user && <Route path="/myProfile" exact element={<Signup/>}/>}
+
+			{user && <Route path="/editProfile" exact element={<EditProfile />} />}
+			{!user && <Route path="/editProfile" exact element={<Signup/>}/>}
+
+			{user && <Route path="/pastPurchases" exact element={<PastPurchases />} />}
+			{!user && <Route path="/pastPurchases" exact element={<Signup/>}/>}
+
+			{user && <Route path="/pastPosts" exact element={<PastPosts />} />}
+			{!user && <Route path="/pastPosts" exact element={<Signup/>}/>}
 
 			{user && <Route path="/postProduct" exact element={<PostProduct/>}/>}
 			{!user && <Route path="/postProduct" exact element={<Signup/>}/>}
