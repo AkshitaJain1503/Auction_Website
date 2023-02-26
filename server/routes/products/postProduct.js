@@ -34,14 +34,15 @@ router.post("/", upload.single("productImage"), async (req, res) => {
 
     console.log("data fetched");
     const sellerId = req.id 
+    console.log(req.id);
     
     const result = await cloudinary.uploader.upload(req.file.path);
 
-    const productImage = result.public_id;
+    const productImage = result.secure_url;
 
 //Adding product details and sellerID in the product model.
     const product = await new Product({ ... req.body, productImage: productImage, seller: sellerId}).save();
-    console.log(req.body);
+
 //adding ProductID against the specific seller in the user model. 
     await User.findOneAndUpdate(
         { _id: ObjectId(sellerId) }, 

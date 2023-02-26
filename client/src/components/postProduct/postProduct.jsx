@@ -83,7 +83,7 @@ const PostProduct = () => {
         "Authorization": "Bearer "+localStorage.getItem("token")
       },
       body: formdata
-    });
+    }).catch((err)=> console.log(err));
     
     const data = await res.json();
     
