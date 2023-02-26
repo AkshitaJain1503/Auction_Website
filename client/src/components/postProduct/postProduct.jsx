@@ -206,6 +206,7 @@ const PostProduct = () => {
               <div className="my-3">
                 <Label for="image">Product Image</Label>
                 <Input
+                  required
                   id="image"
                   name="productImage"
                   type="file"
