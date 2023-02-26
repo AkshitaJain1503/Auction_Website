@@ -8,7 +8,6 @@ import {
   MDBCard,
   MDBCardText,
   MDBCardBody,
-  MDBBtn,
 } from 'mdb-react-ui-kit';
 
 const GetProfile = () => {
@@ -16,7 +15,7 @@ const GetProfile = () => {
 
   useEffect(() => {
     console.log("length is==>",Object.keys(data).length)
-    if(Object.keys(data).length==0){
+    if(Object.keys(data).length == 0){
       const url = "http://localhost:3001/api/myProfile";
       const tokenStr = localStorage.getItem("token");
       const headers = { "Authorization": "Bearer "+tokenStr };
@@ -29,8 +28,12 @@ const GetProfile = () => {
           setData(res.data.data);
         })
     }
-  });
+  })
+  return data;
+};
 
+const DisplayProfile =()=> {
+  const data = GetProfile();
   const isData = Object.keys(data).length>0
 
   if(isData){
@@ -49,14 +52,17 @@ const GetProfile = () => {
                 
                 <p className="text-muted mb-1">MORE DETAILS</p>
                 <div className="d-flex justify-content-center mb-2">
+                  
                 <a href="/editProfile">
-                  <MDBBtn>Edit Profile</MDBBtn>
+                  <button>Edit Profile</button>
                 </a>
+
                 <a href="/pastPurchases">
-                  <MDBBtn className="ms-1">Past Purchases</MDBBtn>
+                  <button className="ms-3" >Past Purchases</button>
                 </a>
+
                 <a href="/pastPosts">
-                <MDBBtn className="ms-1">Past Posts</MDBBtn>
+                <button className="ms-3">Past Posts</button>
                 </a>
                   
                 </div>
@@ -118,6 +124,7 @@ const GetProfile = () => {
     )
   }
 }
-
-export default GetProfile;
+// module.exports = { GetProfile,DislayProfile }
+//export default DislayProfile;
   
+export {GetProfile,DisplayProfile};
