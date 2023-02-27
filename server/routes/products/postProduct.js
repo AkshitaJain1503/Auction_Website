@@ -49,6 +49,8 @@ router.post("/", upload.single("productImage"), async (req, res) => {
         { $push: { postedProducts: ObjectId(product._id) }}
     );
 
-    res.json(req.body);
+    // req.id = product._id;
+    res.json(product._id);
+    console.log(req.body);
 });
 module.exports = router;

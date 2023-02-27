@@ -19,7 +19,7 @@ export default function ProductPage(props) {
 
   const getProducts = async () => {
     const response = await fetch(
-      "http://localhost:3001/api/productDetails?name=" + data.productName
+      "http://localhost:3001/api/productDetails?id=" + data
     );
     const res = await response.json();
     //console.log(res.data.productName);
