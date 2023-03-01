@@ -1,6 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
-import NavLoggedOut from "../../home/navbar/navLoggedOut";
+import NavLoggedOut from "../../navbar/navLoggedOut";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 

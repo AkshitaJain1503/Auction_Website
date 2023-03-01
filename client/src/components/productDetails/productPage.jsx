@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import NavLoggedIn from "../home/navbar/navLoggedIn";
+import NavLoggedIn from "../navbar/navLoggedIn";
 import styles from "./styles.module.css";
 
 export default function ProductPage(props) {
