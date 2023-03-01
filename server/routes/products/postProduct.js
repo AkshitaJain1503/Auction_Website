@@ -4,6 +4,7 @@ const multer = require('multer');
 const {v4: uuidv4} = require("uuid");
 const path = require("path");
 const {Product} = require("../../models/product");
+const {Auction} = require("../../models/auction");
 const {User} = require("../../models/user");
 var ObjectId = require('mongoose').Types.ObjectId;
 const {cloudinary} = require("./cloudinary");
@@ -33,8 +34,11 @@ let upload = multer({storage, fileFilter});
 router.post("/", upload.single("productImage"), async (req, res) => {
 
     console.log("data fetched");
-    const sellerId = req.id 
-    console.log(req.id);
+    const sellerId = req.id;
+    const productBasePrice = req.body.productBasePrice;
+    const auctionStartDate = req.body.auctionStartDate;
+    const auctionStartTime = req.body.auctionStartTime;
+    const auctionDuration = req.body.auctionDuration;
     
     const result = await cloudinary.uploader.upload(req.file.path);
 
@@ -43,12 +47,15 @@ router.post("/", upload.single("productImage"), async (req, res) => {
 //Adding product details and sellerID in the product model.
     const product = await new Product({ ... req.body, productImage: productImage, seller: sellerId}).save();
 
+    const auction = await new Auction({product: product._id, productBasePrice, auctionStartDate, auctionStartTime, duration: auctionDuration}).save();
 //adding ProductID against the specific seller in the user model. 
     await User.findOneAndUpdate(
         { _id: ObjectId(sellerId) }, 
         { $push: { postedProducts: ObjectId(product._id) }}
     );
 
-    res.json(req.body);
+    // req.id = product._id;
+    res.json(product._id);
+    // console.log(req.body);
 });
 module.exports = router;

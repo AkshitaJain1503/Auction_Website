@@ -4,13 +4,13 @@ const {Product} = require("../../models/product");
 const { User } = require("../../models/user");
 
 router.get("/", async(req, res) => {
-    console.log(req.query.name);
-    const requested_name = req.query.name;
+    // console.log(req.query.id);
+    const requested_id = req.query.id;
 
-    const product = await Product.findOne({productName: requested_name});
+    const product = await Product.findOne({_id: requested_id});
     const sellerInfo = await User.findOne({_id: product.seller});
-    console.log(sellerInfo);
-    console.log(product);
+    // console.log(sellerInfo);
+    // console.log(product);
     var productDetailsRequired = {};
     productDetailsRequired.productName = product.productName;
     productDetailsRequired.productDescription = product.productDescription;
