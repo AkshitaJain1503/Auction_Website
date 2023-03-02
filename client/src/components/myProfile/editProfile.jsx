@@ -1,6 +1,6 @@
 import React,{ useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import NavLoggedIn from "../home/navbar/navLoggedIn";
+import NavLoggedIn from "../navbar/navLoggedIn";
 import axios from 'axios';
 import { GetProfile } from "./getProfile";
 import styles from "../loginAndSignup/signup/styles.module.css";

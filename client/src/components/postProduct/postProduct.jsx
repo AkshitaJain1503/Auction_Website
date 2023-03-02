@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavLoggedIn from "../home/navbar/navLoggedIn";
+import NavLoggedIn from "../navbar/navLoggedIn";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Card,
