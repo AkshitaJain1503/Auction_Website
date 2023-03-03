@@ -8,6 +8,7 @@ import PastPurchases from "./components/pastPurchases/pastPurchases";
 import PastPosts from "./components/pastPosts/pastPosts";
 import PostProduct from "./components/postProduct/postProduct";
 import ProductPage from "./components/productDetails/productPage";
+import Auction from "./components/auctionSpace"; 
 function App() {
 	const user = localStorage.getItem("token");
 
@@ -38,6 +39,7 @@ function App() {
 
 			{user && <Route path="/productPage" exact element={<ProductPage/>}/>}
 			
+			{user && <Route path="/auctionSpace" exact element={<Auction/>} />} 
 		</Routes>
 	);
 }
