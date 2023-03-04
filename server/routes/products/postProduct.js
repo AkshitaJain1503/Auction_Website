@@ -33,7 +33,7 @@ let upload = multer({storage, fileFilter});
 
 router.post("/", upload.single("productImage"), async (req, res) => {
 
-    //console.log("data fetched");
+    console.log("data fetched");
     const sellerId = req.id;
     const productBasePrice = req.body.productBasePrice;
     const auctionStartDate = req.body.auctionStartDate;

@@ -37,7 +37,7 @@ function App() {
 			{user && <Route path="/postProduct" exact element={<PostProduct/>}/>}
 			{!user && <Route path="/postProduct" exact element={<Signup/>}/>}
 
-			{user && <Route path="/productPage" exact element={<ProductPage/>}/>}
+			<Route path="/productPage" exact element={<ProductPage/>}/>
 			
 			{user && <Route path="/auctionSpace" exact element={<Auction/>} />} 
 		</Routes>
