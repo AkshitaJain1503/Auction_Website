@@ -4,9 +4,11 @@ import NavLoggedIn from "../navbar/navLoggedIn";
 import styles from "./styles.module.css";
 
 export default function ProductPage(props) {
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const { data } = state;
+  const useQuery = () => new URLSearchParams(useLocation().search);
+  const query = useQuery();
+
+  const id = query.get('id');
+  console.log(id);
 
   const [product, setProduct] = useState({
     productName: "",
@@ -20,7 +22,7 @@ export default function ProductPage(props) {
 
   const getProducts = async () => {
     const response = await fetch(
-      "http://localhost:3001/api/productDetails?id=" + data
+      "http://localhost:3001/api/productDetails?id=" + id
     );
     const res = await response.json();
     // console.log(res.data.productName);

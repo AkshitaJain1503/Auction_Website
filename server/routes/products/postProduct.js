@@ -33,12 +33,15 @@ let upload = multer({storage, fileFilter});
 
 router.post("/", upload.single("productImage"), async (req, res) => {
 
-    //console.log("data fetched");
+    console.log("data fetched");
     const sellerId = req.id;
     const productBasePrice = req.body.productBasePrice;
     const auctionStartDate = req.body.auctionStartDate;
     const auctionStartTime = req.body.auctionStartTime;
-    const auctionDuration = req.body.auctionDuration;
+    const days = req.body.days;
+    const minutes = req.body.minutes;
+    const hours = req.body.hours;
+    let auctionDuration = days +":" + minutes + ":" + hours;
     
     const result = await cloudinary.uploader.upload(req.file.path);
 
