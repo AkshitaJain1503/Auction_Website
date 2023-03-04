@@ -1,8 +1,15 @@
 import styles from "./styles.module.css";
+
 const NavLoggedIn = () => {
+
 	const handleLogout = () => {
+		console.log("removed");
 		localStorage.removeItem("token");
-		window.location.reload();
+	// 	console.log("removed");
+	// 	const user = localStorage.getItem("token")
+	// console.log(user);
+		// navigate("/");
+		window.location = "/"
 	};
 	return (
 		<div className={styles.home_container}>

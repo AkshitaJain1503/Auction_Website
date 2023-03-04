@@ -1,16 +1,11 @@
-import NavLoggedIn from "../navbar/navLoggedIn";
-import NavLoggedOut from "../navbar/navLoggedOut";
+import NavBar from "../navbar/index";
 const Home = () => {
-	const user = localStorage.getItem("token")
-	if(user){
-		return(
-			<NavLoggedIn/>
-		)
-	}else{
-		return (
-			<NavLoggedOut/>
-		)
-	} 
+	return(
+        <div>
+            <NavBar/>
+        </div>
+        
+    )
 };
 
 export default Home;

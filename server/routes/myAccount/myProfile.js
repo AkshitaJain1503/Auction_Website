@@ -9,8 +9,8 @@ router.get("/", async (req, res) => {
     var userData = {}
 
     const user = await User.findOne({_id: req.id});
-    userData.firstName = user.firstName;
-    userData.lastName = user.lastName;
+    userData.name = user.name;
+    // userData.lastName = user.lastName;
     userData.email = user.email;
     userData.address = user.address;
 

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavLoggedIn from "../navbar/navLoggedIn";
+//import NavLoggedIn from "../navbar/navLoggedIn";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NavBar from "../navbar/index";
 import {
   Card,
   CardBody,
@@ -101,7 +102,7 @@ const PostProduct = () => {
   };
   return (
     <>
-    <NavLoggedIn/>
+    <NavBar/>
       <div className="wrapper">
         <Card className="shadow-sm">
           <CardBody>

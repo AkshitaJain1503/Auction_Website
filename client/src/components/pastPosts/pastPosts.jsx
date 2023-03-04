@@ -1,8 +1,9 @@
 import React,{ useEffect } from 'react';
-import NavLoggedIn from "../navbar/navLoggedIn";
+//import NavLoggedIn from "../navbar/navLoggedIn";
 import axios from 'axios';
 import { useNavigate } from "react-router-dom";
 import { TableControl } from 'react-bootstrap-table-control';
+import NavBar from "../navbar/index";
 
 //GetPastPosts returns an array of objects on hitting the back-end API
 const GetPastPosts = () => {
@@ -36,7 +37,7 @@ const PastPosts = () => {
     if(Object.keys(data).length > 0){
         return (
             <div>
-                <NavLoggedIn/>
+                <NavBar/>
                 <h5>TOTAL POSTS:  {data.length}</h5>
                 <hr/>
                 <TableControl
@@ -48,7 +49,7 @@ const PastPosts = () => {
                     itens={data}
                 
                     onClickItem={function navProduct(data){
-                        navigate('/productPage', {state : {data : data.productId}});
+                        navigate(`/productPage?id=${data.productId}`);
                     }}
 
                     clickable
@@ -63,7 +64,7 @@ const PastPosts = () => {
     else{
         return (
             <div>
-              <NavLoggedIn/>
+              <NavBar/>
               <h5>TOTAL POSTS: {Object.keys(data).length}</h5>
             </div>
         );

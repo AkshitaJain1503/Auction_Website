@@ -35,6 +35,7 @@ app.use("/api/postProduct", checkAuthLogin, postProduct);
 app.use("/api/auctionSpace", checkAuthLogin, auctionSpace);
 
 
+
 const port = process.env.PORT || 3001;
 app.listen(port, function () {
     console.log("listening on port" + port);
