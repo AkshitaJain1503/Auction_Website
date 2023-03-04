@@ -94,7 +94,8 @@ const PostProduct = () => {
       // <Redirect to="/"></Redirect>
       alert('Product details submitted!');
       // const element = <ProductPage name="90"/>
-      navigate('/productPage', {state : {data : data}});
+      // navigate(`/productPage/${data}`, {state : {data : data}});
+      navigate("/productPage", {state : {data : data}});
     }
   };
   return (

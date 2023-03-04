@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavLoggedIn from "../navbar/navLoggedIn";
 import styles from "./styles.module.css";
 
 export default function ProductPage(props) {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const { data } = state;
 
@@ -22,7 +23,7 @@ export default function ProductPage(props) {
       "http://localhost:3001/api/productDetails?id=" + data
     );
     const res = await response.json();
-    //console.log(res.data.productName);
+    // console.log(res.data.productName);
     setProduct((previousState) => {
       return {
         ...product,
@@ -40,6 +41,10 @@ export default function ProductPage(props) {
   useEffect(() => {
     getProducts();
   }, []);
+
+  const handleClick = () => {
+    navigate('/auctionSpace', {state : {productId : data}});
+  };
 
   // console.log("product name");
   // console.log(product.data.productName);
@@ -67,7 +72,7 @@ export default function ProductPage(props) {
            <span> Start time of auction: 12:30 am </span>
            <span> Duration: 23 hours 2 minutes</span>
            <span> Status: Upcoming</span>
-           <button className={styles.button}>Auction Space</button>
+           <button onClick={handleClick} className={styles.button}>Auction Space</button>
           </div>
         </div>
       </div>

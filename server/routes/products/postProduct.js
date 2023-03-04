@@ -47,7 +47,7 @@ router.post("/", upload.single("productImage"), async (req, res) => {
 //Adding product details and sellerID in the product model.
     const product = await new Product({ ... req.body, productImage: productImage, seller: sellerId}).save();
 
-    const auction = await new Auction({product: product._id, productBasePrice, auctionStartDate, auctionStartTime, duration: auctionDuration}).save();
+    const auction = await new Auction({product: product._id, productBasePrice, auctionStartDate, auctionStartTime, currentPrice: product.productBasePrice, duration: auctionDuration}).save();
 //adding ProductID against the specific seller in the user model. 
     await User.findOneAndUpdate(
         { _id: ObjectId(sellerId) }, 
