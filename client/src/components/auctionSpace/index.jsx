@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import NavLoggedIn from "../home/navbar/navLoggedIn";
+import NavLoggedIn from "../navbar/navLoggedIn";
 import styles from "./styles.module.css";
 import {Form, Button, Input} from "reactstrap"
 

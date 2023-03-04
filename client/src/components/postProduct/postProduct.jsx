@@ -36,7 +36,9 @@ const PostProduct = () => {
     productImage: "",
     auctionStartDate: "",
     auctionStartTime: "",
-    auctionDuration: ""
+    days: "",
+    hours: "",
+    minutes: ""
   });
   let name, value;
   const handleInput = (e) => {
@@ -64,7 +66,9 @@ const PostProduct = () => {
       productImage,
       auctionStartDate,
       auctionStartTime,
-      auctionDuration
+      days,
+      hours, 
+      minutes
     } = product;
     const formdata = new FormData();
     formdata.append("productName", productName);
@@ -74,7 +78,9 @@ const PostProduct = () => {
     formdata.append("productImage", productImage);
     formdata.append("auctionStartDate", auctionStartDate);
     formdata.append("auctionStartTime", auctionStartTime);
-    formdata.append("auctionDuration", auctionDuration);
+    formdata.append("days", days);
+    formdata.append("hours", hours);
+    formdata.append("minutes", minutes);
 
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
@@ -166,16 +172,38 @@ const PostProduct = () => {
                 /> 
               </div>
               <div className="my-3">
-                <Label for="duration">Duration in hh:mm format (in hours and minutes)*</Label>
-                <Input 
+                <Label for="duration">Duration*</Label>
+                <br/>
+                {/* <span> */}
+                <input 
                  id="duration"
-                 name="auctionDuration"
-                 type="time"
-                 value={product.auctionDuration}
+                 name="days"
+                 type="number"
+                 value={product.days}
                  onChange={handleInput}
-                 className="rounded-0"
+                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "20px"}}
                  required
-                /> 
+                /> days
+                <input 
+                 id="duration"
+                 name="hours"
+                 type="number"
+                 value={product.hours}
+                 onChange={handleInput}
+                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
+                  required
+                /> hours
+                <input 
+                 id="duration"
+                 name="minutes"
+                 type="number"
+                 value={product.minutes}
+                 onChange={handleInput}
+                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
+                 required
+                /> minutes
+                {/* </span> */}
+                
               </div>
               <div className="my-3">
                 <Label for="place">Shipment from*</Label>
