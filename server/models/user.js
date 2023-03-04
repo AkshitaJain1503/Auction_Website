@@ -39,6 +39,12 @@ const userSchema = new mongoose.Schema({
           ref: 'Product',
         },
     ],
+    watchList: [
+        {
+          type: mongoose.Types.ObjectId,
+          ref: 'Auction',
+        },
+    ],
     //   bids: [
     //     {
     //       type: mongoose.Types.ObjectId,

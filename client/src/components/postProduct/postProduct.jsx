@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavLoggedIn from "../home/navbar/navLoggedIn";
+import NavLoggedIn from "../navbar/navLoggedIn";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Card,
@@ -86,15 +86,11 @@ const PostProduct = () => {
     }).catch((err)=> console.log(err));
     
     const data = await res.json();
-    
     if (data.status === 404 || !data) {
       window.location = "/signup";
     } else {
-      //console.log("data fetched!");
-      // <Redirect to="/"></Redirect>
       alert('Product details submitted!');
-      // const element = <ProductPage name="90"/>
-      navigate('/productPage', {state : {data : data}});
+      navigate(`/productPage?id=${data}`);
     }
   };
   return (

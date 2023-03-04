@@ -34,7 +34,6 @@ app.use("/api/postProduct", checkAuthLogin, postProduct);
 app.use("/api/productDetails", productDetails);
 
 
-
 const port = process.env.PORT || 3001;
 app.listen(port, function () {
     console.log("listening on port" + port);
