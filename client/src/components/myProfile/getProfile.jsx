@@ -1,6 +1,7 @@
 import React,{ useEffect } from 'react';
-import NavLoggedIn from "../navbar/navLoggedIn";
+//import NavLoggedIn from "../navbar/navLoggedIn";
 import axios from 'axios';
+import NavBar from "../navbar/index";
 import {
   MDBCol,
   MDBContainer,
@@ -41,7 +42,7 @@ const DisplayProfile =()=> {
       <div>
         {isData ? (
           <div>
-            <NavLoggedIn/>
+            <NavBar/>
             <section >
               <MDBContainer className="py-5">
               <MDBRow>
@@ -50,14 +51,14 @@ const DisplayProfile =()=> {
               <MDBCardBody>
                 <MDBRow>
                   <MDBCol sm="3">
-                    <MDBCardText>FIRST NAME</MDBCardText>
+                    <MDBCardText>NAME</MDBCardText>
                   </MDBCol>
                   <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{data.firstName}</MDBCardText>
+                    <MDBCardText className="text-muted">{data.name}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
                 <hr />
-                <MDBRow>
+                {/* <MDBRow>
                   <MDBCol sm="3">
                     <MDBCardText>LAST NAME</MDBCardText>
                   </MDBCol>
@@ -65,7 +66,7 @@ const DisplayProfile =()=> {
                     <MDBCardText className="text-muted">{data.lastName}</MDBCardText>
                   </MDBCol>
                 </MDBRow>
-                <hr />
+                <hr /> */}
                 <MDBRow>
                   <MDBCol sm="3">
                     <MDBCardText>EMAIL</MDBCardText>
@@ -120,7 +121,7 @@ const DisplayProfile =()=> {
   </div>
       ) : 
       (
-        <NavLoggedIn/>
+        <NavBar/>
       )}
       </div>
     )

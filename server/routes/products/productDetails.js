@@ -17,8 +17,8 @@ router.get("/", async(req, res) => {
     productDetailsRequired.productBasePrice = product.productBasePrice;
     productDetailsRequired.shipmentFrom = product.shipmentFrom;
     productDetailsRequired.productImage = product.productImage;
-    productDetailsRequired.sellerFirstName = sellerInfo.firstName;
-    productDetailsRequired.sellerLastName = sellerInfo.lastName;
+    productDetailsRequired.sellerName = sellerInfo.name;
+    // productDetailsRequired.sellerLastName = sellerInfo.lastName;
     productDetailsRequired.sellerId = sellerInfo._id;
     //console.log(productDetailsRequired);
     res.status(200).send({data: productDetailsRequired});

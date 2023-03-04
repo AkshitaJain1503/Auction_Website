@@ -1,8 +1,9 @@
 import { useState } from "react";
 import axios from "axios";
-import NavLoggedOut from "../../navbar/navLoggedOut";
+//import NavLoggedOut from "../../navbar/navLoggedOut";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
+import NavBar from "../../navbar/index";
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
@@ -33,7 +34,7 @@ const Login = () => {
   return (
     <div>
       <div>
-        <NavLoggedOut/>
+      <NavBar/>
       </div>
       <div className={styles.login_container}>
         <div className={styles.login_form_container}>

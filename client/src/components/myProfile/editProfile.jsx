@@ -1,9 +1,10 @@
 import React,{ useState } from 'react';
 import { useNavigate } from "react-router-dom";
-import NavLoggedIn from "../navbar/navLoggedIn";
+//import NavLoggedIn from "../navbar/navLoggedIn";
 import axios from 'axios';
 import { GetProfile } from "./getProfile";
 import styles from "../loginAndSignup/signup/styles.module.css";
+import NavBar from "../navbar/index";
 
 
 const EditProfile = () => {
@@ -40,26 +41,26 @@ const EditProfile = () => {
   return(
     <div>
       <div>
-        <NavLoggedIn/>
+        <NavBar/>
       </div>
       <div className={styles.signup_container}>
         <div className={styles.signup_form_container}>
           <div className={styles.right}>
             <form className={styles.form_container} onSubmit={handleSubmit}>
               <h1>Edit Profile</h1>
-              <label >First Name*
+              <label >Name*
                 <input style={{ marginLeft: '2rem' }}
                   type="text"
-                  placeholder="First Name"
-                  name="firstName"
+                  placeholder="Name"
+                  name="name"
             //deafultValue is the already existing data from get myProfile API
-                  defaultValue = {data.firstName}
+                  defaultValue = {data.name}
                   required
                   onChange={handleChange}
                   className={styles.input}
                 />
               </label>
-              <label> Last Name
+              {/* <label> Last Name
                 <input style={{ marginLeft: '2rem' }}
                   type="text"
                   placeholder="Last Name"
@@ -68,7 +69,7 @@ const EditProfile = () => {
                   onChange={handleChange}
                   className={styles.input}
                 />
-              </label>
+              </label> */}
               <label> Address*
                 <input style={{ marginLeft: '2rem' }}
                   type="address"

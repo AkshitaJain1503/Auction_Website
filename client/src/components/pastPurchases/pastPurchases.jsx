@@ -1,11 +1,12 @@
 import React,{ useEffect } from 'react';
-import NavLoggedIn from "../navbar/navLoggedIn";
+//import NavLoggedIn from "../navbar/navLoggedIn";
 import axios from 'axios';
+import NavBar from "../navbar/index";
 
 const PastPurchases = () => {
     return(
         <div>
-            <NavLoggedIn/>
+            <NavBar/>
             <p> PAST PURCHASES </p>
         </div>
     )
