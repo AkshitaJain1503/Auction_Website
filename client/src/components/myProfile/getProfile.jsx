@@ -1,5 +1,5 @@
 import React,{ useEffect } from 'react';
-import NavLoggedIn from "../home/navbar/navLoggedIn";
+import NavLoggedIn from "../navbar/navLoggedIn";
 import axios from 'axios';
 import {
   MDBCol,
@@ -15,7 +15,7 @@ const GetProfile = () => {
 
   useEffect(() => {
     console.log("length is==>",Object.keys(data).length)
-    if(Object.keys(data).length == 0){
+    if(Object.keys(data).length === 0){
       const url = "http://localhost:3001/api/myProfile";
       const tokenStr = localStorage.getItem("token");
       const headers = { "Authorization": "Bearer "+tokenStr };
@@ -44,33 +44,7 @@ const DisplayProfile =()=> {
             <NavLoggedIn/>
             <section >
               <MDBContainer className="py-5">
-      
-          <MDBRow>
-          <MDBCol lg="4">
-            <MDBCard className="mb-4">
-              <MDBCardBody className="text-center">
-                
-                <p className="text-muted mb-1">MORE DETAILS</p>
-                <div className="d-flex justify-content-center mb-2">
-                  
-                <a href="/editProfile">
-                  <button>Edit Profile</button>
-                </a>
-
-                <a href="/pastPurchases">
-                  <button className="ms-3" >Past Purchases</button>
-                </a>
-
-                <a href="/pastPosts">
-                <button className="ms-3">Past Posts</button>
-                </a>
-                  
-                </div>
-              </MDBCardBody>
-            </MDBCard>
-
-
-          </MDBCol>
+              <MDBRow>
           <MDBCol lg="8">
             <MDBCard className="mb-4">
               <MDBCardBody>
@@ -111,6 +85,34 @@ const DisplayProfile =()=> {
                 </MDBRow>
               </MDBCardBody>
             </MDBCard>
+          </MDBCol>
+        </MDBRow>
+      
+          <MDBRow>
+          <MDBCol lg="4">
+            <MDBCard className="mb-4">
+              <MDBCardBody className="text-center">
+                
+                <p className="text-muted mb-1">MORE DETAILS</p>
+                <div className="d-flex justify-content-center mb-2">
+                  
+                <a href="/editProfile">
+                  <button>Edit Profile</button>
+                </a>
+
+                <a href="/pastPurchases">
+                  <button className="ms-3" >Past Purchases</button>
+                </a>
+
+                <a href="/pastPosts">
+                <button className="ms-3">Past Posts</button>
+                </a>
+                  
+                </div>
+              </MDBCardBody>
+            </MDBCard>
+
+
           </MDBCol>
         </MDBRow>
       </MDBContainer>

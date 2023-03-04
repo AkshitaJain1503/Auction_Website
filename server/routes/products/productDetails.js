@@ -20,7 +20,7 @@ router.get("/", async(req, res) => {
     productDetailsRequired.sellerFirstName = sellerInfo.firstName;
     productDetailsRequired.sellerLastName = sellerInfo.lastName;
     productDetailsRequired.sellerId = sellerInfo._id;
-    console.log(productDetailsRequired);
+    //console.log(productDetailsRequired);
     res.status(200).send({data: productDetailsRequired});
 })
 

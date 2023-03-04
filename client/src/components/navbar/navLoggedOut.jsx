@@ -1,4 +1,4 @@
-import styles from "../styles.module.css";
+import styles from "./styles.module.css";
 const NavLoggedOut = () => {
 	return (
 		<div className={styles.home_container}>
@@ -13,7 +13,7 @@ const NavLoggedOut = () => {
 				<form action="" className={styles.search_bar}>
 					<input type="text" placeholder="search anything" name="q"/>
 					<button	type="submit">
-						<img src={require("../../../images/search_icon.jpg") } alt=""/>
+						<img src={require("../../images/search_icon.jpg") } alt=""/>
 					</button>
 				</form>
 				<h1>

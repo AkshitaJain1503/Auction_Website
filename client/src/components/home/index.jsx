@@ -1,5 +1,5 @@
-import NavLoggedIn from "./navbar/navLoggedIn";
-import NavLoggedOut from "./navbar/navLoggedOut";
+import NavLoggedIn from "../navbar/navLoggedIn";
+import NavLoggedOut from "../navbar/navLoggedOut";
 const Home = () => {
 	const user = localStorage.getItem("token")
 	if(user){

@@ -8,8 +8,11 @@ router.get("/", async (req, res) => {
 
     const user = await User.findOne({_id: req.id});
     userData.purchasedProducts = user.purchasedProducts;
+    
 
     res.status(200).send({data: userData});
 });
 
 module.exports = router;
+
+
