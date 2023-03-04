@@ -1,13 +1,14 @@
 import { useState } from "react";
 import axios from "axios";
-import NavLoggedOut from "../../navbar/navLoggedOut";
+//import NavLoggedOut from "../../navbar/navLoggedOut";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
+import NavBar from "../../navbar/index";
 
 const Signup = () => {
   const [data, setData] = useState({
-    firstName: "",
-    lastName: "",
+    name: "",
+    // lastName: "",
     email: "",
     password: "",
     address: ""
@@ -40,7 +41,7 @@ const Signup = () => {
   return (
     <div>
       <div>
-        <NavLoggedOut/>
+      <NavBar/>
       </div>
       <div className={styles.signup_container}>
         <div className={styles.signup_form_container}>
@@ -57,21 +58,21 @@ const Signup = () => {
               <h1>Create Account</h1>
               <input
                 type="text"
-                placeholder="First Name*"
-                name="firstName"
+                placeholder="Name*"
+                name="name"
                 onChange={handleChange}
-                value={data.firstName}
+                value={data.name}
                 required
                 className={styles.input}
               />
-              <input
+              {/* <input
                 type="text"
                 placeholder="Last Name"
                 name="lastName"
                 onChange={handleChange}
                 value={data.lastName}
                 className={styles.input}
-              />
+              /> */}
               <input
                 type="email"
                 placeholder="Email*"

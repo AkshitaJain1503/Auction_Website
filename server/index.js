@@ -33,6 +33,7 @@ app.use("/api/pastPurchases", checkAuthLogin, pastPurchases);
 app.use("/api/postProduct", checkAuthLogin, postProduct);
 
 
+
 const port = process.env.PORT || 3001;
 app.listen(port, function () {
     console.log("listening on port" + port);

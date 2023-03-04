@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import NavLoggedIn from "../navbar/navLoggedIn";
+import NavBar from "../navbar/index";
 import styles from "./styles.module.css";
 
 export default function ProductPage(props) {
@@ -16,8 +16,8 @@ export default function ProductPage(props) {
     productImage: "",
     shipmentFrom: "",
     basePrice: "",
-    firstName: "",
-    lastName: ""
+    name: "",
+    // lastName: ""
   });
 
   const getProducts = async () => {
@@ -34,8 +34,8 @@ export default function ProductPage(props) {
         productImage: res.data.productImage,
         shipmentFrom: res.data.shipmentFrom,
         basePrice: res.data.productBasePrice,
-        firstName: res.data.sellerFirstName,
-        lastName: res.data.sellerLastName
+        name: res.data.sellerName,
+        // lastName: res.data.sellerLastName
       };
     });
   };
@@ -48,7 +48,7 @@ export default function ProductPage(props) {
   // console.log(product.data.productName);
   return (
     <>
-      <NavLoggedIn />
+      <NavBar />
       <div>
         <h1 className={styles.productName}>{product.productName}</h1>
         <div className={styles.classify}>
@@ -65,7 +65,7 @@ export default function ProductPage(props) {
               Shipment from {product.shipmentFrom}
             </span>
             <span> Base Price: {product.basePrice}</span>
-           <span> Seller :  <a href="./" className={styles.links}>{product.firstName} {product.lastName}</a></span>
+           <span> Seller :  <a href="./" className={styles.links}>{product.name} </a></span>
            <span> Start Date of auction: 23.10.2003</span>
            <span> Start time of auction: 12:30 am </span>
            <span> Duration: 23 hours 2 minutes</span>
