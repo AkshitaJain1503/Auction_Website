@@ -36,8 +36,9 @@ router.post("/", upload.single("productImage"), async (req, res) => {
     console.log("data fetched");
     const sellerId = req.id;
     const productBasePrice = req.body.productBasePrice;
-    const auctionStartDate = req.body.auctionStartDate;
-    const auctionStartTime = req.body.auctionStartTime;
+    const startDateTime= req.body.startDateTime;
+    // const auctionStartDate = req.body.auctionStartDate;
+    // const auctionStartTime = req.body.auctionStartTime;
     const days = req.body.days;
     const minutes = req.body.minutes;
     const hours = req.body.hours;
@@ -50,7 +51,7 @@ router.post("/", upload.single("productImage"), async (req, res) => {
 //Adding product details and sellerID in the product model.
     const product = await new Product({ ... req.body, productImage: productImage, seller: sellerId}).save();
 
-    const auction = await new Auction({product: product._id, productBasePrice, auctionStartDate, auctionStartTime, currentPrice: product.productBasePrice, duration: auctionDuration}).save();
+    const auction = await new Auction({product: product._id, startDateTime, productCurrentPrice: product.productBasePrice, duration: auctionDuration}).save();
 //adding ProductID against the specific seller in the user model. 
     await User.findOneAndUpdate(
         { _id: ObjectId(sellerId) }, 

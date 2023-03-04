@@ -35,8 +35,9 @@ const PostProduct = () => {
     productBasePrice: "",
     shipmentFrom: "",
     productImage: "",
-    auctionStartDate: "",
-    auctionStartTime: "",
+    startDateTime: "",
+    // auctionStartDate: "",
+    // auctionStartTime: "",
     days: "",
     hours: "",
     minutes: ""
@@ -65,8 +66,9 @@ const PostProduct = () => {
       productBasePrice,
       shipmentFrom,
       productImage,
-      auctionStartDate,
-      auctionStartTime,
+      startDateTime,
+      // auctionStartDate,
+      // auctionStartTime,
       days,
       hours, 
       minutes
@@ -77,8 +79,8 @@ const PostProduct = () => {
     formdata.append("productBasePrice", productBasePrice);
     formdata.append("shipmentFrom", shipmentFrom);
     formdata.append("productImage", productImage);
-    formdata.append("auctionStartDate", auctionStartDate);
-    formdata.append("auctionStartTime", auctionStartTime);
+    formdata.append("startDateTime", startDateTime);
+    // formdata.append("auctionStartTime", auctionStartTime);
     formdata.append("days", days);
     formdata.append("hours", hours);
     formdata.append("minutes", minutes);
@@ -148,7 +150,7 @@ const PostProduct = () => {
                   required
                 />
               </div>
-              <div className="my-3">
+              {/* <div className="my-3">
                 <Label for="startDate">Start Date*</Label>
                 <Input 
                  id="startDate"
@@ -171,7 +173,21 @@ const PostProduct = () => {
                  className="rounded-0"
                  required
                 /> 
+              </div> */}
+
+              <div className="my-3">
+                <Label for="startTime">Auction Start Date and Time*</Label>
+                <Input 
+                 id="startTime"
+                 name="startDateTime"
+                 type="datetime-local"
+                 value={product.startDateTime}
+                 onChange={handleInput}
+                 className="rounded-0"
+                 required
+                /> 
               </div>
+
               <div className="my-3">
                 <Label for="duration">Duration*</Label>
                 <br/>

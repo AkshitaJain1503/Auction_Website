@@ -1,20 +1,5 @@
 const mongoose= require('mongoose')
 
-// const bid= new Schema({
-//     bidder: {
-//         type: mongoose.Types.ObjectId,
-//         ref: 'User',
-//     },
-//     time: {
-//         type: Date, 
-//         default: Date.now
-//     },
-//     price:  { 
-//         type: Number,
-//         required: true 
-//     }
-// })
-
 const auctionSchema = new mongoose.Schema({
     product: {
         type: mongoose.Types.ObjectId,
@@ -35,7 +20,7 @@ const auctionSchema = new mongoose.Schema({
             required: true 
         }
     } ] ,
-    productBasePrice:{
+    productCurrentPrice:{
         type: Number,
         required: true
     },
@@ -43,17 +28,13 @@ const auctionSchema = new mongoose.Schema({
         type: mongoose.Types.ObjectId,
         ref: 'User',
     },
-    // auctionStartTime: Date,
-    // auctionStartDate: Date,
-    // endTime: Date,
-    // duration: Number,
-    auctionStartDate: {
-        type: String,
+    startDateTime: {
+        type: Date,
         required: true
     },
-    auctionStartTime: {
-        type: String,
-        required: true
+    endDateTime: {
+        type: Date,
+        // required: true
     },
     duration: {
         type: String,

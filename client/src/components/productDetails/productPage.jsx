@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import NavBar from "../navbar/index";
 import styles from "./styles.module.css";
 
 export default function ProductPage(props) {
+  const navigate = useNavigate();
   const useQuery = () => new URLSearchParams(useLocation().search);
   const query = useQuery();
 
@@ -45,7 +46,7 @@ export default function ProductPage(props) {
   }, []);
 
   const handleClick = () => {
-    navigate('/auctionSpace', {state : {productId : data}});
+    navigate(`/auctionSpace?id=`+ id);
   };
 
   // console.log("product name");

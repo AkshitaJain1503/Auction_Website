@@ -71,3 +71,11 @@ th {
   cursor: pointer;
   margin-right: 20px;
 }
+
+.container {
+  display: flex;
+}
+
+.element {
+  width: 50%;
+}
