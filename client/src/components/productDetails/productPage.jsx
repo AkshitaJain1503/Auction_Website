@@ -18,7 +18,7 @@ export default function ProductPage(props) {
     shipmentFrom: "",
     basePrice: "",
     name: "",
-    // lastName: ""
+    sellerId: ""
   });
 
   const getProducts = async () => {
@@ -36,7 +36,7 @@ export default function ProductPage(props) {
         shipmentFrom: res.data.shipmentFrom,
         basePrice: res.data.productBasePrice,
         name: res.data.sellerName,
-        // lastName: res.data.sellerLastName
+        sellerId: res.data.sellerId
       };
     });
   };
@@ -70,7 +70,7 @@ export default function ProductPage(props) {
               Shipment from {product.shipmentFrom}
             </span>
             <span> Base Price: {product.basePrice}</span>
-           <span> Seller :  <a href="./" className={styles.links}>{product.name} </a></span>
+           <span> Seller :  <a href={`/userProfile?id=${product.sellerId}`} className={styles.links}>{product.name} </a></span>
            <span> Start Date of auction: 23.10.2003</span>
            <span> Start time of auction: 12:30 am </span>
            <span> Duration: 23 hours 2 minutes</span>

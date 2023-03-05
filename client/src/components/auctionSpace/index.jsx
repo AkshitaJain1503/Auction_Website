@@ -9,12 +9,13 @@ const Auction = () => {
   const useQuery = () => new URLSearchParams(useLocation().search);
   const query = useQuery();
   const productId = query.get('id');
-  // const [startTime, setStartTime]= useState({});
   const [auction, setAuction]= useState({
     prodCurrentPrice: "",
     productName: "",
-    isLive: "",
-    duration: "",
+    auctionLive: "",
+    endDateTime: "",
+    soldTo: "",
+    // duration: "",
     status: "",
     // startTime: ""
   })
@@ -40,12 +41,12 @@ const Auction = () => {
         productId
       } = data;
 // can place bid only if the auction is live
-      // if(!auction.isLive)
-      // {
-      //   alert("Cant place bid! \nAuction is not live.");
-      //   setInput({price:""});
-      //   return;
-      // }
+      if(!auction.auctionLive)
+      {
+        alert("Cant place bid! \nAuction is not live.");
+        setInput({price:""});
+        return;
+      }
       
 // can place bid only if the price is greater than current price 
       if( price<=auction.prodCurrentPrice )
@@ -89,8 +90,10 @@ useEffect(() => {
             ...auction,
             prodCurrentPrice: data.currPrice,
             productName: data.productName,
-            isLive: data.isLive,
-            duration:data.duration,
+            auctionLive: data.auctionLive,
+            endDateTime: data.endDateTime,
+            soldTo: data.soldTo,
+            // duration:data.duration,
             status: data.status,
           };
         });
@@ -109,27 +112,6 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, []);
 
-
-// console.log(startTime,"stttt");
-// // to set start time
-// useEffect(() => {
-//   const currentDate = new Date();
-//   const targetDate = new Date(startTime);
-//   console.log(targetDate);
-//   console.log("starttime", startTime, "e");
-
-//   const timeUntilTarget = targetDate.getTime() - currentDate.getTime();
-//   if (timeUntilTarget > 0) {
-//     const timeoutId = setTimeout(() => {
-//       console.log("Performing operation at target time...");
-//       alert("Auction Started");
-      
-//       // Perform your operation here
-//     }, timeUntilTarget);
-
-//     return () => clearTimeout(timeoutId);
-//   }
-// }, []);
 
 // displaying all the bids of the current product
   const bidTable = bids.map((bid) => (
@@ -153,7 +135,8 @@ useEffect(() => {
         <div className={styles.container}>
         <div className={styles.element}><h6>  Current Price: {auction.prodCurrentPrice} </h6></div>
         <div className={styles.element}><h6>  Status: { auction.status} </h6></div>
-        <div className={styles.element}><h6>  Duration left: { auction.isLive? auction.duration : "--:--" } </h6></div>
+        <div className={styles.element}><h6>  Auction Ends at: { auction.endDateTime } </h6></div>
+        <div className={styles.element}><h6>  Sold To: { auction.soldTo? auction.soldTo: "--" } </h6></div>
         </div>
         </div>
       <Form 

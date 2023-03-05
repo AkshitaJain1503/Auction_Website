@@ -36,11 +36,12 @@ const PostProduct = () => {
     shipmentFrom: "",
     productImage: "",
     startDateTime: "",
+    endDateTime: "",
     // auctionStartDate: "",
     // auctionStartTime: "",
-    days: "",
-    hours: "",
-    minutes: ""
+    // days: "",
+    // hours: "",
+    // minutes: ""
   });
   let name, value;
   const handleInput = (e) => {
@@ -67,11 +68,12 @@ const PostProduct = () => {
       shipmentFrom,
       productImage,
       startDateTime,
+      endDateTime,
       // auctionStartDate,
       // auctionStartTime,
-      days,
-      hours, 
-      minutes
+      // days,
+      // hours, 
+      // minutes
     } = product;
     const formdata = new FormData();
     formdata.append("productName", productName);
@@ -80,10 +82,11 @@ const PostProduct = () => {
     formdata.append("shipmentFrom", shipmentFrom);
     formdata.append("productImage", productImage);
     formdata.append("startDateTime", startDateTime);
+    formdata.append("endDateTime", endDateTime);
     // formdata.append("auctionStartTime", auctionStartTime);
-    formdata.append("days", days);
-    formdata.append("hours", hours);
-    formdata.append("minutes", minutes);
+    // formdata.append("days", days);
+    // formdata.append("hours", hours);
+    // formdata.append("minutes", minutes);
 
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
@@ -187,11 +190,23 @@ const PostProduct = () => {
                  required
                 /> 
               </div>
-
               <div className="my-3">
+                <Label for="endTime">Auction End Date and Time*</Label>
+                <Input 
+                 id="endTime"
+                 name="endDateTime"
+                 type="datetime-local"
+                 value={product.endDateTime}
+                 onChange={handleInput}
+                 className="rounded-0"
+                 required
+                /> 
+              </div>
+
+               {/* <div className="my-3">
                 <Label for="duration">Duration*</Label>
                 <br/>
-                {/* <span> */}
+                
                 <input 
                  id="duration"
                  name="days"
@@ -218,10 +233,9 @@ const PostProduct = () => {
                  onChange={handleInput}
                  style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
                  required
-                /> minutes
-                {/* </span> */}
+                /> minutes 
                 
-              </div>
+              </div> */}
               <div className="my-3">
                 <Label for="place">Shipment from*</Label>
                 <Input

@@ -34,12 +34,22 @@ const auctionSchema = new mongoose.Schema({
     },
     endDateTime: {
         type: Date,
-        // required: true
-    },
-    duration: {
-        type: String,
         required: true
     },
+    // duration: {
+    //     days: {
+    //         type: Number,
+    //         required: true
+    //     },
+    //     hours:{
+    //         type: Number,
+    //         required: true
+    //     },
+    //     minutes:{
+    //         type: Number,
+    //         required: true
+    //     }
+    // },
     auctionLive: {
         type: Boolean,
         default: false

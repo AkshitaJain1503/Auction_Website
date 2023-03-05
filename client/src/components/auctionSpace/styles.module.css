@@ -18,11 +18,9 @@ h1{
 
 table {
   
-  /* padding-top: 5%; */
   border-collapse: collapse;
   width: 100%;
   margin-bottom: 20%;
-  /* gk */
 }
 th, td {
   padding: 8px;

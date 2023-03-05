@@ -1,6 +1,5 @@
 import React,{ useState } from 'react';
 import { useNavigate } from "react-router-dom";
-//import NavLoggedIn from "../navbar/navLoggedIn";
 import axios from 'axios';
 import { GetProfile } from "./getProfile";
 import styles from "../loginAndSignup/signup/styles.module.css";
@@ -17,8 +16,6 @@ const EditProfile = () => {
   const [newData, setData] = useState({});
   const handleChange = ({ currentTarget: input }) => {    
     setData({ ...newData, [input.name]: input.value });
-
-    console.log("new data is->",newData)
 };
 
 //on submitting sending the new data to the patch myProfile API
@@ -60,16 +57,7 @@ const EditProfile = () => {
                   className={styles.input}
                 />
               </label>
-              {/* <label> Last Name
-                <input style={{ marginLeft: '2rem' }}
-                  type="text"
-                  placeholder="Last Name"
-                  name="lastName"
-                  defaultValue = {data.lastName}
-                  onChange={handleChange}
-                  className={styles.input}
-                />
-              </label> */}
+
               <label> Address*
                 <input style={{ marginLeft: '2rem' }}
                   type="address"

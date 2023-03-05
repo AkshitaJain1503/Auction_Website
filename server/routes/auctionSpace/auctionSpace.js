@@ -1,24 +1,16 @@
 const { Auction } = require("../../models/auction");
 const { User } = require("../../models/user");
 const { Product } = require("../../models/product");
-// const schedule = require('node-schedule');
 var ObjectId = require('mongoose').Types.ObjectId;
 const router = require("express").Router() ;
-
+  
+  
 router.get("/", async (req, res) => {
 
-  // function auctionStarted() {
-  //   console.log('Executing myFunction at 2:30 PM...');
-  // }
-  
     try {
       const productId = req.query.id;
       const product= await Product.findOne({_id: productId});
       const auction = await Auction.findOne( { product: productId } );
-      // const auctionStartTime= auction.startDateTime;
-      // Schedule your function to be executed at a particular time using node-schedule
-      // const job = schedule.scheduleJob({ auctionStartTime }, auctionStarted);
-
 
       // list of bids of the requested product
       const bids= auction.bids;
@@ -29,6 +21,7 @@ router.get("/", async (req, res) => {
         // converting the date into standard date-time format 
         const formattedTime= new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(bids[i].time);
+
         const bidder = await User.findOne({_id: bids[i].bidder});
 
         const bid={};
@@ -52,14 +45,20 @@ router.get("/", async (req, res) => {
     {
       status="Ended";
     }
-    // responseData.push(bidsList);
+
+    const formattedEndTime= new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.endDateTime);
+    const soldTo = await User.findOne({_id: auction.soldTo});
+
     responseData.bidsList= bidsList;
     responseData.currPrice=auction.productCurrentPrice;
     responseData.productName=product.productName;
-    responseData.isLive= auction.isLive;
-    responseData.duration= auction.duration;
+    responseData.auctionLive= auction.auctionLive;
+    responseData.endDateTime= formattedEndTime;
+    if(soldTo)
+    responseData.soldTo= soldTo.name;
+    // responseData.duration= auction.duration;
     responseData.status=status;
-    // responseData.push(auctionStartTime);
 
     // sending the bid data with the required attributes
       res.json(responseData);
