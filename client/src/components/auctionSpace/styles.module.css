@@ -1,0 +1,79 @@
+
+a:link {
+    text-decoration: none;
+    color: black;
+}
+
+.auctionSpace{
+  background-color: rgb(253, 253, 253);
+  padding: 5%;
+  margin: 3%;
+  box-shadow: 1px 1px 3px rgba(147, 147, 147, 0.3);
+}
+  
+h1{
+  padding : 5px;
+  text-align: center;
+}
+
+table {
+  
+  border-collapse: collapse;
+  width: 100%;
+  margin-bottom: 20%;
+}
+th, td {
+  padding: 8px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+th {
+  background-color: #f2f2f2;
+}
+
+#root{
+  align-items: center;
+  justify-content: center;
+  padding-top: 3%;
+}
+
+ .bid-btn{
+   padding: 5px ;
+  margin: 5px;
+} 
+
+.navbar {
+  width: 100%;
+  height: 70px;
+  background-color: #3bb19b;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.navbar h1 {
+  color: white;
+  font-size: 25px;
+  margin-left: 20px;
+}
+
+.white_btn {
+  border: none;
+  outline: none;
+  padding: 12px 0;
+  background-color: white;
+  border-radius: 20px;
+  width: 120px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.container {
+  display: flex;
+}
+
+.element {
+  width: 50%;
+}

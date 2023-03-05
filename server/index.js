@@ -12,6 +12,7 @@ const pastPurchases = require("./routes/userPastActivity/pastPurchases");
 const checkAuthLogin = require("./middleware/checkAuthLogin");
 const postProduct = require("./routes/products/postProduct");
 const productDetails = require("./routes/products/productDetails");
+const auctionSpace = require("./routes/auctionSpace/auctionSpace");
 var bodyParser = require('body-parser');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -32,6 +33,9 @@ app.use("/api/myProfile", checkAuthLogin, myProfile);
 app.use("/api/pastPosts", checkAuthLogin, pastPosts);
 app.use("/api/pastPurchases", checkAuthLogin, pastPurchases);
 app.use("/api/postProduct", checkAuthLogin, postProduct);
+app.use("/api/auctionSpace", checkAuthLogin, auctionSpace);
+
+
 app.use("/api/userProfile", checkAuthLogin, userProfile);
 
 const port = process.env.PORT || 3001;
