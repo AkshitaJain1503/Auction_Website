@@ -5,9 +5,10 @@ const cors = require("cors");
 const connection = require("./db");
 const registerRoute = require("./routes/loginAndSignup/register");
 const authLoginRoute = require("./routes/loginAndSignup/authLogin");
-const myProfile = require("./routes/myAccount/myProfile");
-const pastPosts = require("./routes/myAccount/pastPosts");
-const pastPurchases = require("./routes/myAccount/pastPurchases");
+const myProfile = require("./routes/userInfo/myProfile");
+const userProfile = require("./routes/userInfo/buyerOrSellerProfile");
+const pastPosts = require("./routes/userPastActivity/pastPosts");
+const pastPurchases = require("./routes/userPastActivity/pastPurchases");
 const checkAuthLogin = require("./middleware/checkAuthLogin");
 const postProduct = require("./routes/products/postProduct");
 const productDetails = require("./routes/products/productDetails");
@@ -31,8 +32,7 @@ app.use("/api/myProfile", checkAuthLogin, myProfile);
 app.use("/api/pastPosts", checkAuthLogin, pastPosts);
 app.use("/api/pastPurchases", checkAuthLogin, pastPurchases);
 app.use("/api/postProduct", checkAuthLogin, postProduct);
-
-
+app.use("/api/userProfile", checkAuthLogin, userProfile);
 
 const port = process.env.PORT || 3001;
 app.listen(port, function () {
