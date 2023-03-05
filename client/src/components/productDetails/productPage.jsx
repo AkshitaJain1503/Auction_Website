@@ -18,7 +18,9 @@ export default function ProductPage(props) {
     shipmentFrom: "",
     basePrice: "",
     name: "",
-    sellerId: ""
+    sellerId: "",
+    aucStart: "",
+    aucEnd: "",
   });
 
   const getProducts = async () => {
@@ -36,9 +38,13 @@ export default function ProductPage(props) {
         shipmentFrom: res.data.shipmentFrom,
         basePrice: res.data.productBasePrice,
         name: res.data.sellerName,
-        sellerId: res.data.sellerId
+        sellerId: res.data.sellerId,
+        aucStart: res.data.aucStart,
+        aucEnd: res.data.aucEnd,
       };
     });
+    console.log("eh", product.aucEnd, "k");
+    
   };
 
   useEffect(() => {
@@ -70,11 +76,9 @@ export default function ProductPage(props) {
               Shipment from {product.shipmentFrom}
             </span>
             <span> Base Price: {product.basePrice}</span>
-           <span> Seller :  <a href={`/userProfile?id=${product.sellerId}`} className={styles.links}>{product.name} </a></span>
-           <span> Start Date of auction: 23.10.2003</span>
-           <span> Start time of auction: 12:30 am </span>
-           <span> Duration: 23 hours 2 minutes</span>
-           <span> Status: Upcoming</span>
+           <span> Seller : <a href={`/userProfile?id=${product.sellerId}`} className={styles.links}>{product.name} </a></span>
+           <span> Start Time of auction: {product.aucStart}</span>
+           <span> End Time of auction: {product.aucEnd} </span>
            <button onClick={handleClick} className={styles.button}>Auction Space</button>
           </div>
         </div>

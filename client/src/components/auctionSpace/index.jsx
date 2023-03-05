@@ -117,7 +117,7 @@ useEffect(() => {
   const bidTable = bids.map((bid) => (
     <tr key={bid.id}>
       <td>
-        <a href="/"> {bid.bidderName} </a>
+      <a href={`/userProfile?id=${bid.bidderId}`} > {bid.bidderName} </a>
       </td>
       <td> {bid.price} </td>
       <td> {bid.time} </td>

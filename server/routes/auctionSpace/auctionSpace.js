@@ -29,6 +29,7 @@ router.get("/", async (req, res) => {
         bid.price= bids[i].price;
         bid.time= formattedTime;
         bid.bidderName= bidder.name;
+        bid.bidderId=bids[i].bidder;
 
         bidsList.push(bid);
     }
