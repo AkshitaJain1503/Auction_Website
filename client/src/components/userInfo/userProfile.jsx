@@ -1,4 +1,5 @@
 import React,{ useEffect } from 'react';
+import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import NavBar from "../navbar/index";
 import {
@@ -10,14 +11,24 @@ import {
   MDBCardBody,
 } from 'mdb-react-ui-kit';
 
-//getting the (myProfile) data from the backend API
+// getting the buyer or seller (user) id for params
+const GetUserId = () => {
+  const useQuery = () => new URLSearchParams(useLocation().search);
+  const query = useQuery();
 
-const GetProfile = () => {
+  const id = query.get('id');
+
+  return id;
+}
+
+//getting the buyer or seller (user) data from the backend API
+const GetUserProfile = () => {
+  const id = GetUserId();
   const [data, setData] = React.useState({})
 
   useEffect(() => {
     if(Object.keys(data).length === 0){
-      const url = "http://localhost:3001/api/myProfile";
+      const url = "http://localhost:3001/api/userProfile?id=" + id;
       const tokenStr = localStorage.getItem("token");
       const headers = { "Authorization": "Bearer "+tokenStr };
       axios
@@ -33,9 +44,10 @@ const GetProfile = () => {
   return data;
 };
 
-//rendering the myProfile data on the browser
-const DisplayProfile =()=> {
-  const data = GetProfile();
+//rendering the buyer or seller (user) data on the browser
+const DisplayUserProfile =()=> {
+  const data = GetUserProfile();
+  const id = GetUserId();
   const isData = Object.keys(data).length>0
 
   if(isData){
@@ -59,7 +71,7 @@ const DisplayProfile =()=> {
                   </MDBCol>
                 </MDBRow>
                 <hr />
-                
+              
                 <MDBRow>
                   <MDBCol sm="3">
                     <MDBCardText>EMAIL</MDBCardText>
@@ -69,14 +81,7 @@ const DisplayProfile =()=> {
                   </MDBCol>
                 </MDBRow>
                 <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>ADDRESS</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{data.address}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
+                
               </MDBCardBody>
             </MDBCard>
           </MDBCol>
@@ -89,16 +94,13 @@ const DisplayProfile =()=> {
                 
                 <p className="text-muted mb-1">MORE DETAILS</p>
                 <div className="d-flex justify-content-center mb-2">
-                  
-                <a href="/editProfile">
-                  <button>Edit Profile</button>
-                </a>
+                
 
-                <a href="/pastPurchases">
+                <a href={`/pastPurchases?id=${id}`}>
                   <button className="ms-3" >Past Purchases</button>
                 </a>
 
-                <a href="/pastPosts">
+                <a href={`/pastPosts?id=${id}`}>
                 <button className="ms-3">Past Posts</button>
                 </a>
                   
@@ -121,4 +123,4 @@ const DisplayProfile =()=> {
   }
 }
 
-export {GetProfile,DisplayProfile};
+export {DisplayUserProfile};

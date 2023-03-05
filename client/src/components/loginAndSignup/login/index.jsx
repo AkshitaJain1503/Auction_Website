@@ -1,9 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
-//import NavLoggedOut from "../../navbar/navLoggedOut";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import NavBar from "../../navbar/index";
+
+//the login component hits the backend authOgin API.
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });

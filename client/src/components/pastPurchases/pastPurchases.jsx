@@ -1,5 +1,4 @@
 import React,{ useEffect } from 'react';
-//import NavLoggedIn from "../navbar/navLoggedIn";
 import axios from 'axios';
 import NavBar from "../navbar/index";
 

@@ -1,6 +1,5 @@
 import { useState } from "react";
 import axios from "axios";
-//import NavLoggedOut from "../../navbar/navLoggedOut";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import NavBar from "../../navbar/index";
@@ -8,7 +7,6 @@ import NavBar from "../../navbar/index";
 const Signup = () => {
   const [data, setData] = useState({
     name: "",
-    // lastName: "",
     email: "",
     password: "",
     address: ""
@@ -26,7 +24,6 @@ const Signup = () => {
       const { data: res } = await axios.post(url, data);
       localStorage.setItem("token", res.data);
       window.location = "/";
-      console.log(res.message);
     } catch (error) {
       if (
         error.response &&
