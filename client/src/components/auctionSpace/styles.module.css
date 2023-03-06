@@ -80,8 +80,10 @@ th {
 
 .container {
   display: flex;
+  padding: 2px;
+  margin-bottom: 5px;
 }
 
 .element {
-  width: 50%;
+  width: 80%;
 }

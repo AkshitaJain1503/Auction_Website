@@ -49,6 +49,8 @@ router.get("/", async (req, res) => {
 
     const formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.endDateTime);
+    const formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.startDateTime);
     const soldTo = await User.findOne({_id: auction.soldTo});
 
     responseData.bidsList= bidsList;
@@ -56,6 +58,7 @@ router.get("/", async (req, res) => {
     responseData.productName=product.productName;
     responseData.auctionLive= auction.auctionLive;
     responseData.endDateTime= formattedEndTime;
+    responseData.startDateTime= formattedStartTime;
     if(soldTo)
     responseData.soldTo= soldTo.name;
     // responseData.duration= auction.duration;
