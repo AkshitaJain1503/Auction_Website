@@ -77,37 +77,48 @@ const Auction = () => {
 }
 
 // GET request for getting the auction data
-useEffect(() => {
-  fetch("http://localhost:3001/api/auctionSpace?id=" + productId , {
-        headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
-      })
-    .then(response => response.json())
-    .then(data => 
-      {
-        setBids(data.bidsList);
-        setAuction((previousState) => {
-          return {
-            ...auction,
-            prodCurrentPrice: data.currPrice,
-            productName: data.productName,
-            auctionLive: data.auctionLive,
-            endDateTime: data.endDateTime,
-            soldTo: data.soldTo,
-            // duration:data.duration,
-            status: data.status,
-          };
-        });
-        
-      }
-    )
-    .catch(error => console.error(error));
-}, []);
+function getSpace(){
+  
+    fetch("http://localhost:3001/api/auctionSpace?id=" + productId , {
+          headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
+        })
+      .then(response => response.json())
+      .then(data => 
+        {
+          setBids(data.bidsList);
+          setAuction((previousState) => {
+            return {
+              ...auction,
+              prodCurrentPrice: data.currPrice,
+              productName: data.productName,
+              auctionLive: data.auctionLive,
+              endDateTime: data.endDateTime,
+              soldTo: data.soldTo,
+              // duration:data.duration,
+              status: data.status,
+            };
+          });
+          
+        }
+      )
+      .catch(error => console.error(error));
+  
+}
+
+// test()
 
 // to auto refresh page
 useEffect(() => {
-  const interval = setInterval(() => {
-    window.location.reload();
-  }, 10000); // Refresh every 10 seconds
+  let interval
+  setTimeout(function() {
+    getSpace()
+  
+    interval = setInterval(() => {
+      getSpace()
+    }, 5000); // Refresh every 5 seconds
+
+}, 1);
+
 
   return () => clearInterval(interval);
 }, []);
