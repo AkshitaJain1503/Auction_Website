@@ -55,7 +55,9 @@ const PastPosts = () => {
                     header={[
                     { key: "SNo", name: "#" },
                     { key: "productName", name: "Product Name" },
-                    { key: "basePrice", name: "Base Price" }
+                    { key: "basePrice", name: "Base Price" },
+                    { key: "startTime", name: "Start Date and Time" },
+                    { key: "endTime", name: "End Date and Time" }
                     ]}
                     itens={data}
                 
