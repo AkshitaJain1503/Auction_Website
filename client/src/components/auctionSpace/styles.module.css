@@ -14,6 +14,14 @@ a:link {
 h1{
   padding : 5px;
   text-align: center;
+  
+}
+.link{
+  text-decoration: none;
+  color: black;
+}
+.link:hover{
+  color:rgb(42, 56, 64)
 }
 
 table {

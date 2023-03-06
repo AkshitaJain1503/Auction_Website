@@ -39,9 +39,9 @@ router.get("/", async (req, res) => {
         productDetails.productName = products[i].productName;
         productDetails.basePrice = products[i].productBasePrice;
 
-        let formattedStartTime= new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',
+        let formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].startDateTime);
-        let formattedEndTime= new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',
+        let formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].endDateTime);
 
         productDetails.startTime= formattedStartTime;

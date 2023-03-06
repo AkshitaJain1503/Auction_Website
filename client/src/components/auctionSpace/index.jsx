@@ -129,7 +129,7 @@ useEffect(() => {
 
       <NavBar/>
 
-      <h1> Auction Space for {auction.productName} </h1>
+      <h1> Auction Space for <a className={styles.link} href={`/productPage?id=${productId}`} > {auction.productName} </a>  </h1>
       <div className={styles.auctionSpace}>
         <div>
         <div className={styles.container}>
