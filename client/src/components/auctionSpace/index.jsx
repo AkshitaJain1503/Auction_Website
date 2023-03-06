@@ -14,6 +14,7 @@ const Auction = () => {
     productName: "",
     auctionLive: "",
     endDateTime: "",
+    startDateTime: "",
     soldTo: "",
     // duration: "",
     status: "",
@@ -93,6 +94,7 @@ function getSpace(){
               productName: data.productName,
               auctionLive: data.auctionLive,
               endDateTime: data.endDateTime,
+              startDateTime: data.startDateTime,
               soldTo: data.soldTo,
               // duration:data.duration,
               status: data.status,
@@ -140,14 +142,19 @@ useEffect(() => {
 
       <NavBar/>
 
-      <h1> Auction Space for {auction.productName} </h1>
+      <h1> Auction Space for <a className={styles.link} href={`/productPage?id=${productId}`} > {auction.productName} </a>  </h1>
       <div className={styles.auctionSpace}>
         <div>
         <div className={styles.container}>
         <div className={styles.element}><h6>  Current Price: {auction.prodCurrentPrice} </h6></div>
         <div className={styles.element}><h6>  Status: { auction.status} </h6></div>
-        <div className={styles.element}><h6>  Auction Ends at: { auction.endDateTime } </h6></div>
         <div className={styles.element}><h6>  Sold To: { auction.soldTo? auction.soldTo: "--" } </h6></div>
+        </div>
+        </div>
+        <div>
+        <div className={styles.container}>
+        <div className={styles.element}><h6>  Auction Start Time: { auction.startDateTime } </h6></div>
+        <div className={styles.element}><h6>  Auction End Time: { auction.endDateTime } </h6></div>
         </div>
         </div>
       <Form 

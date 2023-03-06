@@ -20,9 +20,9 @@ router.get("/", async(req, res) => {
     productDetailsRequired.shipmentFrom = product.shipmentFrom;
     productDetailsRequired.productImage = product.productImage;
     productDetailsRequired.sellerName = sellerInfo.name;
-    const formattedStartTime= new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',
+    const formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.startDateTime);
-    const formattedEndTime= new Intl.DateTimeFormat('en-US', {year: 'numeric', month: '2-digit',
+    const formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.endDateTime);
     productDetailsRequired.aucStart= formattedStartTime;
     productDetailsRequired.aucEnd= formattedEndTime;
