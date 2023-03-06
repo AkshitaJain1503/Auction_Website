@@ -75,6 +75,20 @@ const PostProduct = () => {
       // hours, 
       // minutes
     } = product;
+
+    // Validating auction start time and end time 
+    const now = new Date();
+    const startTime = new Date(startDateTime);
+    const endTime = new Date(endDateTime);
+    if (startTime <= now || endTime <= now) {
+      alert("Auction start time and end time must be in the future.");
+      return;
+    }
+    if (startTime >= endTime) {
+      alert("Auction start time must be before the auction end time.");
+      return;
+    }
+
     const formdata = new FormData();
     formdata.append("productName", productName);
     formdata.append("productDescription", productDescription);
