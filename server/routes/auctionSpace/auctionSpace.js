@@ -16,8 +16,9 @@ router.get("/", async (req, res) => {
       const bids= auction.bids;
       const responseData={};
       const bidsList=[];
+      const bidsLength= bids.length;
 
-      for(var i=bids.length-1 ; i >=0; i--){
+      for(var i=bidsLength-1 ; i >=0; i--){
         // converting the date into standard date-time format 
         const formattedTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(bids[i].time);
@@ -59,6 +60,7 @@ router.get("/", async (req, res) => {
     responseData.auctionLive= auction.auctionLive;
     responseData.endDateTime= formattedEndTime;
     responseData.startDateTime= formattedStartTime;
+    responseData.auctionEnded= auction.auctionEnded;
     if(soldTo)
     responseData.soldTo= soldTo.name;
     // responseData.duration= auction.duration;

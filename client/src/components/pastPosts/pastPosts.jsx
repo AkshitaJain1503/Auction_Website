@@ -4,6 +4,7 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { TableControl } from 'react-bootstrap-table-control';
 import NavBar from "../navbar/index";
+import styles from "../auctionSpace/styles.module.css";
 
 //Past post component can be the myprofile segment or the buyer or seller segment
 //so getting the id accordingly for params
@@ -49,28 +50,33 @@ const PastPosts = () => {
         return (
             <div>
                 <NavBar/>
-                <h5>TOTAL POSTS:  {data.length}</h5>
-                <hr/>
-                <TableControl
-                    header={[
-                    { key: "SNo", name: "#" },
-                    { key: "productName", name: "Product Name" },
-                    { key: "basePrice", name: "Base Price" },
-                    { key: "startTime", name: "Start Date and Time" },
-                    { key: "endTime", name: "End Date and Time" }
-                    ]}
-                    itens={data}
                 
-                    onClickItem={function navProduct(data){
-                        navigate(`/productPage?id=${data.productId}`);
-                    }}
+                <hr/>
+                <div className={styles.backGroundSpace}>
+                  <h5>TOTAL POSTS:  {data.length}</h5>
+                  <hr></hr>
+                  <br></br>
+                  <TableControl
+                      header={[
+                      { key: "SNo", name: "#" },
+                      { key: "productName", name: "Product Name" },
+                      { key: "basePrice", name: "Base Price" },
+                      { key: "startTime", name: "Start Date and Time" },
+                      { key: "endTime", name: "End Date and Time" }
+                      ]}
+                      itens={data}
+                  
+                      onClickItem={function navProduct(data){
+                          navigate(`/productPage?id=${data.productId}`);
+                      }}
 
-                    clickable
-                    tableProps={{
-                        hover: true
-                    }}
-                    totalPosition="none"
-                />
+                      clickable
+                      tableProps={{
+                          hover: true
+                      }}
+                      totalPosition="none"
+                  />
+                </div>
             </div>
         );
     }

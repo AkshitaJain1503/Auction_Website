@@ -16,9 +16,9 @@ const Auction = () => {
     endDateTime: "",
     startDateTime: "",
     soldTo: "",
+    auctionEnded: "",
     // duration: "",
     status: "",
-    // startTime: ""
   })
 
   const [data, setInput] = useState({
@@ -96,6 +96,7 @@ function getSpace(){
               endDateTime: data.endDateTime,
               startDateTime: data.startDateTime,
               soldTo: data.soldTo,
+              auctionEnded: data.auctionEnded,
               // duration:data.duration,
               status: data.status,
             };
@@ -117,13 +118,18 @@ useEffect(() => {
   
     interval = setInterval(() => {
       getSpace()
+      // stops refreshing once the auction has ended
+      if(auction.auctionEnded)
+      {
+        clearInterval(interval);
+      }
     }, 5000); // Refresh every 5 seconds
 
 }, 1);
 
 
   return () => clearInterval(interval);
-}, []);
+}, [auction.auctionEnded]);
 
 
 // displaying all the bids of the current product
@@ -143,7 +149,7 @@ useEffect(() => {
       <NavBar/>
 
       <h1> Auction Space for <a className={styles.link} href={`/productPage?id=${productId}`} > {auction.productName} </a>  </h1>
-      <div className={styles.auctionSpace}>
+      <div className={styles.backGroundSpace}>
         <div>
         <div className={styles.container}>
         <div className={styles.element}><h6>  Current Price: {auction.prodCurrentPrice} </h6></div>
