@@ -6,6 +6,7 @@ import {DisplayProfile} from "./components/myProfile/getProfile";
 import {DisplayUserProfile} from "./components/userInfo/userProfile";
 import EditProfile from "./components/myProfile/editProfile";
 import PastPurchases from "./components/pastPurchases/pastPurchases";
+import SearchDetails from "./components/search_page/search";
 import PastPosts from "./components/pastPosts/pastPosts";
 import PostProduct from "./components/postProduct/postProduct";
 import ProductPage from "./components/productDetails/productPage";
@@ -44,6 +45,7 @@ function App() {
 			{!user && <Route path="/userProfile" exact element={<Signup/>}/>}
 			
 			{user && <Route path="/auctionSpace" exact element={<Auction/>} />} 
+			<Route path="/searchResults" exact element={<SearchDetails/>}/>
 		</Routes>
 	);
 }
