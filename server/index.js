@@ -13,6 +13,7 @@ const checkAuthLogin = require("./middleware/checkAuthLogin");
 const postProduct = require("./routes/products/postProduct");
 const productDetails = require("./routes/products/productDetails");
 const auctionSpace = require("./routes/auctionSpace/auctionSpace");
+const allDaysCalendar = require("./routes/calendarView/getAllStartDays");
 var bodyParser = require('body-parser');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -27,6 +28,7 @@ app.use(cors());
 app.use("/api/register", registerRoute);
 app.use("/api/authLogin", authLoginRoute);
 app.use("/api/productDetails", productDetails);
+app.use("/api/getAllStartDaysCalendar", allDaysCalendar);
 
 //protected routes with middleware checkAuthLogin
 app.use("/api/myProfile", checkAuthLogin, myProfile);
