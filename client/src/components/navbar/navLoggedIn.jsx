@@ -1,28 +1,21 @@
 import styles from "./styles.module.css";
-import SearchDetails from "../search_page/search";
 import { useNavigate } from "react-router-dom";
+import React from 'react';
+import {useState} from 'react';
+
 const NavLoggedIn = () => {
 	const navigate = useNavigate();
 	const handleLogout = () => {
-		console.log("removed");
 		localStorage.removeItem("token");
-	// 	console.log("removed");
-	// 	const user = localStorage.getItem("token")
-	// console.log(user);
-		// navigate("/");
 		window.location = "/"
 	};
+
+	const[value, setValue] = useState(""); 
+
 	const handleSearch = ()  => {
-		console.log("removed");
-		
-		//SearchDetails();
-		//localStorage.removeItem("token");
-	// 	console.log("removed");
-	// 	const user = localStorage.getItem("token")
-	// console.log(user);
-		 navigate("/searchResults");
-		//window.location = "/searchResults"
+		navigate(`/searchResults?s=${value}`)
 	};
+
 	return (
 		<div className={styles.home_container}>
 			<nav className={styles.navbar}>
@@ -40,15 +33,8 @@ const NavLoggedIn = () => {
 				<button className={styles.white_btn} onClick={handleLogout}>
 					Logout
 				</button>
-				  {/* <form action="" className={styles.search_bar}>
-					<input type="text" placeholder="search anything" name="name"/>
-				 <button	type="submit" onSubmit={handleSearch}>
-					<button onClick={handleSearch}>
-						<img src={require("../../images/search_icon.jpg") } alt=""/>
-						
-					</button>
-				</form> */}
-				<form action="/" method="get" >
+
+				<form >
         <label htmlFor="header-search">
             <span className="visually-hidden">Search blog posts</span>
         </label>
@@ -56,9 +42,11 @@ const NavLoggedIn = () => {
             type="text"
             id="header-search"
             placeholder="Search anything"
-            name="s" 
+            name="name" 
+			onChange={(e) => {setValue(e.target.value)}}
+			
         />
-        <button onClick={handleSearch} >Search</button>
+        <button onClick={handleSearch}>Search</button>
     </form>
 					<h1>
 						<a href="/" style={{textDecoration:"none",color:"inherit"}}>

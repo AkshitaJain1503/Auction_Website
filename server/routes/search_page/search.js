@@ -5,7 +5,7 @@ router.get("/", async (req, res) => {
     const requestedProductName = req.query.name;
     var responseData = [];
     
-    let products = await Product.find({ productName :{ $regex : '.'+ requestedProductName + '.', $options: 'i' }});
+    let products = await Product.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
     for(var i=products.length-1 ; i >=0; i--){
 
         var productDetails = {};
