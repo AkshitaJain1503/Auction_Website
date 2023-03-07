@@ -2,6 +2,7 @@ import React,{ useEffect } from 'react';
 import { useLocation } from "react-router-dom";
 import axios from 'axios';
 import NavBar from "../navbar/index";
+import styles from "../auctionSpace/styles.module.css";
 import {
   MDBCol,
   MDBContainer,
@@ -56,6 +57,9 @@ const DisplayUserProfile =()=> {
         {isData ? (
           <div>
             <NavBar/>
+            <div className={styles.backGroundSpace}>
+              <h5>USER PROFILE</h5>
+              <hr></hr>
             <section >
               <MDBContainer className="py-5">
               <MDBRow>
@@ -112,7 +116,7 @@ const DisplayUserProfile =()=> {
           </MDBCol>
         </MDBRow>
       </MDBContainer>
-    </section>
+    </section></div>
   </div>
       ) : 
       (
