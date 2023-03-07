@@ -13,7 +13,7 @@ const NavLoggedIn = () => {
 	const[value, setValue] = useState(""); 
 
 	const handleSearch = ()  => {
-		navigate(`/searchResults?s=${value}`)
+		navigate(`/searchResults?name=${value}`)
 	};
 
 	return (

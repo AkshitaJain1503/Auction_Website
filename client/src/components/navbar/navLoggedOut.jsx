@@ -7,7 +7,7 @@ const NavLoggedOut = () => {
 	const[value, setValue] = useState(""); 
 
 	const handleSearch = ()  => {
-		navigate(`/searchResults?s=${value}`)
+		navigate(`/searchResults?name=${value}`)
 	};
 	return (
 		<div className={styles.home_container}>
