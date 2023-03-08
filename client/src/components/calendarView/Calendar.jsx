@@ -1,4 +1,4 @@
-import React , { useRef, useState, useEffect } from "react";
+import React , {  useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import {
   SevenColGrid,
@@ -6,14 +6,14 @@ import {
   HeadDays,
   DateControls,
   StyledEvent,
-  SeeMore,
+  // SeeMore,
   PortalWrapper
 } from "./Calendar.styled";
-import Conts, { DAYS, MOCKAPPS } from "./conts";
+// import { DAYS, MOCKAPPS } from "./conts";
 import {
   datesAreOnSameDay,
   // getDarkColor,
-  getDaysInMonth,
+  // getDaysInMonth,
   getMonthYear,
   getSortedDays,
   nextMonth,
@@ -23,55 +23,33 @@ import {
 } from "./utils";
 
 export const Calendar = () => {
-  const [currentDate, setCurrentDate] = useState(new Date(2022, 9, 1));
-  const [events, setEvents] = useState(MOCKAPPS);
+
+  const DAYS = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
+  const [currentDate, setCurrentDate] = useState(new Date());
   // const dragDateRef = useRef();
   // const dragindexRef = useRef();
   const [showPortal, setShowPortal] = useState(false);
   const [portalData, setPortalData] = useState({});
 
-  //=================
   const useQuery = () => new URLSearchParams(useLocation().search);
   const query = useQuery();
   const name = query.get('name');
-  // const [events, setEvents] = useState([]);
-  const [auctions, setAuctions] = useState([]);
-  const aucs=[];
+  const [events, setEvents] = useState([]);
 
-  // GET request for getting the auction events
+// GET request for getting the auction start dates
 useEffect(() => {
-  console.log("eve", MOCKAPPS);
   fetch("http://localhost:3001/api/getAllStartDaysCalendar?name=" + name , {
         headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
       })
     .then(response => response.json())
     .then(data => 
       {
-        console.log("data", data.data);
-        // setEvents(data.data);
-        setAuctions(data.data);
-        // console.log("la", auctions.length);
-        
-        
-        // Conts(auctions);
+        setEvents(data.data);
         
       }
     )
     .catch(error => console.error(error));
 }, []);
-// const [events, setEvents] = useState([]);
-
-// useEffect( () =>{
-//   // Conts(auctions);
-//   for(var i=0; i<auctions.length; i++)
-//         {
-//           events.push( new Date(auctions[i].date) );
-//         }
-//         console.log("auc", events);
-// }, [auctions] );
-
-// console.log("auc", auctions);
-
 
   // const addEvent = (date, event) => {
   //   if (!event.target.classList.contains("StyledEvent")) {
@@ -112,7 +90,7 @@ useEffect(() => {
 
   const handleOnClickEvent = (event) => {
     setShowPortal(true);
-    setPortalData(event);
+    setPortalData((event));
   };
 
   const handlePotalClose = () => setShowPortal(false);
@@ -132,12 +110,12 @@ useEffect(() => {
         <ion-icon
           onClick={() => prevMonth(currentDate, setCurrentDate)}
           name="arrow-back-circle-outline"
-        > &lt;= </ion-icon>
+        >  </ion-icon>
         {getMonthYear(currentDate)}
         <ion-icon
           onClick={() => nextMonth(currentDate, setCurrentDate)}
           name="arrow-forward-circle-outline"
-        >=&gt;</ion-icon>
+        ></ion-icon>
       </DateControls>
 
       {/* // days */}
@@ -151,7 +129,7 @@ useEffect(() => {
 
       <SevenColGrid
         fullheight={true}
-        is28Days={getDaysInMonth(currentDate) === 28}
+        // is28Days={getDaysInMonth(currentDate) === 28}
       >
         {getSortedDays(currentDate).map((day) => (
           <div
@@ -199,7 +177,7 @@ useEffect(() => {
               {events.map(
                 (ev, index) =>
                   datesAreOnSameDay(
-                    ev.date,
+                    (new Date(ev.date)),
                     new Date(
                       currentDate.getFullYear(),
                       currentDate.getMonth(),
@@ -211,8 +189,8 @@ useEffect(() => {
                       onClick={() => handleOnClickEvent(ev)}
                       // draggable
                       className="StyledEvent"
-                      id={`${ev.color} ${ev.title}`}
-                      key={ev.title}
+                      id={`${ev.color}`}
+                      key={ev.date}
                       bgColor={ev.color}
                     >
                       {ev.title}
@@ -239,7 +217,7 @@ const EventWrapper = ({ children }) => {
     return (
       <>
         {children}
-        {children.filter((child) => child).length > 2 && (
+        {/* {children.filter((child) => child).length > 2 && (
           <SeeMore
             onClick={(e) => {
               e.stopPropagation();
@@ -248,7 +226,7 @@ const EventWrapper = ({ children }) => {
           >
             see more...
           </SeeMore>
-        )}
+        )} */}
       </>
     );
 };

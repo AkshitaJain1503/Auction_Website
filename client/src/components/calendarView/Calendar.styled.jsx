@@ -6,61 +6,39 @@ export const Wrapper = styled.div`
 `;
 
 export const StyledEvent = styled.span`
-  background: ${({ bgColor }) => bgColor} !important;
-  color: white;
-  text-align: left !important;
-  padding: 2px 10px;
-  // margin-top: 0;
-  // height: ;
-  // position: absolute;
-  top: -15px;
-  //   float:left;
-  
-  height:90px;
-  // width: 100%;
-  // margin: 0 2px;
-  // border-radius: 5px;
-  font-size: 13px;
-
+  background: ${({ bgColor }) => bgColor};
+  // color: white;
+  // text-align: left !important;
+  // padding: 2px 10px;
+  margin: 0 2px;
+  border-radius: 10px;
+  // font-size: 13px;
   cursor: pointer;
-  text-transform: capitalize;
+  // text-transform: capitalize;
 `;
 
 export const SevenColGrid = styled.div`
   display: grid;
-  // position: relative;
   grid-template-columns: repeat(7, 1fr);
   ${(props) => props.fullheight && `height: calc(100% - 75px);`}
   ${(props) =>
     props.fullheight &&
-
-    `grid-template-rows: repeat(${props.is28Days ? 5: 6}, 1fr);`}
+    `grid-template-rows: repeat(6, 1fr);`}
   div {
     display: grid;
     border: 1px solid;
     ${StyledEvent} {
-      position: relative;
-        // top: 0;
-    height: 140%;
-    widht: 100%;
-    // color: pink;
-    
-      display: block;
+      display: none;
+      height: 25px;
     }
     ${StyledEvent}:nth-child(-n + 3) {
-      
-  // height: 100%;
-  // widht: 100%;
       display: block;
-      
     }
 
     span {
       text-align: right;
       padding-right: 15px;
       height: fit-content;
-      background: #E8E8E8;
-      
     }
 
     span.active {
@@ -97,12 +75,12 @@ export const DateControls = styled.div`
   }
 `;
 
-export const SeeMore = styled.p`
-  font-size: 12px;
-  padding: 0 5px;
-  margin-bottom: 0;
-  cursor: pointer;
-`;
+// export const SeeMore = styled.p`
+//   font-size: 12px;
+//   padding: 0 5px;
+//   margin-bottom: 0;
+//   cursor: pointer;
+// `;
 
 export const PortalWrapper = styled.div`
   background: white;
@@ -140,6 +118,4 @@ export const PortalWrapper = styled.div`
     background: red;
     color: lightblue;
   }
-   
 `;
-
