@@ -1,14 +1,93 @@
 import React,{ useEffect } from 'react';
-import NavLoggedIn from "../navbar/navLoggedIn";
 import axios from 'axios';
+import { useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { TableControl } from 'react-bootstrap-table-control';
+import NavBar from "../navbar/index";
+import styles from "../auctionSpace/styles.module.css";
 
-const PastPurchases = () => {
-    return(
-        <div>
-            <NavLoggedIn/>
-            <p> PAST PURCHASES </p>
-        </div>
-    )
+//Past Purchases component can be the myprofile segment or the buyer or seller segment
+//so getting the id accordingly for params
+const GetUserId = () => {
+    const useQuery = () => new URLSearchParams(useLocation().search);
+    const query = useQuery();
+  
+    const id = query.get('id');
+  
+    return id;
+  }
+
+//GetPastPurchases returns an array of objects on hitting the back-end API
+const GetPastPurchases = () => {
+    const id = GetUserId();
+    const [data, setData] = React.useState({})
+  
+    useEffect(() => {
+      if(Object.keys(data).length === 0){
+        const url = "http://localhost:3001/api/pastPurchases?id=" + id;
+        const tokenStr = localStorage.getItem("token");
+        const headers = { "Authorization": "Bearer "+tokenStr };
+        axios
+          .get(url, { headers })
+          .then((res) => {
+            if (res.status === 404 || !res) {
+              window.location = "/signup";
+            }
+            setData(res.data.data);
+          })
+      }
+    })
+    return data;
 };
+
+//Renders the past purchases in a table whose each row on cliking renders the specific product page.
+//(TableControl) 25 rows are shown on one page. Rest are shown via pagination
+const PastPurchases = () => {
+    const navigate = useNavigate();
+    const data = GetPastPurchases();
+    
+    if(Object.keys(data).length > 0){
+        return (
+            <div>
+                <NavBar/>
+                
+                <hr/>
+                <div className={styles.backGroundSpace}>
+                  <h5>TOTAL WINNING PURCHASES:  {data.length}</h5>
+                  <hr></hr>
+                  <br></br>
+                  <TableControl
+                      header={[
+                      { key: "SNo", name: "#" },
+                      { key: "productName", name: "Product Name" },
+                      { key: "basePrice", name: "Base Price" },
+                      { key: "soldAt", name: "Won at Price" },
+                      { key: "wonOn", name: "Won on Date and Time" }
+                      ]}
+                      itens={data}
+                  
+                      onClickItem={function navProduct(data){
+                          navigate(`/productPage?id=${data.productId}`);
+                      }}
+
+                      clickable
+                      tableProps={{
+                          hover: true
+                      }}
+                      totalPosition="none"
+                  />
+                </div>
+            </div>
+        );
+    }
+    else{
+        return (
+            <div>
+              <NavBar/>
+              <h5>TOTAL POSTS: {Object.keys(data).length}</h5>
+            </div>
+        );
+    }
+}
 
 export default PastPurchases;

@@ -3,6 +3,7 @@ import Home from "./components/home";
 import Signup from "./components/loginAndSignup/signup";
 import Login from "./components/loginAndSignup/login";
 import {DisplayProfile} from "./components/myProfile/getProfile";
+import {DisplayUserProfile} from "./components/userInfo/userProfile";
 import EditProfile from "./components/myProfile/editProfile";
 import PastPurchases from "./components/pastPurchases/pastPurchases";
 import PastPosts from "./components/pastPosts/pastPosts";
@@ -38,6 +39,9 @@ function App() {
 			{!user && <Route path="/postProduct" exact element={<Signup/>}/>}
 
 			<Route path="/productPage" exact element={<ProductPage/>}/>
+
+			{user && <Route path="/userProfile" exact element={<DisplayUserProfile/>}/>}
+			{!user && <Route path="/userProfile" exact element={<Signup/>}/>}
 			
 			{user && <Route path="/auctionSpace" exact element={<Auction/>} />} 
 		</Routes>

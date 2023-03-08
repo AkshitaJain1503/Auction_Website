@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import NavLoggedIn from "../navbar/navLoggedIn";
+//import NavLoggedIn from "../navbar/navLoggedIn";
 import "bootstrap/dist/css/bootstrap.min.css";
+import NavBar from "../navbar/index";
 import {
   Card,
   CardBody,
@@ -34,11 +35,13 @@ const PostProduct = () => {
     productBasePrice: "",
     shipmentFrom: "",
     productImage: "",
-    auctionStartDate: "",
-    auctionStartTime: "",
-    days: "",
-    hours: "",
-    minutes: ""
+    startDateTime: "",
+    endDateTime: "",
+    // auctionStartDate: "",
+    // auctionStartTime: "",
+    // days: "",
+    // hours: "",
+    // minutes: ""
   });
   let name, value;
   const handleInput = (e) => {
@@ -64,23 +67,40 @@ const PostProduct = () => {
       productBasePrice,
       shipmentFrom,
       productImage,
-      auctionStartDate,
-      auctionStartTime,
-      days,
-      hours, 
-      minutes
+      startDateTime,
+      endDateTime,
+      // auctionStartDate,
+      // auctionStartTime,
+      // days,
+      // hours, 
+      // minutes
     } = product;
+
+    // Validating auction start time and end time 
+    const now = new Date();
+    const startTime = new Date(startDateTime);
+    const endTime = new Date(endDateTime);
+    if (startTime <= now || endTime <= now) {
+      alert("Auction start time and end time must be in the future.");
+      return;
+    }
+    if (startTime >= endTime) {
+      alert("Auction start time must be before the auction end time.");
+      return;
+    }
+
     const formdata = new FormData();
     formdata.append("productName", productName);
     formdata.append("productDescription", productDescription);
     formdata.append("productBasePrice", productBasePrice);
     formdata.append("shipmentFrom", shipmentFrom);
     formdata.append("productImage", productImage);
-    formdata.append("auctionStartDate", auctionStartDate);
-    formdata.append("auctionStartTime", auctionStartTime);
-    formdata.append("days", days);
-    formdata.append("hours", hours);
-    formdata.append("minutes", minutes);
+    formdata.append("startDateTime", startDateTime);
+    formdata.append("endDateTime", endDateTime);
+    // formdata.append("auctionStartTime", auctionStartTime);
+    // formdata.append("days", days);
+    // formdata.append("hours", hours);
+    // formdata.append("minutes", minutes);
 
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
@@ -101,7 +121,7 @@ const PostProduct = () => {
   };
   return (
     <>
-    <NavLoggedIn/>
+    <NavBar/>
       <div className="wrapper">
         <Card className="shadow-sm">
           <CardBody>
@@ -147,7 +167,7 @@ const PostProduct = () => {
                   required
                 />
               </div>
-              <div className="my-3">
+              {/* <div className="my-3">
                 <Label for="startDate">Start Date*</Label>
                 <Input 
                  id="startDate"
@@ -170,11 +190,57 @@ const PostProduct = () => {
                  className="rounded-0"
                  required
                 /> 
+              </div> */}
+
+              <div className="my-3">
+                <Label for="startTime">Auction Start Date and Time*</Label>
+                <Input 
+                 id="startTime"
+                 name="startDateTime"
+                 type="datetime-local"
+                 value={product.startDateTime}
+                 onChange={handleInput}
+                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "20px"}}
+                 required
+                /> days
+                <input 
+                 id="duration"
+                 name="hours"
+                 type="number"
+                 value={product.hours}
+                 onChange={handleInput}
+                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
+                  required
+                /> hours
+                <input 
+                 id="duration"
+                 name="minutes"
+                 type="number"
+                 value={product.minutes}
+                 onChange={handleInput}
+                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
+                 required
+                /> minutes
+                {/* </span> */}
+                
               </div>
               <div className="my-3">
+                <Label for="endTime">Auction End Date and Time*</Label>
+                <Input 
+                 id="endTime"
+                 name="endDateTime"
+                 type="datetime-local"
+                 value={product.endDateTime}
+                 onChange={handleInput}
+                 className="rounded-0"
+                 required
+                /> 
+              </div>
+
+               {/* <div className="my-3">
                 <Label for="duration">Duration*</Label>
                 <br/>
-                {/* <span> */}
+                
                 <input 
                  id="duration"
                  name="days"
@@ -201,10 +267,9 @@ const PostProduct = () => {
                  onChange={handleInput}
                  style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
                  required
-                /> minutes
-                {/* </span> */}
+                /> minutes 
                 
-              </div>
+              </div> */}
               <div className="my-3">
                 <Label for="place">Shipment from*</Label>
                 <Input

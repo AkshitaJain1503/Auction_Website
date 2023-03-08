@@ -4,7 +4,7 @@ a:link {
     color: black;
 }
 
-.auctionSpace{
+.backGroundSpace{
   background-color: rgb(253, 253, 253);
   padding: 5%;
   margin: 3%;
@@ -14,15 +14,21 @@ a:link {
 h1{
   padding : 5px;
   text-align: center;
+  
+}
+.link{
+  text-decoration: none;
+  color: black;
+}
+.link:hover{
+  color:rgb(42, 56, 64)
 }
 
 table {
   
-  /* padding-top: 5%; */
   border-collapse: collapse;
   width: 100%;
   margin-bottom: 20%;
-  /* gk */
 }
 th, td {
   padding: 8px;
@@ -70,4 +76,14 @@ th {
   font-size: 14px;
   cursor: pointer;
   margin-right: 20px;
+}
+
+.container {
+  display: flex;
+  padding: 2px;
+  margin-bottom: 5px;
+}
+
+.element {
+  width: 80%;
 }

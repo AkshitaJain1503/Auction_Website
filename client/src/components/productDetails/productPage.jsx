@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import NavLoggedIn from "../navbar/navLoggedIn";
+import { useNavigate, useLocation } from "react-router-dom";
+import NavBar from "../navbar/index";
 import styles from "./styles.module.css";
 
 export default function ProductPage(props) {
+  const navigate = useNavigate();
   const useQuery = () => new URLSearchParams(useLocation().search);
   const query = useQuery();
 
@@ -16,8 +17,10 @@ export default function ProductPage(props) {
     productImage: "",
     shipmentFrom: "",
     basePrice: "",
-    firstName: "",
-    lastName: ""
+    name: "",
+    sellerId: "",
+    aucStart: "",
+    aucEnd: "",
   });
 
   const getProducts = async () => {
@@ -25,7 +28,7 @@ export default function ProductPage(props) {
       "http://localhost:3001/api/productDetails?id=" + id
     );
     const res = await response.json();
-    //console.log(res.data.productName);
+    // console.log(res.data.productName);
     setProduct((previousState) => {
       return {
         ...product,
@@ -34,21 +37,29 @@ export default function ProductPage(props) {
         productImage: res.data.productImage,
         shipmentFrom: res.data.shipmentFrom,
         basePrice: res.data.productBasePrice,
-        firstName: res.data.sellerFirstName,
-        lastName: res.data.sellerLastName
+        name: res.data.sellerName,
+        sellerId: res.data.sellerId,
+        aucStart: res.data.aucStart,
+        aucEnd: res.data.aucEnd,
       };
     });
+    console.log("eh", product.aucEnd, "k");
+    
   };
 
   useEffect(() => {
     getProducts();
   }, []);
 
+  const handleClick = () => {
+    navigate(`/auctionSpace?id=`+ id);
+  };
+
   // console.log("product name");
   // console.log(product.data.productName);
   return (
     <>
-      <NavLoggedIn />
+      <NavBar />
       <div>
         <h1 className={styles.productName}>{product.productName}</h1>
         <div className={styles.classify}>
@@ -65,12 +76,10 @@ export default function ProductPage(props) {
               Shipment from {product.shipmentFrom}
             </span>
             <span> Base Price: {product.basePrice}</span>
-           <span> Seller :  <a href="./" className={styles.links}>{product.firstName} {product.lastName}</a></span>
-           <span> Start Date of auction: 23.10.2003</span>
-           <span> Start time of auction: 12:30 am </span>
-           <span> Duration: 23 hours 2 minutes</span>
-           <span> Status: Upcoming</span>
-           <button className={styles.button}>Auction Space</button>
+           <span> Seller : <a href={`/userProfile?id=${product.sellerId}`} className={styles.links}>{product.name} </a></span>
+           <span> Start Time of auction: {product.aucStart}</span>
+           <span> End Time of auction: {product.aucEnd} </span>
+           <button onClick={handleClick} className={styles.button}>Auction Space</button>
           </div>
         </div>
       </div>
