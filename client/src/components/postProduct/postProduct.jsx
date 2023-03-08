@@ -200,29 +200,9 @@ const PostProduct = () => {
                  type="datetime-local"
                  value={product.startDateTime}
                  onChange={handleInput}
-                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "20px"}}
+                 className="rounded-0"
                  required
-                /> days
-                <input 
-                 id="duration"
-                 name="hours"
-                 type="number"
-                 value={product.hours}
-                 onChange={handleInput}
-                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
-                  required
-                /> hours
-                <input 
-                 id="duration"
-                 name="minutes"
-                 type="number"
-                 value={product.minutes}
-                 onChange={handleInput}
-                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
-                 required
-                /> minutes
-                {/* </span> */}
-                
+                /> 
               </div>
               <div className="my-3">
                 <Label for="endTime">Auction End Date and Time*</Label>
