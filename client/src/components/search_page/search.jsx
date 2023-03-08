@@ -84,6 +84,7 @@ const GetSearchResults = () => {
                 <hr/>
                 
                 <ul className="card-grid" onClickdata={function navProduct(data){
+                            
                          navigate(`/productPage?id=${data.productId}`);
                      }}>
                     {data.map((data) => (

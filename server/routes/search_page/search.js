@@ -7,7 +7,8 @@ router.get("/", async (req, res) => {
     var responseData = []; //this is an array of objects
     
     let products = await Product.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
-    //let auction = await Auction.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
+    let auction = await Auction.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
+    console.log(auction);
     for(var i=products.length-1 ; i >=0; i--){
 
         var productDetails = {}; // this will hold a single object
@@ -18,12 +19,15 @@ router.get("/", async (req, res) => {
         productDetails.basePrice = products[i].productBasePrice;
         productDetails.img = products[i].productImage;
         productDetails.shipment = products[i].shipmentFrom;
-        // let formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
-        // day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].endDateTime);
-        // let formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
-        // day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].endStartTime)
-        // productDetails.EndTime= formattedEndTime;
-        // productDetails.StartTime= formattedStartTime;
+
+         let formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
+         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].endDateTime);
+
+        let formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].startDateTime)
+
+        productDetails.EndTime= formattedEndTime;
+        productDetails.StartTime= formattedStartTime;
 
         responseData.push(productDetails);
     }
