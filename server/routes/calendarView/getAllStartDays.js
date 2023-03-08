@@ -1,69 +1,29 @@
 const router = require("express").Router();
-const {Product} = require("../../models/product");
 const {Auction} = require("../../models/auction");
 
-
-//Get the buyer or seller (user) profile data.
+//Get unique dates from auction db corresponding to the searched product name for calendar display.
 router.get("/", async (req, res) => {
 
     const requestedProductName = req.query.name;
-    var productdata = {}
+    let response =[];
 
-    // to avoid hitting the DB query in a loop, writing a SQL equivalent IN query.
-    //writing a SQL equivalent LIKE Operator query.
-    //$options: 'i' ensures case insensitivity.
-    let ProductList = await Product.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
-    let ProductIdList = [];
-    for(var i=0 ; i < ProductList.length; i++){
-        let ProductId = ProductList[i]._id;
-        ProductIdList.push(ProductId);
-    }
+    let todayDate = dateConverter(String(new Date()));
 
-    let AuctionList = await Auction.find({product: ProductIdList});
-
-    let response = [];
-    let auctionData = {};
-
-    //returns {pId:Date, pId:Date, ....}
-    for(var i=0 ; i < AuctionList.length; i++){
-        let ProductId = AuctionList[i].product;
-        auctionData[ProductId] = AuctionList[i].startDateTime;
-    }
-
-    //returns [{date: date,title: name, color: colour},{},{},....]
-    for(var i=0 ; i < ProductList.length; i++){
-        let resData = {};
-        let prodData = ProductList[i];
-        prodID = prodData._id;
-        let name = prodData.productName;
-        let auctDate = auctionData[prodID];
-        resData.date = auctDate;
-        resData.title = name;
-        // var dateObj = new Date(auctDate);
-        // var month = dateObj.getUTCMonth(); //months from 1-12
-        // var date = dateObj.getUTCDate();
-        // var year = dateObj.getUTCFullYear();
-        // var resDate = new Date(year, month, date)
-        // console.log(dateObj,"dateObj");
-        // console.log(auctDate,"auctDate");
-        // resData.date = resDate;
-
-        // let indianDateTody = JustADate(new Date()).toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
-        // let auctDateCompare = JustADate(new Date(auctDate)).toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
-        // let auctDateCompare = new Date(auctDate).toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
-        // console.log(indianDateTody,"indianDateToday");
-        // console.log(auctDateCompare,"resDate");
-        
-        console.log(auctDate,"auctDate");
-        // console.log(new Date(auctDate),"auctDateNew");
-        let todayDate = new Date();
-        console.log(todayDate,"todayDate");
-        // let indianDateTody= new Date().toISOString().split("T")[0];
-        // let auctDateCompare = new Date(auctDate).toISOString().split("T")[0];
-        // console.log(indianDateTody,"indianDateToday");
-        // console.log(auctDateCompare,"resDate");
-        // console.log("compare", indianDate> resDateCompare);
-        let colour;
+    //getting distinct DATE-TIME where name LIKE requestedProductName.
+    let AuctionList= await Auction.find().distinct("startDateTime",
+    { productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' } });
+    
+    //to extract only date from the date type format
+    function dateConverter(str){
+        var date = new Date(str),
+        mnth = ("0" + (date.getMonth()+1)).slice(-2),
+        day  = ("0" + date.getDate()).slice(-2);
+        year = date.getFullYear();
+        return `${year}/${mnth}/${day}`
+     }
+     
+     //deciding colour which will highlight the calendar according to past, today and future.
+    function decideColour(todayDate, auctDate){
         if(todayDate < auctDate){
             colour = "#774dbf";
         }
@@ -73,14 +33,42 @@ router.get("/", async (req, res) => {
         else{
             colour = "#9bbf4d";
         }
-        resData.color = colour;
-
-        response.push(resData)
+        return colour;
     }
 
+
+    //only if AuctionList contains something.
+    if(AuctionList.length!=0){
+        AuctionList.sort();
+        let uniqueDate = dateConverter(String(AuctionList[0]));
+        let resData = {date: String(AuctionList[0]), color: decideColour(todayDate, uniqueDate)};
+        response.push(resData); 
+
+        //getting only UNIQUE DATES
+        for(var i=0 ; i < AuctionList.length; i++){
+            let resData = {};
+            let currentDate = dateConverter(String(AuctionList[i]));
+
+            if(currentDate == uniqueDate){
+                continue;
+            }
+            else{
+                uniqueDate = currentDate
+            }
+
+            resData.date = String(AuctionList[i]);
+
+            let colour = decideColour(todayDate,currentDate);
+            resData.color = colour;
+            
+            response.push(resData)
+
+        }
+    }
     res.status(200).send({data:response});
 });
 
 
 module.exports = router;
+
 
