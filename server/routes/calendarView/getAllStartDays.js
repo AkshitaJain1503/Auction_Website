@@ -41,7 +41,7 @@ router.get("/", async (req, res) => {
     if(AuctionList.length!=0){
         AuctionList.sort();
         let uniqueDate = dateConverter(String(AuctionList[0]));
-        let resData = {date: String(AuctionList[0]), color: decideColour(todayDate, uniqueDate)};
+        let resData = {date: (AuctionList[0]), color: decideColour(todayDate, uniqueDate)};
         response.push(resData); 
 
         //getting only UNIQUE DATES
@@ -56,7 +56,7 @@ router.get("/", async (req, res) => {
                 uniqueDate = currentDate
             }
 
-            resData.date = String(AuctionList[i]);
+            resData.date = (AuctionList[i]);
 
             let colour = decideColour(todayDate,currentDate);
             resData.color = colour;

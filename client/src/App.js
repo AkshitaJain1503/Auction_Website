@@ -10,6 +10,7 @@ import PastPosts from "./components/pastPosts/pastPosts";
 import PostProduct from "./components/postProduct/postProduct";
 import ProductPage from "./components/productDetails/productPage";
 import Auction from "./components/auctionSpace"; 
+import { Calendar } from "./components/calendarView/Calendar";
 function App() {
 	const user = localStorage.getItem("token");
 
@@ -44,6 +45,8 @@ function App() {
 			{!user && <Route path="/userProfile" exact element={<Signup/>}/>}
 			
 			{user && <Route path="/auctionSpace" exact element={<Auction/>} />} 
+
+			<Route path="/calendarView" exact element={<Calendar/>}/>
 		</Routes>
 	);
 }
