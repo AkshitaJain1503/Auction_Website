@@ -1,5 +1,7 @@
 import React , {  useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import NavBar from "../navbar/index";
+import styles from "../auctionSpace/styles.module.css";
 import {
   SevenColGrid,
   Wrapper,
@@ -103,8 +105,9 @@ useEffect(() => {
   };
 
   return (
-    <Wrapper>
-      
+    <div >
+    <NavBar/>
+    <Wrapper >
       {/* first line */}
       <DateControls>
         <ion-icon
@@ -208,7 +211,10 @@ useEffect(() => {
           handlePotalClose={handlePotalClose}
         />
       )}
+      
+      
     </Wrapper>
+    </div>
   );
 };
 

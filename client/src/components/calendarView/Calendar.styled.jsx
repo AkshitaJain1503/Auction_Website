@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const Wrapper = styled.div`
-  border: 1px solid;
+  // border: 1px solid;
   height: 99vh;
+  padding: 15px ;
 `;
 
 export const StyledEvent = styled.span`
@@ -10,7 +11,7 @@ export const StyledEvent = styled.span`
   // color: white;
   // text-align: left !important;
   // padding: 2px 10px;
-  margin: 0 2px;
+  margin: 0 3px;
   border-radius: 10px;
   // font-size: 13px;
   cursor: pointer;
