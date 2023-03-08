@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
 
     let todayDate = dateConverter(String(new Date()));
 
-    //getting distinct DATE-TIME where name LIKE requestedProductName.
+    //getting distinct DATE-TIME where name LIKE %requestedProductName%.
     let AuctionList= await Auction.find().distinct("startDateTime",
     { productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' } });
     

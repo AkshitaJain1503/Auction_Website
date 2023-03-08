@@ -13,8 +13,8 @@ const checkAuthLogin = require("./middleware/checkAuthLogin");
 const postProduct = require("./routes/products/postProduct");
 const productDetails = require("./routes/products/productDetails");
 const auctionSpace = require("./routes/auctionSpace/auctionSpace");
-const allDaysCalendar = require("./routes/calendarView/getAllStartDays");
-const specificDayCalendar = require("./routes/calendarView/getSpecificDayDetail");
+const calendar = require("./routes/calendarView/calendar");
+const calendarDetails = require("./routes/calendarView/calendarDetails");
 
 var bodyParser = require('body-parser');
 app.use(bodyParser.json({limit: '50mb'}));
@@ -30,8 +30,8 @@ app.use(cors());
 app.use("/api/register", registerRoute);
 app.use("/api/authLogin", authLoginRoute);
 app.use("/api/productDetails", productDetails);
-app.use("/api/getAllStartDaysCalendar", allDaysCalendar);
-app.use("/api/getSpecificDayDetailsCalendar", specificDayCalendar);
+app.use("/api/calendar", calendar);
+app.use("/api/calendarDetails", calendarDetails);
 
 //protected routes with middleware checkAuthLogin
 app.use("/api/myProfile", checkAuthLogin, myProfile);
