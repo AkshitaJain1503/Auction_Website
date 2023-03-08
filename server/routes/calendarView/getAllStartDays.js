@@ -37,7 +37,7 @@ router.get("/", async (req, res) => {
         prodID = prodData._id;
         let name = prodData.productName;
         let auctDate = auctionData[prodID];
-        resData.date = auctDate;
+        resData.date = new Date (auctDate);
         resData.title = name;
         // var dateObj = new Date(auctDate);
         // var month = dateObj.getUTCMonth(); //months from 1-12
@@ -48,16 +48,22 @@ router.get("/", async (req, res) => {
         // console.log(auctDate,"auctDate");
         // resData.date = resDate;
 
-        // let indianDateTody = JustADate(new Date()).toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
+        let indianDateTody = new Date().toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
         // let auctDateCompare = JustADate(new Date(auctDate)).toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
         // let auctDateCompare = new Date(auctDate).toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
-        // console.log(indianDateTody,"indianDateToday");
+        console.log(indianDateTody,"indianDateToday");
         // console.log(auctDateCompare,"resDate");
         
         console.log(auctDate,"auctDate");
         // console.log(new Date(auctDate),"auctDateNew");
         let todayDate = new Date();
-        console.log(todayDate,"todayDate");
+        let year= todayDate.getFullYear();
+        let month= todayDate.getMonth();
+        let day= todayDate.getDate();
+        console.log("year", year, month, day);
+        let ntodayDate=  new Date(year, month-1, day);
+        // todayDate = todayDate.slice(0, -1);
+        console.log(ntodayDate,"todayDate");
         // let indianDateTody= new Date().toISOString().split("T")[0];
         // let auctDateCompare = new Date(auctDate).toISOString().split("T")[0];
         // console.log(indianDateTody,"indianDateToday");
