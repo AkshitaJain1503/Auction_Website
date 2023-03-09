@@ -9,7 +9,7 @@ router.get("/", async (req, res) => {
     const requestedProductName = req.query.name;
     const requestedDate =  req.query.date;
 
-    console.log(requestedDate,"requestedDate");
+    // console.log(requestedDate,"requestedDate");
     let seperateDate = requestedDate.split("T");
     let dateOnly = seperateDate[0];
 
@@ -63,6 +63,7 @@ router.get("/", async (req, res) => {
 
         responseArray.push(resdata);
     }
+    // console.log(responseArray);
 
     res.status(200).send({data: responseArray});
 });
