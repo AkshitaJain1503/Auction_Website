@@ -103,7 +103,8 @@ const GetSearchResults = () => {
     const name = GetProductname();
     const [data, setData] = React.useState([]);
     const [sort, setSort] = React.useState("none");
-
+    const [shipment,setShipment] =React.useState("none");
+    const [Time,setTime] =React.useState("none");
     useEffect(() => {
         if(Object.keys(data).length === 0){
             const url = "http://localhost:3001/api/search?name=" + name;
@@ -125,8 +126,44 @@ const GetSearchResults = () => {
         } else if (sort === "highToLow") {
             sortedData = data.sort((a, b) => b.basePrice - a.basePrice);
         }
-    
-        return { data: sortedData, handleSort };
+        
+        const handleShipment = (e) => {
+            setShipment(e.target.value);
+        }
+        let ShipmentData = sortedData;
+        if (shipment !== "none") {
+            ShipmentData = sortedData.filter(
+              (item) => item.shipment === shipment
+            );
+          }
+          const handleTimee = (e) => {
+            setTime(e.target.value);
+          }
+        let TimeData = ShipmentData;
+        if(Time==="StartTime")
+        {  
+            
+            TimeData = ShipmentData.sort((a, b) => {
+                const aStartTime = new Date(a.fStartTime).getTime();
+                //console.log(typeof(aStartTime));
+                const bStartTime = new Date(b.fStartTime).getTime();
+                //console.log("hello",TimeData);
+                return aStartTime - bStartTime;
+            });
+           // TimeData = ShipmentData.sort((a, b) => a.fStartTime - b.fStartTime);
+        }
+        
+        if(Time==="EndTime")
+        {
+           TimeData = ShipmentData.sort((a, b) => {
+            const aEndTime = new Date(a.fEndTime).getTime();
+            const bEndTime = new Date(b.fEndTime).getTime();
+            return aEndTime - bEndTime;
+          });
+        //   TimeData = ShipmentData.sort((a, b) => a.fEndTime - b.fEndTime);
+        //   console.log(typeof(fEndTime));
+        }
+        return { data: TimeData, handleSort, handleShipment, handleTimee,name};
     };
 // const GetSearchResults = () => {
 //     const name = GetProductname();
@@ -155,24 +192,54 @@ const GetSearchResults = () => {
 
     const SearchDetails = () => {
         const navigate = useNavigate();
-        const { data, handleSort } = GetSearchResults();
+        const { data, handleSort ,handleShipment,handleTimee,name} = GetSearchResults();
         if (Object.keys(data).length > 0) {
+
+            const handleOnClickEvent = (product) => {
+                navigate(`/productPage?id=${product.productId}`  );
+              };
+
             return (
                 <div>
                     <NavBar />
-                    <div>
-                        <h5>Total Matching Products: {data.length}</h5>
+                    <h5>Total Matching Products: {data.length}</h5>
+
+                    <div className='cont'>
+                        
                         <select onChange={handleSort}>
                             <option value="none">Sort by Base Price</option>
                             <option value="lowToHigh">Low to High</option>
                             <option value="highToLow">High to Low</option>
                         </select>
+                        <select onChange={handleShipment}>
+                            <option value="none">Filter by Shipment Location</option>
+                            <option value="Bangalore">Bangalore</option>
+                            <option value="Hyderabad">Hyderabad</option>
+                            <option value="Kolkata">Kolkata</option>
+                            <option value="Mumbai">Mumbai</option>
+                            <option value="Delhi">Delhi</option>
+                            <option value="Chennai">Chennai</option>
+                            <option value="Ahmedabad">Ahmedabad</option>
+                            <option value="Pune">Pune</option>
+                            <option value="Surat">Surat</option>
+                        </select>
+                        <select onChange={handleTimee}>
+                            <option value="none">Sort by Time</option>
+                            <option value="StartTime">Start Time</option>
+                            <option value="EndTime">End Time</option>
+                        </select>
+                        <a href={`/calendarView?name=${name}`}>
+					<button className="white_btn">
+						Calendar
+					</button>
+				</a>
                     </div>
-                    <hr />
+                    <hr></hr>
                     <ul className="card-grid">
                         {data.map((data) => (
                             <li>
-                                <Link to={`/productPage?id=${data.productId}`} className="card-link">
+                                {/* <Link to={`/productPage?id=${data.productId}`} className="card-link"> */}
+                                <div onClick={() => handleOnClickEvent(data)} >
                                     <article className="card" key={data.productId}>
                                     <div className="card-image">
                                         <img src={data.img} alt={data.productName} />
@@ -196,7 +263,8 @@ const GetSearchResults = () => {
                                         </ol>
                                         </div>
                                 </article>
-                            </Link>
+                                </div>
+                            {/* </Link> */}
                         </li>
                     ))}
                 </ul>
