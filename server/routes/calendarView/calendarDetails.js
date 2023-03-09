@@ -10,14 +10,13 @@ router.get("/", async (req, res) => {
     const requestedDate =  req.query.date;
 
     console.log(requestedDate,"requestedDate");
-    let sep = requestedDate.split("T");
-    console.log(sep,"sep");
+    let seperateDate = requestedDate.split("T");
+    let dateOnly = seperateDate[0];
 
     // finding all the auction documents with matching param conditions [{},{},{}]
     let auctList = await Auction.find( 
         { productName: { $regex : '.*'+ requestedProductName + '.*', $options: 'i' }, 
-        startDateTime: requestedDate});
-    console.log("auctList==>",auctList);
+        startDate: dateOnly});
 
     // array of product Ids to get data from product collection. [,,,]
     let pIdList = [];
@@ -25,11 +24,9 @@ router.get("/", async (req, res) => {
         let pId = auctList[i].product;
         pIdList.push(pId);
     }
-    console.log("pIdList==>",pIdList);
 
     //finding all the product documents with all productIds in pIdList [{},{},{}]
     let productList = await Product.find({_id: pIdList});
-    console.log("productList==>",productList);
 
     //make a relation {pId:{shipment:,base:,img:..}{},{}} to avoid hitting db again and again later.
     let relation = {};
@@ -42,7 +39,6 @@ router.get("/", async (req, res) => {
         productDetails.img = productList[i].productImage;
         relation[productId] = productDetails;
     }
-    console.log("relation==>",relation);
 
     //final retrival of all details from both product and auction collection needed for the front-end [{},{},{}]
     let responseArray = [];
@@ -67,8 +63,6 @@ router.get("/", async (req, res) => {
 
         responseArray.push(resdata);
     }
-
-    console.log("responseArray==>",responseArray);
 
     res.status(200).send({data: responseArray});
 });
