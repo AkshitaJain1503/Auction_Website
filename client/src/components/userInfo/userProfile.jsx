@@ -85,6 +85,23 @@ const DisplayUserProfile =()=> {
                   </MDBCol>
                 </MDBRow>
                 <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>TOTAL POSTS</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText className="text-muted">{data.totalPosts}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
+                <hr />
+                <MDBRow>
+                  <MDBCol sm="3">
+                    <MDBCardText>TOTAL PURCHASES</MDBCardText>
+                  </MDBCol>
+                  <MDBCol sm="9">
+                    <MDBCardText className="text-muted">{data.totalPurchases}</MDBCardText>
+                  </MDBCol>
+                </MDBRow>
                 
               </MDBCardBody>
             </MDBCard>
