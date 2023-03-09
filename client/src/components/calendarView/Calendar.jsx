@@ -1,5 +1,5 @@
 import React , {  useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../navbar/index";
 import styles from "../auctionSpace/styles.module.css";
 import {
@@ -25,6 +25,7 @@ import {
 } from "./utils";
 
 export const Calendar = () => {
+  const navigate = useNavigate();
 
   const DAYS = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
   const [currentDate, setCurrentDate] = useState(new Date());
@@ -41,7 +42,7 @@ export const Calendar = () => {
 // GET request for getting the auction start dates
 useEffect(() => {
   fetch("http://localhost:3001/api/getAllStartDaysCalendar?name=" + name , {
-        headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
+        // headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
       })
     .then(response => response.json())
     .then(data => 
@@ -91,8 +92,10 @@ useEffect(() => {
   // };
 
   const handleOnClickEvent = (event) => {
-    setShowPortal(true);
-    setPortalData((event));
+    // navu= ""
+    navigate(`/calendarDetails?name=${name}&date=${String(event.date)}`  );
+    // setShowPortal(true);
+    // setPortalData((event));
   };
 
   const handlePotalClose = () => setShowPortal(false);
