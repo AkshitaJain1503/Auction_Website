@@ -41,7 +41,7 @@ export const Calendar = () => {
 
 // GET request for getting the auction start dates
 useEffect(() => {
-  fetch("http://localhost:3001/api/getAllStartDaysCalendar?name=" + name , {
+  fetch("http://localhost:3001/api/calendar?name=" + name , {
         // headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
       })
     .then(response => response.json())
@@ -92,8 +92,7 @@ useEffect(() => {
   // };
 
   const handleOnClickEvent = (event) => {
-    // navu= ""
-    navigate(`/calendarDetails?name=${name}&date=${String(event.date)}`  );
+    navigate(`/calendarDetails?name=${name}&date=${event.date}`  );
     // setShowPortal(true);
     // setPortalData((event));
   };
