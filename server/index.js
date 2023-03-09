@@ -13,6 +13,7 @@ const checkAuthLogin = require("./middleware/checkAuthLogin");
 const postProduct = require("./routes/products/postProduct");
 const productDetails = require("./routes/products/productDetails");
 const auctionSpace = require("./routes/auctionSpace/auctionSpace");
+const search = require("./routes/search_page/search");
 const calendar = require("./routes/calendarView/calendar");
 const calendarDetails = require("./routes/calendarView/calendarDetails");
 
@@ -30,6 +31,7 @@ app.use(cors());
 app.use("/api/register", registerRoute);
 app.use("/api/authLogin", authLoginRoute);
 app.use("/api/productDetails", productDetails);
+app.use("/api/search",search);
 app.use("/api/calendar", calendar);
 app.use("/api/calendarDetails", calendarDetails);
 
