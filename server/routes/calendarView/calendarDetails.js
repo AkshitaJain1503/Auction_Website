@@ -3,92 +3,74 @@ const {Product} = require("../../models/product");
 const {Auction} = require("../../models/auction");
 
 
-//Get the buyer or seller (user) profile data.
+//Get all the auction and product details with searched name and date.
 router.get("/", async (req, res) => {
 
     const requestedProductName = req.query.name;
-    const requestedDate = req.query.date;
+    const requestedDate =  req.query.date;
+
     console.log(requestedDate,"requestedDate");
-    let AuctList = Auction.find( { productName: requestedProductName , productCurrentPrice: requestedDate } );
-    console.log("AuctList",AuctList);
-    //var productdata = {}
+    let sep = requestedDate.split("T");
+    console.log(sep,"sep");
 
-    // to avoid hitting the DB query in a loop, writing a SQL equivalent IN query.
-    //writing a SQL equivalent LIKE Operator query.
-    //$options: 'i' ensures case insensitivity.
-    // let ProductList = await Product.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
+    // finding all the auction documents with matching param conditions [{},{},{}]
+    let auctList = await Auction.find( 
+        { productName: { $regex : '.*'+ requestedProductName + '.*', $options: 'i' }, 
+        startDateTime: requestedDate});
+    console.log("auctList==>",auctList);
 
+    // array of product Ids to get data from product collection. [,,,]
+    let pIdList = [];
+    for(var i = 0; i < auctList.length; i++){
+        let pId = auctList[i].product;
+        pIdList.push(pId);
+    }
+    console.log("pIdList==>",pIdList);
 
-    // let AuctionList = await Auction.find({startDateTime: requestedDate});
+    //finding all the product documents with all productIds in pIdList [{},{},{}]
+    let productList = await Product.find({_id: pIdList});
+    console.log("productList==>",productList);
 
-    // console.log("ProductList==>",ProductList)
-    // console.log("AuctionList==>",AuctionList)
-    // let ProductIdList = [];
-    // for(var i=0 ; i < ProductList.length; i++){
-    //     let ProductId = ProductList[i]._id;
-    //     ProductIdList.push(ProductId);
-    // }
+    //make a relation {pId:{shipment:,base:,img:..}{},{}} to avoid hitting db again and again later.
+    let relation = {};
+    for(var i = 0; i< productList.length; i++){
+        let productDetails = {};
+        let productId  = productList[i]._id;
+        productDetails.shipment = productList[i].shipmentFrom;
+        productDetails.basePrice = productList[i].productBasePrice;
+        productDetails.productName = productList[i].productName;
+        productDetails.img = productList[i].productImage;
+        relation[productId] = productDetails;
+    }
+    console.log("relation==>",relation);
 
-    
+    //final retrival of all details from both product and auction collection needed for the front-end [{},{},{}]
+    let responseArray = [];
+    for(var i = 0; i<auctList.length; i++){
+        let resdata = {};
 
-    // let response = [];
-    // let auctionData = {};
+        let formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auctList[i].startDateTime);
+        let formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auctList[i].endDateTime);
 
-    // //returns {pId:Date, pId:Date, ....}
-    // for(var i=0 ; i < AuctionList.length; i++){
-    //     let ProductId = AuctionList[i].product;
-    //     auctionData[ProductId] = AuctionList[i].startDateTime;
-    // }
+        resdata.StartTime = formattedStartTime;
+        resdata.EndTime= formattedEndTime;
 
-    // //returns [{date: date,title: name, color: colour},{},{},....]
-    // for(var i=0 ; i < ProductList.length; i++){
-    //     let resData = {};
-    //     let prodData = ProductList[i];
-    //     prodID = prodData._id;
-    //     let name = prodData.productName;
-    //     let auctDate = auctionData[prodID];
-    //     resData.date = auctDate;
-    //     resData.title = name;
-    //     // var dateObj = new Date(auctDate);
-    //     // var month = dateObj.getUTCMonth(); //months from 1-12
-    //     // var date = dateObj.getUTCDate();
-    //     // var year = dateObj.getUTCFullYear();
-    //     // var resDate = new Date(year, month, date)
-    //     // console.log(dateObj,"dateObj");
-    //     // console.log(auctDate,"auctDate");
-    //     // resData.date = resDate;
+        let productId = auctList[i].product;
+        resdata.productId = productId;
 
-    //     // let indianDateTody = JustADate(new Date()).toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
-    //     // let auctDateCompare = JustADate(new Date(auctDate)).toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
-    //     // let auctDateCompare = new Date(auctDate).toLocaleString("en-Us", {timeZone: 'Asia/Kolkata'});
-    //     // console.log(indianDateTody,"indianDateToday");
-    //     // console.log(auctDateCompare,"resDate");
-        
-    //     // console.log(auctDate,"auctDate");
-    //     // console.log(new Date(auctDate),"auctDateNew");
-    //     let todayDate = new Date();
-    //     // console.log(todayDate,"todayDate");
-    //     // let indianDateTody= new Date().toISOString().split("T")[0];
-    //     // let auctDateCompare = new Date(auctDate).toISOString().split("T")[0];
-    //     // console.log(indianDateTody,"indianDateToday");
-    //     // console.log(auctDateCompare,"resDate");
-    //     // console.log("compare", indianDate> resDateCompare);
-    //     let colour;
-    //     if(todayDate < auctDate){
-    //         colour = "#774dbf";
-    //     }
-    //     else if(todayDate > auctDate){
-    //         colour = "#bf6d4d";
-    //     }
-    //     else{
-    //         colour = "#9bbf4d";
-    //     }
-    //     resData.color = colour;
+        resdata.img = relation[productId].img;
+        resdata.productName = relation[productId].productName;
+        resdata.basePrice = relation[productId].basePrice;
+        resdata.shipment = relation[productId].shipment;
 
-    //     response.push(resData)
-    // }
+        responseArray.push(resdata);
+    }
 
-    res.status(200).send({data:"hi"});
+    console.log("responseArray==>",responseArray);
+
+    res.status(200).send({data: responseArray});
 });
 
 
