@@ -55,6 +55,10 @@ export default function ProductPage(props) {
     navigate(`/auctionSpace?id=`+ id);
   };
 
+  const goToCart = () => {
+    navigate(`/carts?id=`+ id);
+  };
+
   // console.log("product name");
   // console.log(product.data.productName);
   return (
@@ -80,6 +84,7 @@ export default function ProductPage(props) {
            <span> Start Time of auction: {product.aucStart}</span>
            <span> End Time of auction: {product.aucEnd} </span>
            <button onClick={handleClick} className={styles.button}>Auction Space</button>
+           <button onClick={goToCart} className={styles.button}>Add to Cart</button>
           </div>
         </div>
       </div>

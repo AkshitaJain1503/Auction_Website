@@ -13,9 +13,12 @@ const checkAuthLogin = require("./middleware/checkAuthLogin");
 const postProduct = require("./routes/products/postProduct");
 const productDetails = require("./routes/products/productDetails");
 const auctionSpace = require("./routes/auctionSpace/auctionSpace");
-var bodyParser = require('body-parser');
-app.use(bodyParser.json({limit: '50mb'}));
-app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
+const cart = require("./routes/Carts/addToCart");
+const deleteItem = require("./routes/Carts/deleteItem");
+const allProductCarts = require("./routes/Carts/allProductCarts");
+var bodyParser = require("body-parser");
+app.use(bodyParser.json({ limit: "50mb" }));
+app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 //databse connection
 connection();
 
@@ -34,11 +37,13 @@ app.use("/api/pastPosts", checkAuthLogin, pastPosts);
 app.use("/api/pastPurchases", checkAuthLogin, pastPurchases);
 app.use("/api/postProduct", checkAuthLogin, postProduct);
 app.use("/api/auctionSpace", checkAuthLogin, auctionSpace);
-
+app.use("/api/carts", checkAuthLogin, cart);
+app.use("/api/removeItem", checkAuthLogin, deleteItem);
+app.use("/api/AllProductCarts", checkAuthLogin, allProductCarts);
 
 app.use("/api/userProfile", checkAuthLogin, userProfile);
 
 const port = process.env.PORT || 3001;
 app.listen(port, function () {
-    console.log("listening on port" + port);
+  console.log("listening on port" + port);
 });
