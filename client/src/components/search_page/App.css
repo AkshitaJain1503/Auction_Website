@@ -107,3 +107,8 @@
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
     gap: 10px; /* adjust the gap as per your need */
   }  
+  .card-link {
+    color: black;
+    text-decoration: none;
+  }
+  

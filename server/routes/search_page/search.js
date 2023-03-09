@@ -8,7 +8,7 @@ router.get("/", async (req, res) => {
     
     let products = await Product.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
     let auction = await Auction.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
-    console.log(auction);
+    //console.log(auction);
     for(var i=products.length-1 ; i >=0; i--){
 
         var productDetails = {}; // this will hold a single object
