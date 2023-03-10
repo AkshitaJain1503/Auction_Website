@@ -7,11 +7,7 @@ const {Auction} = require("../../models/auction");
 router.get("/", async (req, res) => {
 
     const requestedProductName = req.query.name;
-    const requestedDate =  req.query.date;
-
-    // console.log(requestedDate,"requestedDate");
-    let seperateDate = requestedDate.split("T");
-    let dateOnly = seperateDate[0];
+    const dateOnly =  req.query.date;
 
     // finding all the auction documents with matching param conditions [{},{},{}]
     let auctList = await Auction.find( 
