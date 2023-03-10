@@ -6,13 +6,12 @@ const router = require("express").Router() ;
 router.get("/", async (req, res) => {
     try{
       const auctions = await Auction.find({auctionLive : true});
-      const products = [];
       const length=auctions.length;
+      const productIds=[];
       for(var i=length-1;i>=0;i--){
-        const prod=await Product.findOne({_id : auctions[i].product});
-        if(prod!=null){
-        products.push(prod);}
+        productIds.push(auctions[i].product);
       }
+      const products=await Product.find({_id : productIds});
       res.status(200).send(products); 
     }
     catch (error) {
