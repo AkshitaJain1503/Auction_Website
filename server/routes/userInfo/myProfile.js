@@ -12,6 +12,8 @@ router.get("/", async (req, res) => {
     userData.name = user.name;
     userData.email = user.email;
     userData.address = user.address;
+    userData.totalPosts = user.postedProducts.length;
+    userData.totalPurchases = user.purchasedProducts.length;
 
     res.status(200).send({data:userData});
 });
