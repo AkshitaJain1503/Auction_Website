@@ -1,12 +1,10 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { Auction } = require("../../models/auction");
-// const { User } = require("../../models/user");
 const { Product } = require("../../models/product");
 const router = require("express").Router() ;
 router.get("/", async (req, res) => {
     try{
-      //const prd=await Product.find();
       const auctions = await Auction.find({auctionLive : true});
       const products = [];
       const length=auctions.length;
