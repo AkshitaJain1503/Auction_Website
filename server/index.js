@@ -13,6 +13,11 @@ const checkAuthLogin = require("./middleware/checkAuthLogin");
 const postProduct = require("./routes/products/postProduct");
 const productDetails = require("./routes/products/productDetails");
 const auctionSpace = require("./routes/auctionSpace/auctionSpace");
+const homeUpcomingAuction= require("./routes/homePage/homeUpcomingAuction");
+//const homePastAuction= require("./routes/homePage/homePastAuction");
+//const homeLiveAuction= require("./routes/homePage/homeLiveAuction");
+const homePastAuction =require("./routes/homePage/homePastAuctions");
+const homeLiveAuction =require("./routes/homePage/homeLiveAuctions");
 var bodyParser = require('body-parser');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -22,8 +27,10 @@ connection();
 //middlewares
 app.use(express.json());
 app.use(cors());
-
 //routes
+app.use("/api/liveAuction",homeLiveAuction);
+app.use("/api/pastAuction",homePastAuction);
+app.use("/api/upcomingAuction",homeUpcomingAuction);
 app.use("/api/register", registerRoute);
 app.use("/api/authLogin", authLoginRoute);
 app.use("/api/productDetails", productDetails);
