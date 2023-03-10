@@ -1,28 +1,35 @@
 import NavBar from "../navbar/index";
 import React from "react";
 import styled from "styled-components";
-import UpcomingAuctions from "./upcomingAuctions";
-import LiveAuctions from "./liveAuctions";
-import PastAuctions from "./pastAuctions";
+import HomeUpcomingAuctions from "./upcomingAuctions";
+import HomeLiveAuctions from "./liveAuctions";
+import HomePastAuctions from "./pastAuctions";
 function Home() {
     return (
       <Container>
         <NavBar />
         <Hbar>
+          <h5>Upcoming Auctions</h5>
+          <a href='/upcomingAuctions'>
             <Button>View all</Button>
-            <h5>Upcoming Auctions</h5>
+          </a>
         </Hbar>
-        <UpcomingAuctions/>
+        <HomeUpcomingAuctions/>
         <Hbar>
+          <h5>Live Auctions</h5>
+          <a href='/liveAuctions'>
             <Button>View all</Button>
-            <h5>Live Auctions</h5>
+          </a>
         </Hbar>
-        <LiveAuctions/>
+        <HomeLiveAuctions/>
         <Hbar>
+          <h5>Past Auctions</h5>
+          <a href='pastAuctions'>
             <Button>View all</Button>
-            <h5>Past Auctions</h5>
+          </a>
+
         </Hbar>
-        <PastAuctions/>
+        <HomePastAuctions/>
       </Container>
     );
   }
@@ -45,21 +52,23 @@ const Hbar = styled.div`
 	height: 40px;
 	background-color: #ffffff;
 	display: flex;
-	flex-direction: row-reverse;
 	align-items: center;
+  flex-gap:100px;
+  justify-content: space-between;
 `
-const Button =styled.button`
-border: none;
+const Button = styled.button`
+  border: none;
 	outline: none;
 	padding: 5px 0;
-	background-color: #3bb19b;
+	background-color: #3bb19b; 
 	border-radius: 20px;
 	width: 90px;
 	font-weight: bold;
 	font-size: 14px;
 	cursor: pointer;
-	margin-right: 10px;
+	// margin-right: auto;
 	margin-left:auto;
 `
+
 
 export default Home;
