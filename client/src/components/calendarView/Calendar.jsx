@@ -92,7 +92,9 @@ useEffect(() => {
   // };
 
   const handleOnClickEvent = (event) => {
-    navigate(`/calendarDetails?name=${name}&date=${event.date}`  );
+    const seperatedDate= event.date.split("T");
+    const dateOnly= seperatedDate[0];
+    navigate(`/calendarDetails?name=${name}&date=${dateOnly}`  );
     // setShowPortal(true);
     // setPortalData((event));
   };

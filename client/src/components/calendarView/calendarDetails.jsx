@@ -75,4 +75,3 @@ import './calendarDetails.css';
 } 
 
 export default CalendarDetails;
-//http://localhost:3000/calendarView?name=st
