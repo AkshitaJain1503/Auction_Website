@@ -83,8 +83,10 @@ export default function ProductPage(props) {
            <span> Seller : <a href={`/userProfile?id=${product.sellerId}`} className={styles.links}>{product.name} </a></span>
            <span> Start Time of auction: {product.aucStart}</span>
            <span> End Time of auction: {product.aucEnd} </span>
-           <button onClick={handleClick} className={styles.button}>Auction Space</button>
-           <button onClick={goToCart} className={styles.button}>Add to Cart</button>
+           <div className={styles.btns}>
+              <button onClick={handleClick} className={styles.button}>Auction Space</button>
+              <button onClick={goToCart} className={styles.button}>Add to Cart</button>
+           </div>
           </div>
         </div>
       </div>

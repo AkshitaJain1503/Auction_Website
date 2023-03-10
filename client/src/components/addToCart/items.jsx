@@ -37,21 +37,19 @@ const Items = ({ auction_id, product_id, productImage, productName, productDescr
     navigate(`/auctionSpace?id=${product_id}`);
   }
 
+  const goToProduct = () => {
+    navigate(`/productPage?id=${product_id}`);
+  }
+
   return (
     <>
       <div className="items-info">
         <div className="product-img">
-          <img src={productImage} alt="arrow"></img>
+          <img onClick={goToProduct} src={productImage} alt="arrow" style={{"cursor":"pointer"}}></img>
         </div>
         <div className="title">
           <h2>{productName}</h2>
-          {/* <p>{productDescription}</p> */}
         </div>
-        {/* <div className="add-minus-quantity">
-          <i className="fas fa-minus minus"></i>
-          <input type="text" placeholder="2" />
-          <i className="fas fa-plus"></i>
-        </div> */}
         <div className="price">
           <h3><span> Current Price: </span> {currentPrice}</h3>
         </div>
