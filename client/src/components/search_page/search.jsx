@@ -115,55 +115,49 @@ const GetSearchResults = () => {
                 })
             }
         }, [data, name])
-    
+        const handleShipment = (e) => {
+            setShipment(e.target.value);
+        }
+        let ShipmentData = data;
+        if (shipment !== "none") {
+            ShipmentData = data.filter(
+              (item) => item.shipment === shipment
+            );
+          }
+          
         const handleSort = (e) => {
             setSort(e.target.value);
         }
     
-        let sortedData = data;
+        let sortedData = ShipmentData;
         if (sort === "lowToHigh") {
-            sortedData = data.sort((a, b) => a.basePrice - b.basePrice);
+            sortedData = ShipmentData.sort((a, b) => a.basePrice - b.basePrice);
         } else if (sort === "highToLow") {
-            sortedData = data.sort((a, b) => b.basePrice - a.basePrice);
+            sortedData = ShipmentData.sort((a, b) => b.basePrice - a.basePrice);
         }
-        
-        const handleShipment = (e) => {
-            setShipment(e.target.value);
-        }
-        let ShipmentData = sortedData;
-        if (shipment !== "none") {
-            ShipmentData = sortedData.filter(
-              (item) => item.shipment === shipment
-            );
-          }
-          const handleTimee = (e) => {
-            setTime(e.target.value);
-          }
-        let TimeData = ShipmentData;
-        if(Time==="StartTime")
-        {  
-            
-            TimeData = ShipmentData.sort((a, b) => {
+        else if(sort === "StartTime")
+        {
+            sortedData = ShipmentData.sort((a, b) => {
                 const aStartTime = new Date(a.fStartTime).getTime();
                 //console.log(typeof(aStartTime));
                 const bStartTime = new Date(b.fStartTime).getTime();
                 //console.log("hello",TimeData);
                 return aStartTime - bStartTime;
-            });
-           // TimeData = ShipmentData.sort((a, b) => a.fStartTime - b.fStartTime);
-        }
-        
-        if(Time==="EndTime")
+        });
+    }
+    else if(sort === "EndTime")
         {
-           TimeData = ShipmentData.sort((a, b) => {
-            const aEndTime = new Date(a.fEndTime).getTime();
-            const bEndTime = new Date(b.fEndTime).getTime();
-            return aEndTime - bEndTime;
-          });
-        //   TimeData = ShipmentData.sort((a, b) => a.fEndTime - b.fEndTime);
-        //   console.log(typeof(fEndTime));
-        }
-        return { data: TimeData, handleSort, handleShipment, handleTimee,name};
+            sortedData = ShipmentData.sort((a, b) => {
+                const aEndTime = new Date(a.fEndTime).getTime();
+                //console.log(typeof(aStartTime));
+                const bEndTime = new Date(b.fEndTime).getTime();
+                //console.log("hello",TimeData);
+                return aEndTime - bEndTime;
+        });
+    }
+        
+        
+        return { data: sortedData, handleSort, handleShipment,name};
     };
 // const GetSearchResults = () => {
 //     const name = GetProductname();
@@ -192,7 +186,7 @@ const GetSearchResults = () => {
 
     const SearchDetails = () => {
         const navigate = useNavigate();
-        const { data, handleSort ,handleShipment,handleTimee,name} = GetSearchResults();
+        const { data, handleSort ,handleShipment,name} = GetSearchResults();
         if (Object.keys(data).length > 0) {
 
             const handleOnClickEvent = (product) => {
@@ -207,9 +201,11 @@ const GetSearchResults = () => {
                     <div className='cont'>
                         
                         <select onChange={handleSort}>
-                            <option value="none">Sort by Base Price</option>
-                            <option value="lowToHigh">Low to High</option>
-                            <option value="highToLow">High to Low</option>
+                            <option value="none">Sort by:</option>
+                            <option value="lowToHigh">Price Low to High</option>
+                            <option value="highToLow">Price High to Low</option>
+                            <option value="StartTime">Start Time</option>
+                            <option value="EndTime">End Time</option>
                         </select>
                         <select onChange={handleShipment}>
                             <option value="none">Filter by Shipment Location</option>
@@ -223,11 +219,11 @@ const GetSearchResults = () => {
                             <option value="Pune">Pune</option>
                             <option value="Surat">Surat</option>
                         </select>
-                        <select onChange={handleTimee}>
+                        {/* <select onChange={handleTimee}>
                             <option value="none">Sort by Time</option>
                             <option value="StartTime">Start Time</option>
                             <option value="EndTime">End Time</option>
-                        </select>
+                        </select> */}
                         <a href={`/calendarView?name=${name}`}>
 					<button className="white_btn">
 						Calendar
@@ -271,6 +267,15 @@ const GetSearchResults = () => {
             </div>
         );
     } 
+     else {
+        return (
+            <div>
+                <NavBar />
+                {/* <h5>Total Matching Products: {Object.keys(data).length}</h5> */}
+                <h5>Sorry, No products match your search results</h5>
+            </div>
+        );
+    }
 }
 //     const SearchDetails = () => {
 //         const navigate = useNavigate();
