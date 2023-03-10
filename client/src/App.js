@@ -6,12 +6,15 @@ import { DisplayProfile } from "./components/myProfile/getProfile";
 import { DisplayUserProfile } from "./components/userInfo/userProfile";
 import EditProfile from "./components/myProfile/editProfile";
 import PastPurchases from "./components/pastPurchases/pastPurchases";
+import SearchDetails from "./components/search_page/search";
 import PastPosts from "./components/pastPosts/pastPosts";
 import PostProduct from "./components/postProduct/postProduct";
 import ProductPage from "./components/productDetails/productPage";
 import Auction from "./components/auctionSpace";
 import Cart from "./components/addToCart/Cart";
 import AllProductCarts from "./components/addToCart/AllProductCarts";
+import { Calendar } from "./components/calendarView/Calendar";
+import CalendarDetails from "./components/calendarView/calendarDetails";
 function App() {
   const user = localStorage.getItem("token");
 
@@ -53,8 +56,16 @@ function App() {
 
       {<Route path="/carts" exact element={<Cart />} />}
       {<Route path="/allProductCarts" exact element={<AllProductCarts />} />}
-    </Routes>
-  );
+			{user && <Route path="/userProfile" exact element={<DisplayUserProfile/>}/>}
+			{!user && <Route path="/userProfile" exact element={<Signup/>}/>}
+			
+			{user && <Route path="/auctionSpace" exact element={<Auction/>} />} 
+		  	<Route path="/searchResults" exact element={<SearchDetails/>}/>
+
+			<Route path="/calendarView" exact element={<Calendar/>}/>
+			<Route path="/calendarDetails" exact element={<CalendarDetails/>}/>
+		</Routes>
+	);
 }
 
 export default App;

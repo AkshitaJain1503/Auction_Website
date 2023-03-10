@@ -19,7 +19,11 @@ const allProductCarts = require("./routes/Carts/allProductCarts");
 var bodyParser = require("body-parser");
 app.use(bodyParser.json({ limit: "50mb" }));
 app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
-//databse connection
+const search = require("./routes/search_page/search");
+const calendar = require("./routes/calendarView/calendar");
+const calendarDetails = require("./routes/calendarView/calendarDetails");
+
+//database connection
 connection();
 
 //middlewares
@@ -30,6 +34,9 @@ app.use(cors());
 app.use("/api/register", registerRoute);
 app.use("/api/authLogin", authLoginRoute);
 app.use("/api/productDetails", productDetails);
+app.use("/api/search",search);
+app.use("/api/calendar", calendar);
+app.use("/api/calendarDetails", calendarDetails);
 
 //protected routes with middleware checkAuthLogin
 app.use("/api/myProfile", checkAuthLogin, myProfile);
