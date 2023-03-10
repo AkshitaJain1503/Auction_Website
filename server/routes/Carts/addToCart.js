@@ -41,8 +41,12 @@ router.get("/", async(req, res) => {
         { _id: user_id }, 
         { 
           $push: {watchList: auction_id}
-        }
-    )
+        })
+      await Auction.findOneAndUpdate(
+        {_id: auction_id},
+        {
+          $push: {subscribers: user_id}
+        })  
     }
     // console.log(cartProducts);
     res.status(200).send({data: cartProducts});

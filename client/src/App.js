@@ -11,7 +11,6 @@ import PastPosts from "./components/pastPosts/pastPosts";
 import PostProduct from "./components/postProduct/postProduct";
 import ProductPage from "./components/productDetails/productPage";
 import Auction from "./components/auctionSpace";
-import Cart from "./components/addToCart/Cart";
 import AllProductCarts from "./components/addToCart/AllProductCarts";
 import { Calendar } from "./components/calendarView/Calendar";
 import CalendarDetails from "./components/calendarView/calendarDetails";
@@ -54,7 +53,6 @@ function App() {
 
       {user && <Route path="/auctionSpace" exact element={<Auction />} />}
 
-      {<Route path="/carts" exact element={<Cart />} />}
       {<Route path="/allProductCarts" exact element={<AllProductCarts />} />}
 			{user && <Route path="/userProfile" exact element={<DisplayUserProfile/>}/>}
 			{!user && <Route path="/userProfile" exact element={<Signup/>}/>}

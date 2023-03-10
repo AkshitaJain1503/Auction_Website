@@ -26,7 +26,7 @@ const AllProductCarts = () => {
   return (
     <>
       <header>
-        <div className="continue-shopping" style={{ padding: "2.5px" }}>
+        <div className="continue-shopping">
           <a href="/">
             <img src="./arrow.png" alt="arrow" className="arrow-icon" />
           </a>

@@ -1,14 +1,10 @@
 @import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200&display=swap");
 
 * {
-  margin: 0;
+  margin: 2px;
   padding: 0;
   box-sizing: border-box;
   font-family: Mulish;
-}
-
-html {
-  font-size: 55.5%;
 }
 
 :root {
@@ -31,20 +27,14 @@ i {
   cursor: pointer;
 }
 
-body {
-  width: 80%;
-  height: 100vh;
-  margin: auto;
-}
-
 header {
   width: 100%;
-  line-height: 10rem;
+  line-height: 5rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-bottom: 0.1rem solid #9a9191;
   transform: rotate(-0.05deg);
-  margin-bottom: 7rem;
+  margin-bottom: 2rem;
 }
 
 .continue-shopping {
@@ -113,7 +103,8 @@ header {
   font-size: 1.8rem;
   text-transform: capitalize;
   color: var(--main-color);
-  margin-bottom: 5rem;
+  margin-bottom: 4rem;
+  margin-left: 2rem;
 }
 
 .total-items-count {
@@ -124,7 +115,7 @@ header {
 /* cart main div start  */
 
 .main-cart-section .cart-items {
-  width: 100%;
+  width: 90%;
   height: 62rem;
   background: linear-gradient(
     103.49deg,
@@ -146,7 +137,7 @@ header {
 }
 
 .cart-items-container {
-  width: 90%;
+  width: 80%;
   height: 56rem;
 }
 
@@ -164,8 +155,14 @@ header {
   height: 11rem;
   filter: drop-shadow(0rem 0.4rem 1rem #f1f7ff);
   border-radius: 1rem;
+  border: 1px grey solid;
+  box-shadow: 1px 1px 2px grey;
 }
 
+.product-img:hover {
+  transition: 1ms all linear;
+  transform: scale(1.09);
+}
 .items-info .title {
   display: flex;
   justify-content: center;
@@ -180,6 +177,7 @@ header {
   align-items: center;
   text-transform: capitalize;
   color: var(--main-color);
+  margin-left: 3rem;
 }
 
 .items-info .title p {
@@ -235,12 +233,16 @@ header {
 
 .price h3 {
   font-style: normal;
-  font-weight: bold;
-  font-size: 2rem;
+  font-weight: 500;
+  font-size: 1rem;
   text-transform: capitalize;
   color: var(--main-color);
 }
 
+.price h3 span {
+  font-weight: 300;
+  font-size: 1rem;
+}
 .remove-item {
   display: flex;
   justify-content: flex-end;
@@ -404,7 +406,7 @@ header {
 }
 
 ::-webkit-scrollbar-thumb{
-  background-color: rgb(20, 162, 223);
+  background-color: #3bb19b;
   background-clip: content-box;
   border: 2px solid transparent;
   border-radius: 15px;

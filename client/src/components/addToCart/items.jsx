@@ -51,7 +51,7 @@ const Items = ({ auction_id, product_id, productImage, productName, productDescr
           <h2>{productName}</h2>
         </div>
         <div className="price">
-          <h3><span> Current Price: </span> {currentPrice}</h3>
+          <h3><span> Current Price: &#x20b9;</span> {currentPrice}</h3>
         </div>
         <div className="price">
           <button className="watch-btn" onClick={GoToAuction}>Watch</button>
