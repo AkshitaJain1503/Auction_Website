@@ -22,7 +22,7 @@ const NavLoggedIn = () => {
 
 				<a href="/allProductCarts">
 					<button className={styles.white_btn}>
-						Carts
+						WatchList
 					</button>
 				</a>
 				<a href="/PostProduct">
