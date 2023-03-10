@@ -1,18 +1,11 @@
 const router = require("express").Router();
 const {Auction} = require("../../models/auction");
 
-//Get unique dates from auction db corresponding to the searched product name for calendar display.
+//Get documents from auction db corresponding to the searched product name for calendar display.
 router.get("/", async (req, res) => {
 
     const requestedProductName = req.query.name;
-    let response =[];
 
-    let todayDate = dateConverter(String(new Date()));
-
-    //getting distinct DATE-TIME where name LIKE %requestedProductName%.
-    let AuctionList= await Auction.find().distinct("startDateTime",
-    { productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' } });
-    
     //to extract only date from the date-time type format
     function dateConverter(str){
         var date = new Date(str),
@@ -25,50 +18,36 @@ router.get("/", async (req, res) => {
      //deciding colour which will highlight the calendar according to past, today and future.
     function decideColour(todayDate, auctDate){
         if(todayDate < auctDate){
-            colour = "#774dbf";
+            return "#774dbf";
         }
-        else if(todayDate > auctDate){
-            colour = "#bf6d4d";
+        if(todayDate > auctDate){
+            return "#504e52";
         }
-        else{
-            colour = "#9bbf4d";
-        }
-        return colour;
+        return "#144a0a";
     }
 
+    let todayDate = dateConverter(String(new Date()));
 
-    //only if AuctionList contains something.
-    if(AuctionList.length!=0){
-        AuctionList.sort();
-        let uniqueDate = dateConverter(String(AuctionList[0]));
-        let resData = {date: (AuctionList[0]), color: decideColour(todayDate, uniqueDate)};
-        response.push(resData); 
+    //getting auction documents where name LIKE %requestedProductName% and is case insensitive.
+    let AuctionList= await Auction.find({ productName 
+        :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' } });
 
-        //getting only UNIQUE DATES
-        for(var i=0 ; i < AuctionList.length; i++){
-            let resData = {};
-            let currentDate = dateConverter(String(AuctionList[i]));
+    let response =[];
 
-            if(currentDate == uniqueDate){
-                continue;
-            }
-            else{
-                uniqueDate = currentDate
-            }
+    //final response array of objects.
+    for(var i = 0; i<AuctionList.length; i++){
+        let resData = {};
+        let auctDate = String(AuctionList[i]. startDateTime);
+        resData.date = auctDate;
+        resData.title = AuctionList[i]. productName;
+        resData.color = decideColour(todayDate,dateConverter(auctDate));
+        response.push(resData);
+    };
 
-            resData.date = (AuctionList[i]);
-
-            let colour = decideColour(todayDate,currentDate);
-            resData.color = colour;
-            
-            response.push(resData)
-
-        }
-    }
     res.status(200).send({data:response});
 });
 
-
 module.exports = router;
+
 
 
