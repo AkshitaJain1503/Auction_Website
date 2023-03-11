@@ -21,7 +21,7 @@ export default function LiveAuctions() {
       {products &&
         products?.data.map((product) => (
           <Card
-            key={product._id}
+            key={product.prouductId}
             Product={product}
           />
         ))}
@@ -53,4 +53,9 @@ const Hbar = styled.div`
 	align-items: center;
   flex-gap:100px;
   justify-content: space-between;
+  h4{
+    margin-left:auto;
+    margin-right:auto;
+    color:#334b48
+  }
 `

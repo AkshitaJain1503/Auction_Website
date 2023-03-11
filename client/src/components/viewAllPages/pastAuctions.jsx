@@ -21,7 +21,7 @@ export default function PastAuctions() {
      {products &&
         products?.data.map((product) => (
           <Card
-            key={product._id}
+            key={product.productId}
             Product={product}
           />
         ))}
@@ -43,6 +43,11 @@ const Content = styled.div`
   }
 `;
 const Hbar = styled.div`
+h4{
+  margin-left:auto;
+  margin-right:auto;
+  color:#334b48
+}
   margin-top:5px;
   outline-style:solid;
 	width: 100%;

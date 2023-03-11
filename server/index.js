@@ -19,7 +19,9 @@ const homeLiveAuction =require("./routes/homePage/homeLiveAuctions");
 const search = require("./routes/search_page/search");
 const calendar = require("./routes/calendarView/calendar");
 const calendarDetails = require("./routes/calendarView/calendarDetails");
-
+const liveAuctions = require("./routes/viewAllPage/LiveAuctions");
+const pastAuctions = require("./routes/viewAllPage/pastAuctions");
+const upcomingAuctions = require("./routes/viewAllPage/upcomingAuctions");
 var bodyParser = require('body-parser');
 app.use(bodyParser.json({limit: '50mb'}));
 app.use(bodyParser.urlencoded({limit: '50mb', extended: true}));
@@ -30,9 +32,12 @@ connection();
 app.use(express.json());
 app.use(cors());
 //routes
-app.use("/api/liveAuction",homeLiveAuction);
-app.use("/api/pastAuction",homePastAuction);
-app.use("/api/upcomingAuction",homeUpcomingAuction);
+app.use("/api/liveAuction",liveAuctions);
+app.use("/api/pastAuction",pastAuctions);
+app.use("/api/upcomingAuction",upcomingAuctions);
+app.use("/api/homeLiveAuction",homeLiveAuction);
+app.use("/api/homePastAuction",homePastAuction);
+app.use("/api/homeUpcomingAuction",homeUpcomingAuction);
 app.use("/api/register", registerRoute);
 app.use("/api/authLogin", authLoginRoute);
 app.use("/api/productDetails", productDetails);

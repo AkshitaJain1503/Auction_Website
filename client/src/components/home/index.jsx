@@ -9,21 +9,21 @@ function Home() {
       <Container>
         <NavBar />
         <Hbar>
-          <h5>Upcoming Auctions</h5>
+          <h4>Upcoming Auctions</h4>
           <a href='/upcomingAuctions'>
             <Button>View all</Button>
           </a>
         </Hbar>
         <HomeUpcomingAuctions/>
         <Hbar>
-          <h5>Live Auctions</h5>
+          <h4>Live Auctions</h4>
           <a href='/liveAuctions'>
             <Button>View all</Button>
           </a>
         </Hbar>
         <HomeLiveAuctions/>
         <Hbar>
-          <h5>Past Auctions</h5>
+          <h4>Past Auctions</h4>
           <a href='pastAuctions'>
             <Button>View all</Button>
           </a>
@@ -37,6 +37,7 @@ function Home() {
 
 const Container = styled.div`
   width: 100%;
+  height:100%;
   background-color: rgb(234, 237, 237);
   max-width: 1400px;
   margin: auto;
@@ -53,7 +54,12 @@ const Hbar = styled.div`
 	background-color: #ffffff;
 	display: flex;
 	align-items: center;
-  flex-gap:100px;
+  h4{
+    margin-left:auto;
+    margin-right:auto;
+    color:#334b48
+  }
+  //flex-gap:100px;
   justify-content: space-between;
 `
 const Button = styled.button`

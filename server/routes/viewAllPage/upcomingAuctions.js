@@ -5,8 +5,8 @@ const { Product } = require("../../models/product");
 const router = require("express").Router() ;
 router.get("/", async (req, res) => {
     try{
-      const auctions = await Auction.find({auctionStarted : false}).limit(4);
-      var length=auctions.length;
+      const auctions = await Auction.find({auctionStarted : false});
+      const length=auctions.length;
       const productIds=[];
       for(var i=length-1;i>=0;i--){
         productIds.push(auctions[i].product);
@@ -31,7 +31,7 @@ router.get("/", async (req, res) => {
         productDetails.fStartTime= auctions[i].startDateTime;
         responseData.push(productDetails);
       }
-      res.status(200).send(responseData);
+      res.status(200).send(responseData); 
     }
     catch (error) {
       console.error(error);

@@ -7,7 +7,7 @@ export default function HomeLiveAuctions() {
     const [products, setProducts] = useState();
     useEffect(() => {
       const fetchdata = async () => {
-        const data = await axios.get("http://localhost:3001/api/liveAuction");
+        const data = await axios.get("http://localhost:3001/api/homeLiveAuction");
         setProducts(data);
       };
       fetchdata();
@@ -15,9 +15,9 @@ export default function HomeLiveAuctions() {
   return (
     <Content>
     {products &&
-        products?.data.slice(0,4).map((product) => (
+        products?.data.map((product) => (
           <Card
-            key={product._id}
+            key={product.productId}
             Product={product}
           />
         ))}
