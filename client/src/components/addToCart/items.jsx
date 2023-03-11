@@ -3,7 +3,7 @@ import "./cart.css";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
-const Items = ({ auction_id, product_id, productImage, productName, productDescription, currentPrice}) => {
+const Items = ({ auction_id, product_id, productImage, productName, productDescription, currentPrice, auctionStartDateTime, auctionEndDateTime}) => {
 
   
   const navigate = useNavigate();
@@ -31,6 +31,7 @@ const Items = ({ auction_id, product_id, productImage, productName, productDescr
     getItems();
   }
 
+  // console.log(`${new Date(auctionStartDateTime).getDate()}/${new Date(auctionStartDateTime).getMonth()}/${new Date(auctionStartDateTime).getFullYear}`);
 
 
   const GoToAuction = () => {
@@ -52,6 +53,8 @@ const Items = ({ auction_id, product_id, productImage, productName, productDescr
         </div>
         <div className="price">
           <h3><span> Current Price: &#x20b9;</span> {currentPrice}</h3>
+          <h3><span> Start Time: </span> {auctionStartDateTime}</h3>
+          <h3><span> End Time: </span> {auctionEndDateTime}</h3>
         </div>
         <div className="price">
           <button className="watch-btn" onClick={GoToAuction}>Watch</button>

@@ -227,22 +227,23 @@ header {
 
 .price {
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
+  flex-direction: column;
 }
 
 .price h3 {
   font-style: normal;
   font-weight: 500;
-  font-size: 1rem;
+  font-size: 0.9rem;
   text-transform: capitalize;
   color: var(--main-color);
 }
 
 .price h3 span {
   font-weight: 300;
-  font-size: 1rem;
 }
+
 .remove-item {
   display: flex;
   justify-content: flex-end;

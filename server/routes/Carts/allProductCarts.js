@@ -21,6 +21,12 @@ router.get("/", async(req, res) => {
       eachProduct.productImage = product.productImage;
       eachProduct.auction_id = auction._id;
       eachProduct.product_id = product._id;
+      const formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.startDateTime);
+      const formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.endDateTime);
+      eachProduct.auctionStartDateTime = formattedStartTime;
+      eachProduct.auctionEndDateTime = formattedEndTime;
       cartProducts.push(eachProduct);
     }
     res.status(200).send({data: cartProducts});
