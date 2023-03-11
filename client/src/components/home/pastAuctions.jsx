@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Card from "./card";
 import styled from "styled-components";
 
-export default function PastAuctions() {
+export default function HomePastAuctions() {
     const [products, setProducts] = useState();
     useEffect(() => {
       const fetchdata = async () => {
