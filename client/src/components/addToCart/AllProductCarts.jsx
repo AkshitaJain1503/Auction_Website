@@ -16,6 +16,9 @@ const AllProductCarts = () => {
       headers: myHeaders,
     });
     const res = await response.json();
+    if(res.status === 404 || !res) {
+      window.location = "/signup";
+    }
     setItem(res.data);
   };
 

@@ -24,6 +24,9 @@ const Items = ({ auction_id, product_id, productImage, productName, productDescr
     if(response) {
       window.location.reload(false);
     }
+    if(response.status === 404 || !response) {
+      window.location = "/signup";
+    }
   }
 
   const removeItem = () => {

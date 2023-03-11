@@ -28,6 +28,10 @@ export default function ProductPage(props) {
       "http://localhost:3001/api/productDetails?id=" + id
     );
     const res = await response.json();
+
+    if(res.status === 404 || !res) {
+      window.location = "/signup";
+    }
     // console.log(res.data.productName);
     setProduct((previousState) => {
       return {
@@ -51,17 +55,19 @@ export default function ProductPage(props) {
     getProducts();
   }, []);
 
-  const getItems = async () => {
+  const addToWatchList = async () => {
     const myHeaders = new Headers({
-      "Content-Type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
     });
-    const response = await fetch("http://localhost:3001/api/carts?id=" + id, {
+    const res = await fetch("http://localhost:3001/api/carts?id=" + id, {
       method: "GET",
       headers: myHeaders,
     });
-    const res = await response.json();
-    console.log(res.data);
+
+    if(res.status === 404 || !res) {
+      window.location = "/signup";
+    }
+
     navigate(`/AllProductCarts`);
   };
 
@@ -69,8 +75,6 @@ export default function ProductPage(props) {
     navigate(`/auctionSpace?id=`+ id);
   };
 
-  // console.log("product name");
-  // console.log(product.data.productName);
   return (
     <>
       <NavBar />
@@ -95,7 +99,7 @@ export default function ProductPage(props) {
            <span> End Time of auction: {product.aucEnd} </span>
            <div className={styles.btns}>
               <button onClick={handleClick} className={styles.button}>Auction Space</button>
-              <button onClick={getItems} className={styles.button}>Add to Cart</button>
+              <button onClick={addToWatchList} className={styles.button}>Add to Cart</button>
            </div>
           </div>
         </div>
