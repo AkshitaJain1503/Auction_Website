@@ -21,7 +21,7 @@ const GetSearchResults = () => {
     const name = GetProductname();
     const [data, setData] = React.useState([]);
     const [sort, setSort] = React.useState("none");
-    const [selectedCities, setSelectedCities] =React.useState([]);
+    const [selectedCities, setSelectedCities] =React.useState({});
    // const [Time,setTime] =React.useState("none");
     useEffect(() => {
         if(Object.keys(data).length === 0){
@@ -33,38 +33,24 @@ const GetSearchResults = () => {
                 })
             }
         }, [data, name])
-        // const handleShipment = (e) => {
-        //     const city = e.target.value;
-        //     const isChecked = e.target.checked;
-        //     setSelectedCities((prevSelectedCities) => ({
-        //       ...prevSelectedCities,
-        //       [city]: isChecked,
-        //     }));
-        //   };
-          const handleCityChange = (event) => {
-            const options = event.target.options;
-            const selected = [];
-            for (let i = 0; i < options.length; i++) {
-              if (options[i].selected) {
-                selected.push(options[i].value);
-              }
-            }
-            setSelectedCities(selected);
+        const handleShipment = (e) => {
+            const city = e.target.value;
+            const isChecked = e.target.checked;
+            setSelectedCities((prevSelectedCities) => ({
+              ...prevSelectedCities,
+              [city]: isChecked,
+            }));
           };
         let ShipmentData = data;
-        // if (Object.keys(selectedCities).length > 0) {
-        //     ShipmentData = data.filter((item) => {
-        //       const shipmentCity = item.shipment;
-        //       return (
-        //         Object.prototype.hasOwnProperty.call(selectedCities, shipmentCity) &&
-        //         selectedCities[shipmentCity]
-        //       );
-        //     });
-        //   }
-        if(selectedCities.length>0)
-        {
-            ShipmentData = data.filter((item) => selectedCities.includes(item.shipment));
-        }
+        if (Object.keys(selectedCities).length > 0) {
+            ShipmentData = data.filter((item) => {
+              const shipmentCity = item.shipment;
+              return (
+                Object.prototype.hasOwnProperty.call(selectedCities, shipmentCity) &&
+                selectedCities[shipmentCity]
+              );
+            });
+          }
         const handleSort = (e) => {
             setSort(e.target.value);
         }
@@ -93,11 +79,11 @@ const GetSearchResults = () => {
     }
         
         
-        return { data: sortedData, handleSort, handleCityChange,name,selectedCities};
+        return { data: sortedData, handleSort, handleShipment,name,setSelectedCities};
     };
     const SearchDetails = () => {
         const navigate = useNavigate();
-        const { data, handleSort ,handleCityChange,name,selectedCities} = GetSearchResults();
+        const { data, handleSort ,handleShipment,name,setSelectedCities} = GetSearchResults();
         if (Object.keys(data).length > 0) {
 
             const handleOnClickEvent = (product) => {
@@ -119,16 +105,26 @@ const GetSearchResults = () => {
                             <option value="StartTime">Start Time</option>
                             <option value="EndTime">End Time</option>
                         </select>
-                        <div>
-      <select multiple={true} id="city-select" onChange={handleCityChange}>
-        <option value="Hyderabad">Hyderabad</option>
-        <option value="Pune">Pune</option>
-        <option value="Ahmedabad">Surat</option>
-        <option value="houston">Houston</option>
-        <option value="philadelphia">Philadelphia</option>
-      </select>
-     <div>Selected cities: {selectedCities.join(', ')}</div>
-    </div>
+  <div  onChange={handleShipment}>
+    <input type="checkbox" id="Hyderabad" name="shipment-cities[]" value="Hyderabad" />
+    <label htmlFor="Hyderabad">Hyderabad</label>
+  </div>
+  <div onChange={handleShipment}>
+    <input type="checkbox" id="Pune" name="shipment-cities[]" value="Pune" />
+    <label htmlFor="Pune">Pune</label>
+  </div >
+  <div onChange={handleShipment}>
+    <input type="checkbox" id="Surat" name="shipment-cities[]" value="Surat" />
+    <label htmlFor="Surat">Surat</label>
+  </div>
+  <div onChange={handleShipment}>
+    <input type="checkbox" id="houston" name="shipment-cities[]" value="Houston" />
+    <label htmlFor="houston">Houston</label>
+  </div>
+  <div onChange={handleShipment}>
+    <input type="checkbox" id="miami" name="shipment-cities[]" value="Miami" />
+    <label htmlFor="miami">Miami</label>
+  </div>
 
 
 
