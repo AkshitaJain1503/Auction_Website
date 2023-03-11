@@ -40,7 +40,7 @@ const GetPastPurchases = () => {
     return data;
 };
 
-//Renders the past purchases in a table whose each row on cliking renders the specific product page.
+//Renders the past purchases in a table whose each row on clicking renders the specific product page.
 //(TableControl) 25 rows are shown on one page. Rest are shown via pagination
 const PastPurchases = () => {
     const navigate = useNavigate();

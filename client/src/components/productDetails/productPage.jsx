@@ -28,6 +28,10 @@ export default function ProductPage(props) {
       "http://localhost:3001/api/productDetails?id=" + id
     );
     const res = await response.json();
+
+    if(res.status === 404 || !res) {
+      window.location = "/signup";
+    }
     // console.log(res.data.productName);
     setProduct((previousState) => {
       return {
@@ -51,12 +55,26 @@ export default function ProductPage(props) {
     getProducts();
   }, []);
 
+  const addToWatchList = async () => {
+    const myHeaders = new Headers({
+      Authorization: "Bearer " + localStorage.getItem("token"),
+    });
+    const res = await fetch("http://localhost:3001/api/carts?id=" + id, {
+      method: "GET",
+      headers: myHeaders,
+    });
+
+    if(res.status === 404 || !res) {
+      window.location = "/signup";
+    }
+
+    navigate(`/AllProductCarts`);
+  };
+
   const handleClick = () => {
     navigate(`/auctionSpace?id=`+ id);
   };
 
-  // console.log("product name");
-  // console.log(product.data.productName);
   return (
     <>
       <NavBar />
@@ -79,7 +97,10 @@ export default function ProductPage(props) {
            <span> Seller : <a href={`/userProfile?id=${product.sellerId}`} className={styles.links}>{product.name} </a></span>
            <span> Start Time of auction: {product.aucStart}</span>
            <span> End Time of auction: {product.aucEnd} </span>
-           <button onClick={handleClick} className={styles.button}>Auction Space</button>
+           <div className={styles.btns}>
+              <button onClick={handleClick} className={styles.button}>Auction Space</button>
+              <button onClick={addToWatchList} className={styles.button}>Add to Cart</button>
+           </div>
           </div>
         </div>
       </div>
