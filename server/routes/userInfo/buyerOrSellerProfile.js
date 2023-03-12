@@ -1,3 +1,4 @@
+// Buyer or seller (user) info : GET
 const router = require("express").Router();
 const {User} = require("../../models/user");
 const Joi = require("joi");
@@ -6,6 +7,7 @@ const Joi = require("joi");
 //Get the buyer or seller (user) profile data.
 router.get("/", async (req, res) => {
 
+    //getting user Id from params
     const requested_id = req.query.id;
     var userData = {}
 

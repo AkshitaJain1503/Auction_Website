@@ -45,8 +45,8 @@ const EditProfile = () => {
           <div className={styles.right}>
             <form className={styles.form_container} onSubmit={handleSubmit}>
               <h1>Edit Profile</h1>
-              <label >Name*
-                <input style={{ marginLeft: '2rem' }}
+              <label >Name<br></br>
+                <input 
                   type="text"
                   placeholder="Name"
                   name="name"
@@ -57,9 +57,10 @@ const EditProfile = () => {
                   className={styles.input}
                 />
               </label>
+              <br></br>
 
-              <label> Address*
-                <input style={{ marginLeft: '2rem' }}
+              <label> Address <br></br>
+                <input 
                   type="address"
                   placeholder="Address"
                   name="address"
@@ -69,6 +70,8 @@ const EditProfile = () => {
                   className={styles.input}
                 />
               </label>
+              <br></br>
+              
               <button type="submit" className={styles.green_btn}>
                 Save
               </button>
@@ -79,9 +82,6 @@ const EditProfile = () => {
     </div>    
   )
 };
-
-
-
 
 export default EditProfile;
 

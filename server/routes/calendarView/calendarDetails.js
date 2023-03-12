@@ -1,7 +1,7 @@
+//Getting calendar details of a specific date and product searched : GET
 const router = require("express").Router();
 const {Product} = require("../../models/product");
 const {Auction} = require("../../models/auction");
-
 
 //Get all the auction and product details with searched name and date.
 router.get("/", async (req, res) => {
@@ -59,8 +59,8 @@ router.get("/", async (req, res) => {
 
         responseArray.push(resdata);
     }
-    // console.log(responseArray);
 
+    //returns an array of objects. {data: [{},{},{}...]}
     res.status(200).send({data: responseArray});
 });
 

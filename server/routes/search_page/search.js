@@ -1,14 +1,26 @@
 const router = require("express").Router();
 const {Product} = require("../../models/product");
 const { Auction } = require("../../models/auction");
+
 router.get("/", async (req, res) => {
 
+    //getting searched name from params
     const requestedProductName = req.query.name;
-    var responseData = []; //this is an array of objects
+    var responseData = []; 
     
+    // finding all the auction documents with matching param conditions [{},{},{}]
     let products = await Product.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
-    let auction = await Auction.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
-    //console.log(auction);
+
+    //getting the productIDs from the above document
+    pIdList = []
+    for(var i = 0; i<products.length; i++){
+        pIdList.push(products[i]._id);
+    }
+
+    //getting those product documents corresponding to the pIdList
+    let auction = await Auction.find({product: pIdList});
+    
+    //returning the info needed at front-end
     for(var i=products.length-1 ; i >=0; i--){
 
         var productDetails = {}; // this will hold a single object
@@ -30,9 +42,12 @@ router.get("/", async (req, res) => {
         productDetails.StartTime= formattedStartTime;
         productDetails.fEndTime= auction[i].endDateTime;
         productDetails.fStartTime= auction[i].startDateTime;
-        console.log(typeof(productDetails.fStartTime))
+    
         responseData.push(productDetails);
     }
- res.status(200).send({data:responseData}); //returns the array of objects
+
+    //returns the array of objects
+    res.status(200).send({data:responseData}); 
 });
+
 module.exports = router;

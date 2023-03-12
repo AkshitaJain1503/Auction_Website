@@ -55,7 +55,7 @@ const Signup = () => {
               <h1>Create Account</h1>
               <input
                 type="text"
-                placeholder="Name*"
+                placeholder="Name"
                 name="name"
                 onChange={handleChange}
                 value={data.name}
@@ -72,7 +72,7 @@ const Signup = () => {
               /> */}
               <input
                 type="email"
-                placeholder="Email*"
+                placeholder="Email"
                 name="email"
                 onChange={handleChange}
                 value={data.email}
@@ -81,7 +81,7 @@ const Signup = () => {
               />
               <input
                 type="password"
-                placeholder="Password*"
+                placeholder="Password"
                 name="password"
                 onChange={handleChange}
                 value={data.password}
@@ -90,7 +90,7 @@ const Signup = () => {
               />
               <input
                 type="address"
-                placeholder="Address*"
+                placeholder="Address"
                 name="address"
                 onChange={handleChange}
                 value={data.address}
