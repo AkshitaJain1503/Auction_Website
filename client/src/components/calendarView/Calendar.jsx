@@ -1,27 +1,21 @@
 import React , {  useState, useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../navbar/index";
-import styles from "../auctionSpace/styles.module.css";
 import {
   SevenColGrid,
   Wrapper,
   HeadDays,
   DateControls,
   StyledEvent,
-  // SeeMore,
-  PortalWrapper
+  SeeMore
 } from "./Calendar.styled";
-// import { DAYS, MOCKAPPS } from "./conts";
 import {
   datesAreOnSameDay,
-  // getDarkColor,
-  // getDaysInMonth,
+  getDaysInMonth,
   getMonthYear,
   getSortedDays,
   nextMonth,
   prevMonth
-  // range,
-  // sortDays
 } from "./utils";
 
 export const Calendar = () => {
@@ -29,10 +23,6 @@ export const Calendar = () => {
 
   const DAYS = ["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"];
   const [currentDate, setCurrentDate] = useState(new Date());
-  // const dragDateRef = useRef();
-  // const dragindexRef = useRef();
-  const [showPortal, setShowPortal] = useState(false);
-  const [portalData, setPortalData] = useState({});
 
   const useQuery = () => new URLSearchParams(useLocation().search);
   const query = useQuery();
@@ -41,91 +31,62 @@ export const Calendar = () => {
 
 // GET request for getting the auction start dates
 useEffect(() => {
-  fetch("http://localhost:3001/api/calendar?name=" + name , {
-        // headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
-      })
+  fetch("http://localhost:3001/api/calendar?name=" + name )
     .then(response => response.json())
     .then(data => 
       {
         setEvents(data.data);
-        
       }
     )
     .catch(error => console.error(error));
 }, []);
 
-  // const addEvent = (date, event) => {
-  //   if (!event.target.classList.contains("StyledEvent")) {
-  //     const text = window.prompt("name");
-  //     if (text) {
-  //       date.setHours(0);
-  //       date.setSeconds(0);
-  //       date.setMilliseconds(0);
-  //       setEvents((prev) => [
-  //         ...prev,
-  //         { date, title: text, color: getDarkColor() }
-  //       ]);
-  //     }
-  //   }
-  // };
-
-  // const drag = (index, e) => {
-  //   dragindexRef.current = { index, target: e.target };
-  // };
-
-  // const onDragEnter = (date, e) => {
-  //   e.preventDefault();
-  //   dragDateRef.current = { date, target: e.target.id };
-  // };
-
-  // const drop = (ev) => {
-  //   ev.preventDefault();
-
-  //   setEvents((prev) =>
-  //     prev.map((ev, index) => {
-  //       if (index === dragindexRef.current.index) {
-  //         ev.date = dragDateRef.current.date;
-  //       }
-  //       return ev;
-  //     })
-  //   );
-  // };
-
-  const handleOnClickEvent = (event) => {
-    const seperatedDate= event.date.split("T");
+  const handleOnClickEvent = (eventDate) => {
+    const date= new Date(eventDate).toISOString() ;
+    const seperatedDate= date.split("T");
     const dateOnly= seperatedDate[0];
     navigate(`/calendarDetails?name=${name}&date=${dateOnly}`  );
-    // setShowPortal(true);
-    // setPortalData((event));
   };
 
-  const handlePotalClose = () => setShowPortal(false);
-
-  const handleDelete = () => {
-    setEvents((prevEvents) =>
-      prevEvents.filter((ev) => ev.title !== portalData.title)
-    );
-    handlePotalClose();
+  const EventWrapper = ({date, children }) => {
+    const childLength= children.filter((child) => child).length; // number of results on this date
+    if (childLength)
+      return (
+        <>
+          {children}
+          {childLength > 2 && (
+            <SeeMore
+            onClick={() => 
+              handleOnClickEvent(date) }
+            >
+              see more...
+            </SeeMore>
+          )}
+        </>
+      );
   };
+
 
   return (
     <div >
     <NavBar/>
+    <h1>Search results for "{name}"</h1>
+    <hr/>
     <Wrapper >
-      {/* first line */}
-      <DateControls>
-        <ion-icon
+      {/* <= month => */}
+       <DateControls>
+         <ion-icon
           onClick={() => prevMonth(currentDate, setCurrentDate)}
           name="arrow-back-circle-outline"
         >  </ion-icon>
-        {getMonthYear(currentDate)}
-        <ion-icon
+        {getMonthYear(currentDate)} 
+         <ion-icon
           onClick={() => nextMonth(currentDate, setCurrentDate)}
           name="arrow-forward-circle-outline"
-        ></ion-icon>
-      </DateControls>
+        ></ion-icon> 
+      </DateControls> 
 
-      {/* // days */}
+      {/* mon tue ... */}
 
       <SevenColGrid>
         
@@ -134,35 +95,15 @@ useEffect(() => {
         ))}
       </SevenColGrid>
 
+      {/* dates grid */}
+
       <SevenColGrid
         fullheight={true}
-        // is28Days={getDaysInMonth(currentDate) === 28}
+        is28Days={getDaysInMonth(currentDate) === 28}
       >
         {getSortedDays(currentDate).map((day) => (
           <div
             id={`${currentDate.getFullYear()}/${currentDate.getMonth()}/${day}`}
-            // onDragEnter={(e) =>
-            //   onDragEnter(
-            //     new Date(
-            //       currentDate.getFullYear(),
-            //       currentDate.getMonth(),
-            //       day
-            //     ),
-            //     e
-            //   )
-            // }
-            // onDragOver={(e) => e.preventDefault()}
-            // onDragEnd={drop}
-            // onClick={(e) =>
-            //   addEvent(
-            //     new Date(
-            //       currentDate.getFullYear(),
-            //       currentDate.getMonth(),
-            //       day
-            //     ),
-            //     e
-            //   )
-            // }
           >
             <span
               className={`nonDRAG ${
@@ -180,7 +121,12 @@ useEffect(() => {
             >
               {day}
             </span>
-            <EventWrapper>
+            <EventWrapper date={new Date(
+                    currentDate.getFullYear(),
+                    currentDate.getMonth(),
+                    day+1
+                  )} >
+              
               {events.map(
                 (ev, index) =>
                   datesAreOnSameDay(
@@ -192,12 +138,10 @@ useEffect(() => {
                     )
                   ) && (
                     <StyledEvent
-                      // onDragStart={(e) => drag(index, e)}
-                      onClick={() => handleOnClickEvent(ev)}
-                      // draggable
+                      onClick={() => handleOnClickEvent(ev.date)}
                       className="StyledEvent"
                       id={`${ev.color}`}
-                      key={ev.date}
+                      key={ev.id}
                       bgColor={ev.color}
                     >
                       {ev.title}
@@ -208,47 +152,10 @@ useEffect(() => {
           </div>
         ))}
       </SevenColGrid>
-      {showPortal && (
-        <Portal
-          {...portalData}
-          handleDelete={handleDelete}
-          handlePotalClose={handlePotalClose}
-        />
-      )}
-      
-      
+              
     </Wrapper>
     </div>
   );
 };
 
-const EventWrapper = ({ children }) => {
-  if (children.filter((child) => child).length)
-    return (
-      <>
-        {children}
-        {/* {children.filter((child) => child).length > 2 && (
-          <SeeMore
-            onClick={(e) => {
-              e.stopPropagation();
-              console.log("clicked p");
-            }}
-          >
-            see more...
-          </SeeMore>
-        )} */}
-      </>
-    );
-};
-
-const Portal = ({ title, date, handleDelete, handlePotalClose }) => {
-  return (
-    <PortalWrapper>
-      <h2>{title}</h2>
-      <p>{date.toDateString()}</p>
-      <ion-icon onClick={handleDelete} name="trash-outline"></ion-icon>
-      <ion-icon onClick={handlePotalClose} name="close-outline"></ion-icon>
-    </PortalWrapper>
-  );
-};
 
