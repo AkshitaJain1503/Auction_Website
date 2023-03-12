@@ -21,9 +21,9 @@ router.get("/", async (req, res) => {
             return "#774dbf";
         }
         if(todayDate > auctDate){
-            return "#504e52";
+            return "#7f7c82";
         }
-        return "#144a0a";
+        return "#2c9119";
     }
 
     let todayDate = dateConverter(String(new Date()));
