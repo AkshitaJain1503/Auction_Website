@@ -14,9 +14,10 @@ import Auction from "./components/auctionSpace";
 import { Calendar } from "./components/calendarView/Calendar";
 import CalendarDetails from "./components/calendarView/calendarDetails";
 import MyProfile from "./components/myProfile";
-import UpcomingAuctions from "./components/viewAllPages/upcomingAuctons";
-import LiveAuctions from "./components/viewAllPages/liveAuctions";
-import PastAuctions from "./components/viewAllPages/pastAuctions";
+// import UpcomingAuctions from "./components/viewAllPages/upcomingAuctons";
+// import LiveAuctions from "./components/viewAllPages/liveAuctions";
+// import PastAuctions from "./components/viewAllPages/pastAuctions";
+import ViewAll from "./components/viewAllPages";
 
 function App() {
 	const user = localStorage.getItem("token");
@@ -59,9 +60,9 @@ function App() {
 			<Route path="/calendarDetails" exact element={<CalendarDetails/>}/>
 			{ user && <Route path="/myProfile" exact element={<MyProfile />}/>}
 			{user && <Route path="/postProduct" exact element={<PostProduct/>}/>}
-			<Route path="/liveAuctions" exact element={<LiveAuctions/>}/>
-			<Route path="/pastAuctions" exact element={<PastAuctions/>}/>
-			<Route path="/upcomingAuctions" exact element={<UpcomingAuctions/>}/>
+			<Route path="/liveAuctions" exact element={<ViewAll/>}/>
+			<Route path="/pastAuctions" exact element={<ViewAll/>}/>
+			<Route path="/upcomingAuctions" exact element={<ViewAll/>}/>
 
 		</Routes>
 	);

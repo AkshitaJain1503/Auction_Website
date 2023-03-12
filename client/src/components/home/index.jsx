@@ -1,9 +1,7 @@
 import NavBar from "../navbar/index";
 import React from "react";
 import styled from "styled-components";
-import HomeUpcomingAuctions from "./upcomingAuctions";
-import HomeLiveAuctions from "./liveAuctions";
-import HomePastAuctions from "./pastAuctions";
+import HomeAuctions from "./homeAuctions";
 function Home() {
     return (
       <Container>
@@ -14,22 +12,27 @@ function Home() {
             <Button>View all</Button>
           </a>
         </Hbar>
-        <HomeUpcomingAuctions/>
+        <HomeAuctions
+          str={"UpcomingAuction"}
+        />
         <Hbar>
           <h4>Live Auctions</h4>
           <a href='/liveAuctions'>
             <Button>View all</Button>
           </a>
         </Hbar>
-        <HomeLiveAuctions/>
+        <HomeAuctions
+          str={"LiveAuction"}
+        />
         <Hbar>
           <h4>Past Auctions</h4>
           <a href='pastAuctions'>
             <Button>View all</Button>
           </a>
-
         </Hbar>
-        <HomePastAuctions/>
+        <HomeAuctions
+          str={"PastAuction"}
+        />
       </Container>
     );
   }
@@ -37,7 +40,7 @@ function Home() {
 
 const Container = styled.div`
   width: 100%;
-  height:100%;
+  height:100vh;
   background-color: rgb(234, 237, 237);
   max-width: 1400px;
   margin: auto;
@@ -59,7 +62,6 @@ const Hbar = styled.div`
     margin-right:auto;
     color:#334b48
   }
-  //flex-gap:100px;
   justify-content: space-between;
 `
 const Button = styled.button`

@@ -3,31 +3,43 @@ import React, { useEffect, useState } from "react";
 import Card from "../home/card";
 import styled from "styled-components";
 
-export default function LiveAuctions() {
-    const [products, setProducts] = useState();
+export default function ViewAll() {
+    const [products, setProducts] = useState({});
     useEffect(() => {
-      const fetchdata = async () => {
-        const data = await axios.get("http://localhost:3001/api/liveAuction");
+        var url=window.location.pathname;
+        const fetchdata = async () => {
+        const data = await axios.get("http://localhost:3001/api"+url);
         setProducts(data);
       };
       fetchdata();
     }, []);
-  return (
-    <div>
-      <Hbar>
-        <h4>Live Auctions</h4>
-      </Hbar>
-      <Content>
-      {products &&
-        products?.data.map((product) => (
-          <Card
-            key={product.prouductId}
-            Product={product}
-          />
-        ))}
-      </Content>
-    </div>
-  )
+    if(Object.keys(products).length > 0){
+      return (
+        <div>
+          <Hbar>
+            <h4>Auctions</h4>
+          </Hbar>
+          <Content>
+            {products &&
+              products?.data.map((product) => (
+              <Card
+                key={product.SNo}
+                Product={product}
+              />
+              ))
+           }
+          </Content>
+        </div>
+      )
+  }
+    else{
+      return(
+        <div>
+          <h5>Sorry,No deals available right now.</h5>
+        </div>
+      )
+      
+    }
 }
 
 
