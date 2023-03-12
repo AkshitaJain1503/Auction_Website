@@ -37,10 +37,11 @@ router.get("/", async (req, res) => {
     //final response array of objects.
     for(var i = 0; i<AuctionList.length; i++){
         let resData = {};
-        let auctDate = String(AuctionList[i]. startDateTime);
+        let auctDate = (AuctionList[i]. startDateTime);
         resData.date = auctDate;
         resData.title = AuctionList[i]. productName;
         resData.color = decideColour(todayDate,dateConverter(auctDate));
+        resData.id = AuctionList[i]._id;
         response.push(resData);
     };
 

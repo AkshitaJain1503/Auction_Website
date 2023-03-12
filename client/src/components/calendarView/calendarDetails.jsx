@@ -32,6 +32,7 @@ import './calendarDetails.css';
         <div>
             <NavBar />
              <div>
+             <h1>Search results for "{productName}"</h1>
                  <h5>Total Matching Products: {data.length}</h5> 
             </div>
             <hr />
