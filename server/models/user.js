@@ -7,10 +7,6 @@ const userSchema = new mongoose.Schema({
         type: String, 
         required: true
     },
-    // lastName: {
-    //     type: String, 
-    //     // required: true
-    // },
     email: {
         type: String, 
         required: true
@@ -19,10 +15,6 @@ const userSchema = new mongoose.Schema({
         type: String, 
         required: true
     },
-    // phone: {
-    //     type: String,
-    //     required: true,
-    // },
     address: {
         type: String,
         required: true,
@@ -45,12 +37,6 @@ const userSchema = new mongoose.Schema({
           ref: 'Auction',
         },
     ],
-    //   bids: [
-    //     {
-    //       type: mongoose.Types.ObjectId,
-    //       ref: 'Product',
-    //     },
-    // ]
 });
 
 //generate jwt 

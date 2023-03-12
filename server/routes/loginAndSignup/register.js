@@ -6,8 +6,6 @@ const passwordComplexity = require('joi-password-complexity');
 const Joi = require('joi');
 
 //validate data entered by user using joi and passwordComplexity
-
-
 router.post("/", async (req, res) => {
 	try {
 		// const validate = (data) => {
@@ -20,6 +18,11 @@ router.post("/", async (req, res) => {
 		// const {error} = validate(req.password);
 		// if (error)
 		// 	return res.status(400).send({message: error.details[0].message});
+
+		// const {error} = passwordComplexity().validate(req.password);
+		// if (error){
+		// console.log("uparrrrrr",error.details[0].message)
+		//  	return res.status(400).send({message: error.details[0].message});}
 
     	// if no error occured previously check email exists or not
 		let user = await User.findOne({email: req.body.email});
@@ -42,10 +45,10 @@ router.post("/", async (req, res) => {
 	} 
     //If any internal server error occured.
     catch (error) {
+		console.log("hereee endddd")
 		res.status(500).send({message: "Internal Server Error"});
 	}
 });
 
 module.exports = router;
-
 
