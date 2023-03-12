@@ -35,7 +35,7 @@ export default function ViewAll() {
     else{
       return(
         <div>
-          <h5>Sorry,No deals available right now.</h5>
+          <h5>Sorry,No auctions available right now.</h5>
         </div>
       )
       

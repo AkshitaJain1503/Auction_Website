@@ -26,7 +26,7 @@ export default function HomeAuctions({str}) {
     }
     else{
         return(
-            <h5>Sorry,No deals available right now.</h5>
+            <h5>Sorry,No auctions available right now.</h5>
         )
     }
 }
