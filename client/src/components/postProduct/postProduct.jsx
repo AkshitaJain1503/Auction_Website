@@ -12,6 +12,9 @@ import {
   Button,
   Container,
 } from "reactstrap";
+import { Country, State, City } from "country-state-city";
+import Select from "react-select";
+
 // import ProductPage from "../productDetails/productPage";
 
 // const convertToBase64 = (file) => {
@@ -29,6 +32,10 @@ import {
 
 const PostProduct = () => {
   const navigate = useNavigate();
+
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
   const [product, setProduct] = useState({
     productName: "",
     productDescription: "",
@@ -61,22 +68,23 @@ const PostProduct = () => {
 
   const postData = async (e) => {
     e.preventDefault();
+    alert("Please wait! Product is getting posted.");
     const {
       productName,
       productDescription,
       productBasePrice,
-      shipmentFrom,
       productImage,
       startDateTime,
       endDateTime,
       // auctionStartDate,
       // auctionStartTime,
       // days,
-      // hours, 
+      // hours,
       // minutes
     } = product;
+    const shipmentFrom = selectedCity.name;
 
-    // Validating auction start time and end time 
+    // Validating auction start time and end time
     const now = new Date();
     const startTime = new Date(startDateTime);
     const endTime = new Date(endDateTime);
@@ -105,29 +113,36 @@ const PostProduct = () => {
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
       headers: {
-        "encType": "multipart/form-data",
-        "Authorization": "Bearer "+localStorage.getItem("token")
+        encType: "multipart/form-data",
+        Authorization: "Bearer " + localStorage.getItem("token"),
       },
-      body: formdata
-    }).catch((err)=> console.log(err));
-    
+      body: formdata,
+    }).catch((err) => console.log(err));
+
     const data = await res.json();
     if (data.status === 404 || !data) {
       window.location = "/signup";
     } else {
-      alert('Product details submitted!');
+      alert("Product details submitted!");
       navigate(`/productPage?id=${data}`);
     }
   };
   return (
     <>
-    <NavBar/>
+      <NavBar />
       <div className="wrapper">
         <Card className="shadow-sm">
           <CardBody>
             <h3>Post your product details for the advertisement</h3>
-            <p>The fields marked with * symbol are required fields, kindly fill those before submitting the form.</p>
-            <Form onSubmit={postData} method="POST" encType="multipart/form-data">
+            <p>
+              The fields marked with * symbol are required fields, kindly fill
+              those before submitting the form.
+            </p>
+            <Form
+              onSubmit={postData}
+              method="POST"
+              encType="multipart/form-data"
+            >
               <div className="my-3">
                 <Label for="productName">Product Name*</Label>
                 <Input
@@ -194,30 +209,30 @@ const PostProduct = () => {
 
               <div className="my-3">
                 <Label for="startTime">Auction Start Date and Time*</Label>
-                <Input 
-                 id="startTime"
-                 name="startDateTime"
-                 type="datetime-local"
-                 value={product.startDateTime}
-                 onChange={handleInput}
-                 className="rounded-0"
-                 required
-                /> 
+                <Input
+                  id="startTime"
+                  name="startDateTime"
+                  type="datetime-local"
+                  value={product.startDateTime}
+                  onChange={handleInput}
+                  className="rounded-0"
+                  required
+                />
               </div>
               <div className="my-3">
                 <Label for="endTime">Auction End Date and Time*</Label>
-                <Input 
-                 id="endTime"
-                 name="endDateTime"
-                 type="datetime-local"
-                 value={product.endDateTime}
-                 onChange={handleInput}
-                 className="rounded-0"
-                 required
-                /> 
+                <Input
+                  id="endTime"
+                  name="endDateTime"
+                  type="datetime-local"
+                  value={product.endDateTime}
+                  onChange={handleInput}
+                  className="rounded-0"
+                  required
+                />
               </div>
 
-               {/* <div className="my-3">
+              {/* <div className="my-3">
                 <Label for="duration">Duration*</Label>
                 <br/>
                 
@@ -251,8 +266,8 @@ const PostProduct = () => {
                 
               </div> */}
               <div className="my-3">
-                <Label for="place">Shipment from*</Label>
-                <Input
+                <Label for="place">Shipment from: </Label>
+                {/* <Input
                   id="place"
                   name="shipmentFrom"
                   type="select"
@@ -272,10 +287,56 @@ const PostProduct = () => {
                   <option>Ahmedabad</option>
                   <option>Pune</option>
                   <option>Surat</option>
-                </Input>
+                </Input> */}
+                <br></br>
+                <Label for="country">Country name* </Label>
+                <Select
+                  options={Country.getAllCountries()}
+                  getOptionLabel={(options) => {
+                    return options["name"];
+                  }}
+                  getOptionValue={(options) => {
+                    return options["name"];
+                  }}
+                  value={selectedCountry}
+                  onChange={(item) => {
+                    setSelectedCountry(item);
+                  }}
+                />
+                <Label for="country">State name* </Label>
+                <Select
+                  options={State?.getStatesOfCountry(selectedCountry?.isoCode)}
+                  getOptionLabel={(options) => {
+                    return options["name"];
+                  }}
+                  getOptionValue={(options) => {
+                    return options["name"];
+                  }}
+                  value={selectedState}
+                  onChange={(item) => {
+                    setSelectedState(item);
+                  }}
+                />
+                <Label for="country">City name* </Label>
+                <Select
+                  options={City.getCitiesOfState(
+                    selectedState?.countryCode,
+                    selectedState?.isoCode
+                  )}
+                  getOptionLabel={(options) => {
+                    return options["name"];
+                  }}
+                  getOptionValue={(options) => {
+                    return options["name"];
+                  }}
+                  value={selectedCity}
+                  onChange={(item) => {
+                    setSelectedCity(item);
+                  }}
+                />
               </div>
               <div className="my-3">
-                <Label for="image">Product Image</Label>
+                <Label for="image">Product Image*</Label>
                 <Input
                   required
                   id="image"
@@ -286,11 +347,7 @@ const PostProduct = () => {
                 />
               </div>
               <Container className="text-center">
-                <Button
-                  type="submit"
-                  className="rounded-0"
-                  color="primary"
-                >
+                <Button type="submit" className="rounded-0" color="primary">
                   Post your product
                 </Button>
                 {/* <Button type="submit" className="rounded-0 ms-2" color="danger">

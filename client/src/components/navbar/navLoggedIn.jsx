@@ -1,20 +1,30 @@
 import styles from "./styles.module.css";
+import { useNavigate } from "react-router-dom";
+import React from 'react';
+import {useState} from 'react';
 
 const NavLoggedIn = () => {
-
+	const navigate = useNavigate();
 	const handleLogout = () => {
-		console.log("removed");
 		localStorage.removeItem("token");
-	// 	console.log("removed");
-	// 	const user = localStorage.getItem("token")
-	// console.log(user);
-		// navigate("/");
 		window.location = "/"
 	};
+
+	const[value, setValue] = useState(""); 
+
+	const handleSearch = ()  => {
+		navigate(`/searchResults?name=${value}`)
+	};
+
 	return (
 		<div className={styles.home_container}>
 			<nav className={styles.navbar}>
 
+				<a href="/allProductCarts">
+					<button className={styles.white_btn}>
+						WatchList
+					</button>
+				</a>
 				<a href="/PostProduct">
 					<button className={styles.white_btn}>
 						Post Product
@@ -28,12 +38,21 @@ const NavLoggedIn = () => {
 				<button className={styles.white_btn} onClick={handleLogout}>
 					Logout
 				</button>
-				<form action="" className={styles.search_bar}>
-					<input type="text" placeholder="search anything" name="q"/>
-					<button	type="submit">
-						<img src={require("../../images/search_icon.jpg") } alt=""/>
-					</button>
-				</form>
+
+				<form >
+        <label htmlFor="header-search">
+            <span className="visually-hidden">Search blog posts</span>
+        </label>
+        <input
+            type="text"
+            id="header-search"
+            placeholder="Search anything"
+            name="name" 
+			onChange={(e) => {setValue(e.target.value)}}
+			
+        />
+        <button onClick={handleSearch}>Search</button>
+    </form>
 					<h1>
 						<a href="/" style={{textDecoration:"none",color:"inherit"}}>
 							BidKaro!!!!!

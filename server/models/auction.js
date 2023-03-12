@@ -1,40 +1,51 @@
-const mongoose= require('mongoose')
+const mongoose = require("mongoose");
 
-const auctionSchema = new mongoose.Schema({
+const auctionSchema = new mongoose.Schema(
+  {
     product: {
-        type: mongoose.Types.ObjectId,
-        ref: 'Product',
-        required: true
+      type: mongoose.Types.ObjectId,
+      ref: "Product",
+      required: true,
     },
-    bids: [ {
+    productName: {
+      type: String,
+      required: true,
+    },
+    bids: [
+      {
         bidder: {
-            type: mongoose.Types.ObjectId,
-            ref: 'User',
+          type: mongoose.Types.ObjectId,
+          ref: "User",
         },
         time: {
-            type: Date, 
-            default: Date.now
+          type: Date,
+          default: Date.now,
         },
-        price:  { 
-            type: Number,
-            required: true 
-        }
-    } ] ,
-    productCurrentPrice:{
-        type: Number,
-        required: true
+        price: {
+          type: Number,
+          required: true,
+        },
+      },
+    ],
+    productCurrentPrice: {
+      type: Number,
+      required: true,
     },
     currentBidder: {
-        type: mongoose.Types.ObjectId,
-        ref: 'User',
+      type: mongoose.Types.ObjectId,
+      ref: "User",
     },
     startDateTime: {
-        type: Date,
-        required: true
+      type: Date,
+      required: true,
+    },
+    startDate: {
+      type: String,
+      required: true,
     },
     endDateTime: {
-        type: Date,
-        required: true
+      type: Date,
+      required: true,
     },
     // duration: {
     //     days: {
@@ -51,33 +62,31 @@ const auctionSchema = new mongoose.Schema({
     //     }
     // },
     auctionLive: {
-        type: Boolean,
-        default: false
-    }, 
-    auctionStarted : {
-        type: Boolean,
-        default: false
-    }, 
-    auctionEnded: {
-        type: Boolean,
-        default: false
-    }, 
-    subscribers: [ {
-        users: {
-            type: mongoose.Types.ObjectId,
-            ref: 'User',
-        }
-    } ],
-    soldTo: {
-        type: mongoose.Types.ObjectId,
-        ref: 'User',
+      type: Boolean,
+      default: false,
     },
-    
-}
-,{ timestamps: true }
-
-)
+    auctionStarted: {
+      type: Boolean,
+      default: false,
+    },
+    auctionEnded: {
+      type: Boolean,
+      default: false,
+    },
+    subscribers: [
+      {
+        type: mongoose.Types.ObjectId,
+        ref: "User",
+      },
+    ],
+    soldTo: {
+      type: mongoose.Types.ObjectId,
+      ref: "User",
+    },
+  },
+  { timestamps: true }
+);
 
 const Auction = mongoose.model("auction", auctionSchema);
 
-module.exports = {Auction};
+module.exports = { Auction };
