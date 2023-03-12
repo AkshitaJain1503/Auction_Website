@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import NavBar from "../../navbar/index";
 
+
 const Signup = () => {
   const [data, setData] = useState({
     name: "",
@@ -17,13 +18,17 @@ const Signup = () => {
     setData({ ...data, [input.name]: input.value });
   };
 
+  //hitting POST API
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const url = "http://localhost:3001/api/register";
       const { data: res } = await axios.post(url, data);
+
+      //setting the JWT token on successful signUp and redirecting to home page
       localStorage.setItem("token", res.data);
       window.location = "/";
+
     } catch (error) {
       if (
         error.response &&
@@ -62,14 +67,6 @@ const Signup = () => {
                 required
                 className={styles.input}
               />
-              {/* <input
-                type="text"
-                placeholder="Last Name"
-                name="lastName"
-                onChange={handleChange}
-                value={data.lastName}
-                className={styles.input}
-              /> */}
               <input
                 type="email"
                 placeholder="Email"
