@@ -64,7 +64,14 @@
     border-radius: 15px;
     width: 250px;
     text-align: center;
-    margin-left: 200px;
     padding: 5px;
+
+}
+
+.btns {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: 0px;
 
 }

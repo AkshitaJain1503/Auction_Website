@@ -20,6 +20,11 @@ const NavLoggedIn = () => {
 		<div className={styles.home_container}>
 			<nav className={styles.navbar}>
 
+				<a href="/allProductCarts">
+					<button className={styles.white_btn}>
+						WatchList
+					</button>
+				</a>
 				<a href="/PostProduct">
 					<button className={styles.white_btn}>
 						Post Product
