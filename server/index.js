@@ -22,13 +22,14 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 const search = require("./routes/search_page/search");
 const calendar = require("./routes/calendarView/calendar");
 const calendarDetails = require("./routes/calendarView/calendarDetails");
-// const auctionsScheduler = require("./routes/auctionSpace/auctionsScheduler");
+const auctionsScheduler = require("./routes/auctionSpace/auctionsScheduler");
 
 
 //database connection
 connection();
 
-// auctionsScheduler();
+//auction start and end event scheduler
+auctionsScheduler();
 
 //middlewares
 app.use(express.json());

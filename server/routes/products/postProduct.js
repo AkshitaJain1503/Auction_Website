@@ -61,64 +61,6 @@ router.post("/", upload.single("productImage"), async (req, res) => {
         { $push: { postedProducts: ObjectId(product._id) }}
     );
 
-// scheduling the auction to start at the start time
-    const startAuction =  schedule.scheduleJob(startDateTime,async function() {
-        console.log(`Auction has started for ${product.productName}!`);
-        await Auction.findOneAndUpdate(
-            { _id: auction._id }, 
-            { 
-                auctionStarted: true,
-                auctionLive: true,
-            }
-        );
-    });
-// scheduling the auction to end at the end time
-    const endAuction = schedule.scheduleJob(endDateTime, async function() {
-        console.log(`Auction has ended for ${product.productName}!`);
-        const currAuction= await Auction.findOneAndUpdate(
-            { _id: auction._id }, 
-            { 
-                auctionEnded: true,
-                auctionLive: false,
-            }
-        )
-        if( currAuction.bids.length )
-            {
-                const maxBidder= currAuction.currentBidder;
-                // product sold to the max bidder
-                await Auction.findOneAndUpdate(
-                    { _id: auction._id }, 
-                    { 
-                        soldTo: maxBidder
-                    }
-                )
-                // adding this product in the purchased products array of the highest bidder
-                await User.findOneAndUpdate(
-                    {_id: maxBidder},
-                    {
-                        $push: { purchasedProducts: ObjectId(product._id) }
-                    }
-                    );
-                
-            }
-        
-    });
-
-//     async function endAuction () {
-//         console.log(`Auction has ended for ${product.productName}!`);
-//         auction.auctionEnded= true;
-//         auction.auctionLive= false;
-//         if( auction.bids.length )
-//         {
-//             auction.soldTo= auction.currentBidder;
-//             const soldTo = await User.findOneAndUpdate(
-//                 {_id: auction.soldTo},
-//                 {
-//                     $push: { purchasedProducts: ObjectId(product._id) }
-//                 }
-//                 );
-//         }
-//     };
 
 // // setting timer for this auction
 // function startTimer( callback) {
