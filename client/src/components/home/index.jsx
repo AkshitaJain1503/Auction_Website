@@ -8,7 +8,7 @@ function Home() {
         <NavBar />
         <Hbar>
           <h4>Upcoming Auctions</h4>
-          <a href='/upcomingAuctions'>
+          <a href='/UpcomingAuctions'>
             <Button>View all</Button>
           </a>
         </Hbar>
@@ -17,7 +17,7 @@ function Home() {
         />
         <Hbar>
           <h4>Live Auctions</h4>
-          <a href='/liveAuctions'>
+          <a href='/LiveAuctions'>
             <Button>View all</Button>
           </a>
         </Hbar>
@@ -26,7 +26,7 @@ function Home() {
         />
         <Hbar>
           <h4>Past Auctions</h4>
-          <a href='pastAuctions'>
+          <a href='PastAuctions'>
             <Button>View all</Button>
           </a>
         </Hbar>

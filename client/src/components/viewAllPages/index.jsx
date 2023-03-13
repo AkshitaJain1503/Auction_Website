@@ -2,13 +2,15 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Card from "../home/card";
 import styled from "styled-components";
-
+import NavBar from "../navbar";
 export default function ViewAll() {
     const [products, setProducts] = useState({});
+    var url;
+    url=window.location.pathname;
+    url=url.substring(1);
     useEffect(() => {
-        var url=window.location.pathname;
         const fetchdata = async () => {
-        const data = await axios.get("http://localhost:3001/api"+url);
+        const data = await axios.get("http://localhost:3001/api/"+url);
         setProducts(data);
       };
       fetchdata();
@@ -16,8 +18,9 @@ export default function ViewAll() {
     if(Object.keys(products).length > 0){
       return (
         <div>
+          <NavBar/>
           <Hbar>
-            <h4>Auctions</h4>
+            <h4>{url.replace(/([a-z0-9])([A-Z])/g, '$1 $2')}</h4>
           </Hbar>
           <Content>
             {products &&
@@ -35,6 +38,7 @@ export default function ViewAll() {
     else{
       return(
         <div>
+          <NavBar/>
           <h5>Sorry,No auctions available right now.</h5>
         </div>
       )

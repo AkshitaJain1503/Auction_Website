@@ -36,9 +36,9 @@ connection();
 app.use(express.json());
 app.use(cors());
 //routes
-app.use("/api/liveAuctions",liveAuctions);
-app.use("/api/pastAuctions",pastAuctions);
-app.use("/api/upcomingAuctions",upcomingAuctions);
+app.use("/api/LiveAuctions",liveAuctions);
+app.use("/api/PastAuctions",pastAuctions);
+app.use("/api/UpcomingAuctions",upcomingAuctions);
 app.use("/api/homeLiveAuction",homeLiveAuction);
 app.use("/api/homePastAuction",homePastAuction);
 app.use("/api/homeUpcomingAuction",homeUpcomingAuction);
