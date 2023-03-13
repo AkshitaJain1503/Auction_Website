@@ -17,8 +17,9 @@ const Auction = () => {
     startDateTime: "",
     soldTo: "",
     auctionEnded: "",
-    // duration: "",
+    seller : "",
     status: "",
+    loggedInUser: "",
   })
 
   const [data, setInput] = useState({
@@ -48,14 +49,21 @@ const Auction = () => {
         setInput({price:""});
         return;
       }
+// cant place bid if the bidder is same as seller
+      // if(auction.seller==auction.loggedInUser)
+      // {
+      //   alert("You cant place bid on your own product!");
+      //   setInput({price:""});
+      //   return;
+      // }
       
 // can place bid only if the price is greater than current price 
-      if( price<=auction.prodCurrentPrice )
-      {
-        alert("Cant place bid! \nCurrent price is higher than the bid placed.");
-        setInput({price:""});
-        return;
-      }
+      // if( price<=auction.prodCurrentPrice )
+      // {
+      //   alert("Cant place bid! \nCurrent price is higher than the bid placed.");
+      //   setInput({price:""});
+      //   return;
+      // }
   
   //POST method to send bid price entered by the user
     const res = await fetch("http://localhost:3001/api/auctionSpace" , {
@@ -77,10 +85,9 @@ const Auction = () => {
     };
 }
 
-// GET request for getting the auction data
-function getSpace(){
-  
-    fetch("http://localhost:3001/api/auctionSpace?id=" + productId , {
+// GET request -- when page reloads
+useEffect(() => {
+   fetch("http://localhost:3001/api/auctionSpace?id=" + productId , {
           headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
         })
       .then(response => response.json())
@@ -97,7 +104,34 @@ function getSpace(){
               startDateTime: data.startDateTime,
               soldTo: data.soldTo,
               auctionEnded: data.auctionEnded,
-              // duration:data.duration,
+              status: data.status,
+              seller: data.seller,
+              loggedInUser: data.loggedInUser,
+            };
+          });
+          
+        }
+      )
+      .catch(error => console.error(error));
+ },[])
+
+// GET request for updating bidding data
+async function getSpace(){
+  
+    await fetch("http://localhost:3001/api/auctionSpace/onlyAuction?id=" + productId , {
+          headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
+        })
+      .then(response => response.json())
+      .then(data => 
+        {
+          setBids(data.bidsList);
+          setAuction((previousState) => {
+            return {
+              ...auction,
+              prodCurrentPrice: data.currPrice,
+              auctionLive: data.auctionLive,
+              soldTo: data.soldTo,
+              auctionEnded: data.auctionEnded,
               status: data.status,
             };
           });
@@ -108,13 +142,9 @@ function getSpace(){
   
 }
 
-// test()
-
 // to auto refresh page
 useEffect(() => {
   let interval
-  setTimeout(function() {
-    getSpace()
   
     interval = setInterval(() => {
       getSpace()
@@ -125,8 +155,6 @@ useEffect(() => {
       }
     }, 5000); // Refresh every 5 seconds
 
-}, 1);
-
 
   return () => clearInterval(interval);
 }, [auction.auctionEnded]);
@@ -134,9 +162,9 @@ useEffect(() => {
 
 // displaying all the bids of the current product
   const bidTable = bids.map((bid) => (
-    <tr key={bid.id}>
+    <tr key={bid._id}>
       <td>
-      <a href={`/userProfile?id=${bid.bidderId}`} > {bid.bidderName} </a>
+      <a href={`/userProfile?id=${bid.bidder}`} > {bid.bidderName} </a>
       </td>
       <td> {bid.price} </td>
       <td> {bid.time} </td>
