@@ -13,6 +13,7 @@ const { User } = require("../../models/user");
             },
             auctionStarted: false
          });
+         console.log("start-", auctions.length);
 
          for (var i = 0; i < auctions.length; i++) {
             // capturing the value of "i" and storing as "index", since scheduler is an asynchronous function
@@ -40,6 +41,7 @@ const { User } = require("../../models/user");
             },
             auctionEnded: false
          });
+         console.log("end-", auctions.length);
 
          for (var i = 0; i < auctions.length; i++) {
             (function(index) {

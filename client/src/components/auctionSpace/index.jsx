@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import NavBar from "../navbar/index";
 import styles from "./styles.module.css";
 import {Form, Button} from "reactstrap"
+import AuctionTimer from "./timer";
 
 const Auction = () => {
 
@@ -188,6 +189,8 @@ useEffect(() => {
         <div>
         <div className={styles.container}>
         <div className={styles.element}><h6>  Auction Start Time: { auction.startDateTime } </h6></div>
+        <div className={styles.element}><h6>  { auction.auctionLive ? <AuctionTimer productId={productId} /> : "--" } </h6></div>
+        
         <div className={styles.element}><h6>  Auction End Time: { auction.endDateTime } </h6></div>
         </div>
         </div>

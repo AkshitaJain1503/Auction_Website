@@ -50,6 +50,10 @@ router.get("/", async (req, res) => {
     responseData.status=status;
     responseData.seller=product.seller;
     responseData.loggedInUser= req.id;
+    const timeLeft=  auction.endDateTime- new Date;
+    responseData.timeLeft= timeLeft;
+    responseData.endTime= auction.endDateTime;
+
     
     if(auction.soldTo){
       const soldToUser = await User.findOne({_id: auction.soldTo});
@@ -152,5 +156,24 @@ router.get("/onlyAuction", async (req, res) => {
       res.status(500).send('Server Error');
     }
   });
+
+  router.get("/timer", async (req, res) => {
+
+    try {
+      const productId = req.query.id;
+      const auction = await Auction.findOne( { product: productId } );
+      const responseData={};
+
+      const timeLeft=  new Date(auction.endDateTime)- new Date();
+      responseData.timeLeft= timeLeft;
+      responseData.endTime= auction.endDateTime;
+      responseData.startTime=auction.startDateTime;
+      res.json(responseData);
+      
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+      }
+    });
 
 module.exports = router;
