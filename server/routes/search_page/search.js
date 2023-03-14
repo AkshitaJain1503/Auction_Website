@@ -1,4 +1,5 @@
 const router = require("express").Router();
+const mongoose = require("mongoose");
 const {Product} = require("../../models/product");
 const { Auction } = require("../../models/auction");
 router.get("/", async (req, res) => {
@@ -33,6 +34,7 @@ router.get("/", async (req, res) => {
         //console.log(typeof(productDetails.fStartTime))
         responseData.push(productDetails);
     }
- res.status(200).send({data:responseData}); //returns the array of objects
+ res.status(200).send(responseData); //returns the array of objects
 });
 module.exports = router;
+//
