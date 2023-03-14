@@ -8,7 +8,12 @@ router.get("/", async (req, res) => {
     var responseData = []; //this is an array of objects
     
     let products = await Product.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
-    let auction = await Auction.find({ productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' }});
+    pIdList = []
+    for(var i=0;i<products.length;i++)
+    {
+        pIdList.push(products[i]._id);
+    }
+    let auction = await Auction.find({ product: pIdList});
     //console.log(auction);
     for(var i=products.length-1 ; i >=0; i--){
 
