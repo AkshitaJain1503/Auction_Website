@@ -1,21 +1,9 @@
 @import url("https://fonts.googleapis.com/css2?family=Mulish:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;1,200&display=swap");
 
-* {
-  margin: 2px;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: Mulish;
-}
-
 :root {
   --main-color: #333;
   --primary-color: #acacac;
   --icon-color: #525252;
-}
-
-i {
-  width: 2rem;
-  height: 2rem;
 }
 
 .fa,
@@ -27,9 +15,10 @@ i {
   cursor: pointer;
 }
 
-header {
-  width: 100%;
-  line-height: 5rem;
+.header-carts {
+  padding-left: 12px;
+  padding-right: 10px;
+  line-height: 2rem;
   display: grid;
   grid-template-columns: 1fr 1fr;
   border-bottom: 0.1rem solid #9a9191;
