@@ -26,6 +26,10 @@
   margin-bottom: 2rem;
 }
 
+.header-carts h3 {
+  font-family: poppins;
+}
+
 .continue-shopping {
   display: flex;
   height: inherit;
@@ -83,6 +87,7 @@
   font-size: 3rem;
   text-transform: capitalize;
   color: rgba(41, 41, 41, 1);
+  font-family: cursive;
   margin-bottom: 1rem;
 }
 
@@ -160,8 +165,9 @@
 
 .items-info .title h2 {
   font-style: normal;
-  font-weight: bold;
-  font-size: 2.2rem;
+  font-weight: 500;
+  font-size: 1.8rem;
+  font-family: Georgia, serif;
   display: flex;
   align-items: center;
   text-transform: capitalize;
@@ -224,13 +230,14 @@
 .price h3 {
   font-style: normal;
   font-weight: 500;
-  font-size: 0.9rem;
+  font-size: 1rem;
   text-transform: capitalize;
   color: var(--main-color);
 }
 
 .price h3 span {
   font-weight: 300;
+  font-family: sono;
 }
 
 .remove-item {
@@ -314,12 +321,6 @@
 }
 
 /* responsive media queries  */
-
-@media (max-width: 968px) {
-  html {
-    font-size: 50%;
-  }
-}
 
 @media (max-width: 768px) {
   .continue-shopping h3 {

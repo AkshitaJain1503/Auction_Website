@@ -82,6 +82,14 @@ router.post("/", upload.single("productImage"), async (req, res) => {
       // const soldTo = await User.findOne({_id: maxBidder});
       //         const soldToName = soldTo.name;
       //         // const soldToEmail = soldTo.email;
+      const prodAuction = await Auction.findById({_id: auction._id});
+      const subscribers = prodAuction.subscribers;
+      var receiversList = "";
+      for(let i = 0; i < subscribers.length; i++) {
+        const subscriber = await User.findById({_id: subscribers[i]});
+        receiversList += subscriber.email + ",";        
+      }
+      console.log(receiversList);
       const soldToEmail = "shreyasristi2003@gmail.com, ss2563@cse.jgec.ac.in";
       const soldToProduct = product.productName;
       console.log(soldToEmail, soldToProduct);
@@ -113,9 +121,10 @@ router.post("/", upload.single("productImage"), async (req, res) => {
 
   // scheduling the auction to start at the start time
   const startAuction = schedule.scheduleJob(startDateTime, async function () {
+    
     console.log(`Auction has started for ${product.productName}!`);
-  const subscribers = auction.subscribers;
-  console.log(subscribers);
+  // const subscribers = auction.subscribers;
+  // console.log(subscribers);
 
     await Auction.findOneAndUpdate(
       { _id: auction._id },
@@ -128,6 +137,14 @@ router.post("/", upload.single("productImage"), async (req, res) => {
   // scheduling the auction to end at the end time
   const endAuction = schedule.scheduleJob(endDateTime, async function () {
     console.log(`Auction has ended for ${product.productName}!`);
+    const prodAuction = await Auction.findById({_id: auction._id});
+      const subscribers = prodAuction.subscribers;
+      var receiversList = "";
+      for(let i = 0; i < subscribers.length; i++) {
+        const subscriber = await User.findById({_id: subscribers[i]});
+        receiversList += subscriber.email + ", ";        
+      }
+      console.log(receiversList);
     const currAuction = await Auction.findOneAndUpdate(
       { _id: auction._id },
       {
@@ -182,8 +199,6 @@ router.post("/", upload.single("productImage"), async (req, res) => {
         }
       });
     }
-    const subscribers = auction.subscribers;
-  console.log(subscribers);
   });
 
   //     async function endAuction () {
