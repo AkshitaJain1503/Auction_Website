@@ -8,21 +8,11 @@ const Joi = require('joi');
 //validate data entered by user using joi and passwordComplexity
 router.post("/", async (req, res) => {
 	try {
-		// const validate = (data) => {
-		// 	const schema = Joi.object({
 
-		// 		password: passwordComplexity().required().label("Password")
-		// 	});
-		// 	return schema.validate(data);
-		// };
-		// const {error} = validate(req.password);
-		// if (error)
-		// 	return res.status(400).send({message: error.details[0].message});
-
-		// const {error} = passwordComplexity().validate(req.password);
-		// if (error){
-		// console.log("uparrrrrr",error.details[0].message)
-		//  	return res.status(400).send({message: error.details[0].message});}
+		//validates the password according to passwordComplexity
+		const {error} = validate({password:req.body.password});
+		if (error)
+			return res.status(400).send({message: error.details[0].message});
 
     	// if no error occured previously check email exists or not
 		let user = await User.findOne({email: req.body.email});
@@ -49,6 +39,24 @@ router.post("/", async (req, res) => {
 		res.status(500).send({message: "Internal Server Error"});
 	}
 });
+
+// to check password complexity with given options
+// {
+// 	min: 8,
+// 	max: 26,
+// 	lowerCase: 1,
+// 	upperCase: 1,
+// 	numeric: 1,
+// 	symbol: 1,
+// 	requirementCount: 4,
+//   }
+const validate = (data) => {
+	console.log("data",data)
+	const schema = Joi.object({
+		password: passwordComplexity().required().label("Password")
+	});
+	return schema.validate(data);
+};
 
 module.exports = router;
 

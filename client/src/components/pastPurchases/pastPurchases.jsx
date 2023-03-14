@@ -74,6 +74,7 @@ const PastPurchases = () => {
                           hover: true
                       }}
                       totalPosition="none"
+                      pagination = {false}
                   />
                 </div>
             </div>

@@ -74,6 +74,7 @@ const PastPosts = () => {
                           hover: true
                       }}
                       totalPosition="none"
+                      pagination = {false}
                   />
                 </div>
             </div>
