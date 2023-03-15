@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 const AuctionTimer = ({ productId }) => {
 
-  const [startTime, setStartTime] = useState(null);
   const [endTime, setEndTime] = useState(null);
   const [timeLeft, setTimeLeft] = useState(null);
 
@@ -15,7 +14,6 @@ const AuctionTimer = ({ productId }) => {
          {
           setEndTime(data.endTime);
           setTimeLeft(data.timeLeft);
-          setStartTime(data.startTime);  
          }
        )
        .catch(error => console.error(error));
@@ -34,8 +32,7 @@ const AuctionTimer = ({ productId }) => {
     const days = Math.floor(time / (1000 * 60 * 60 * 24));
     const hours = Math.floor((time % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
     const minutes = Math.floor((time % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((time % (1000 * 60)) / 1000);
-    return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+    return `${days}d ${hours}h ${minutes}m`;
   }
 
   return (
