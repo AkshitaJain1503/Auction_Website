@@ -9,7 +9,8 @@ const {User} = require("../../models/user");
 var ObjectId = require('mongoose').Types.ObjectId;
 const {cloudinary} = require("./cloudinary");
 require("dotenv").config();
-const schedule = require('node-schedule');
+// const schedule = require('node-schedule');
+const auctionsScheduler = require("../auctionSpace/auctionsScheduler");
 
 const storage = multer.diskStorage({
     // destination: function(req, file, cb) {
@@ -39,13 +40,7 @@ router.post("/", upload.single("productImage"), async (req, res) => {
     const startDateTime= req.body.startDateTime;
     const seperatedStartDate= startDateTime.split("T");
     const startDate= seperatedStartDate[0];
-    // const auctionStartDate = req.body.auctionStartDate;
-    // const auctionStartTime = req.body.auctionStartTime;
-    // const days = req.body.days;
-    // const hours = req.body.hours;
-    // const minutes = req.body.minutes;
     const endDateTime =req.body.endDateTime;
-    // const duration = { days: days,  hours:hours, minutes: minutes }
     
     const result = await cloudinary.uploader.upload(req.file.path);
 
@@ -55,48 +50,17 @@ router.post("/", upload.single("productImage"), async (req, res) => {
     const product = await new Product({ ... req.body, productImage: productImage, seller: sellerId}).save();
 
     const auction = await new Auction({product: product._id, productName:product.productName , startDateTime, startDate:startDate, endDateTime:endDateTime, productCurrentPrice: product.productBasePrice}).save();
+
+    //scheduling start and end of this auction
+    auctionsScheduler.scheduleStart(auction);
+    auctionsScheduler.scheduleEnd(auction);
+    
 //adding ProductID against the specific seller in the user model. 
     await User.findOneAndUpdate(
         { _id: ObjectId(sellerId) }, 
         { $push: { postedProducts: ObjectId(product._id) }}
     );
 
-
-// // setting timer for this auction
-// function startTimer( callback) {
-  
-//     let timerInterval = setInterval(() => {
-  
-//     if( auction.duration.minutes )
-//     {
-//         auction.duration.minutes--;
-//     }
-//     else if (auction.duration.hours)
-//     {
-//         auction.duration.hours--; 
-//         auction.duration.minutes+=59;
-//     }
-//     else if(auction.duration.days)
-//     {
-//         auction.duration.days--; 
-//         auction.duration.hours+=23; 
-//         auction.duration.minutes+=59;
-//     }
-//     else {
-//         clearInterval(timerInterval);
-//         callback();
-//       }
-//       console.log(`${auction.duration.days}:${auction.duration.hours}:${auction.duration.minutes}`);
-//     }, 60000); // every 1 minute
-//   }
-  
-//     startTimer( () => {
-//     console.log("Timer ended!");
-//     endAuction();
-//   });
-
-    // req.id = product._id;
     res.json(product._id);
-    // console.log(req.body);
 });
 module.exports = router;

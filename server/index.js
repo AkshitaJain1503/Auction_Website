@@ -34,8 +34,8 @@ const auctionsScheduler = require("./routes/auctionSpace/auctionsScheduler");
 //database connection
 connection();
 
-//auction start and end event scheduler
-auctionsScheduler();
+//auctions start and end event scheduler
+auctionsScheduler.scheduleAll();
 
 //middlewares
 app.use(express.json());
