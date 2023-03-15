@@ -20,18 +20,18 @@ router.get("/", async (req, res) => {
     });
     
     // getting status of the auction
-    var status;
+    var auctionStatus;
     if(!auction.auctionStarted)
     {
-      status="Yet to start";
+      auctionStatus="Yet to start";
     }
     else if (!auction.auctionEnded)
     {
-      status="Ongoing";
+      auctionStatus="Ongoing";
     }
     else 
     {
-      status="Ended";
+      auctionStatus="Ended";
     }
 
     const formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
@@ -42,12 +42,13 @@ router.get("/", async (req, res) => {
 
     responseData.bidsList= bidsList;
     responseData.currPrice=auction.productCurrentPrice;
+    responseData.basePrice=product.productBasePrice;
     responseData.productName=product.productName;
     responseData.auctionLive= auction.auctionLive;
     responseData.endDateTime= formattedEndTime;
     responseData.startDateTime= formattedStartTime;
     responseData.auctionEnded= auction.auctionEnded;
-    responseData.status=status;
+    responseData.auctionStatus=auctionStatus;
     responseData.seller=product.seller;
     responseData.loggedInUser= req.id;
     const timeLeft=  auction.endDateTime- new Date;
@@ -61,7 +62,7 @@ router.get("/", async (req, res) => {
     }
        
     // sending the response data with the required attributes
-      res.json(responseData);
+      res.status(200).send({responseData: responseData});
     } catch (error) {
       console.error(error);
       res.status(500).send('Server Error');
@@ -78,7 +79,7 @@ router.post("/", async (req, res) => {
     const formattedCurrentTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(new Date());
     
-    const auctionId = await Auction.findOneAndUpdate(
+    const auction = await Auction.findOneAndUpdate(
         { product: productId }, 
         { 
           //pushing the posted bid in the auction object
@@ -90,8 +91,7 @@ router.post("/", async (req, res) => {
           }},
       }
     );
-
-    const maxPrice= auctionId.productCurrentPrice;
+    const maxPrice= auction.productCurrentPrice;
     // when the current bid is the highest bid so far
     if(postedPrice>maxPrice)
     {
@@ -124,25 +124,25 @@ router.get("/onlyAuction", async (req, res) => {
     });
     
     // getting status of the auction
-    var status;
+    var auctionStatus;
     if(!auction.auctionStarted)
     {
-      status="Yet to start";
+      auctionStatus="Yet to start";
     }
     else if (!auction.auctionEnded)
     {
-      status="Ongoing";
+      auctionStatus="Ongoing";
     }
     else 
     {
-      status="Ended";
+      auctionStatus="Ended";
     }
 
     responseData.bidsList= bidsList;
     responseData.currPrice=auction.productCurrentPrice;
     responseData.auctionLive= auction.auctionLive;
     responseData.auctionEnded= auction.auctionEnded;
-    responseData.status=status;
+    responseData.auctionStatus=auctionStatus;
     
     if(auction.soldTo){
       const soldToUser = await User.findOne({_id: auction.soldTo});
@@ -150,11 +150,12 @@ router.get("/onlyAuction", async (req, res) => {
     }
        
     // sending the response data with the required attributes
-      res.json(responseData);
+    res.status(200).send({responseData: responseData});
     } catch (error) {
       console.error(error);
       res.status(500).send('Server Error');
     }
+    
   });
 
   router.get("/timer", async (req, res) => {
@@ -174,6 +175,7 @@ router.get("/onlyAuction", async (req, res) => {
         console.error(error);
         res.status(500).send('Server Error');
       }
+      
     });
 
 module.exports = router;
