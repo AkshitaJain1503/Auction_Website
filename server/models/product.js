@@ -13,9 +13,17 @@ const ProductSchema = new mongoose.Schema({
         type: Number,
         required : true
     },
-    shipmentFrom : {
+    shipmentFromPlace : {
         type : String,
         required : true
+    },
+    shipmentFromLatitude: {
+        type: String,
+        required: true
+    },
+    shipmentFromLongitude: {
+        type: String, 
+        required: true
     },
     productImage: {
         type: String,
