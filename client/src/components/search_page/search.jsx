@@ -15,7 +15,6 @@ const GetProductname = () => {
     const useQuery = () => new URLSearchParams(useLocation().search);
     const query = useQuery();
     const name = query.get('name');
-    
     return name;
 }
 //fetches all data that match the name from GetProductname()
@@ -59,6 +58,10 @@ const GetSearchResults = () => {
                 return aEndTime - bEndTime;
         });
     }
+    // else if(sort === "Distance")
+    //     {
+    //         sortedData = data.sort((a, b) => a.dist - b.dist);
+    // }
         return { data: sortedData, handleSort,name};
     };
 
@@ -86,7 +89,7 @@ const GetSearchResults = () => {
                                             <option value="highToLow">Price High to Low</option>
                                             <option value="StartTime">Start Time</option>
                                             <option value="EndTime">End Time</option>
-                                            {/* <option value="Distance">Distance</option> */}
+                                            <option value="Distance">Distance</option>
                                         </select>
                                         <a href={`/calendarView?name=${name}`}>
                 					<button className="white_btn">

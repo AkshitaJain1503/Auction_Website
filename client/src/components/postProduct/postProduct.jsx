@@ -330,6 +330,7 @@ const PostProduct = () => {
                     return options["name"];
                   }}
                   value={selectedCity}
+                  
                   onChange={(item) => {
                     setSelectedCity(item);
                   }}

@@ -2,6 +2,8 @@ const router = require("express").Router();
 const mongoose = require("mongoose");
 const {Product} = require("../../models/product");
 const { Auction } = require("../../models/auction");
+const {User} = require("../../models/user");
+import { getDistance } from 'geolib';
 router.get("/", async (req, res) => {
 
     const requestedProductName = req.query.name;
@@ -25,7 +27,8 @@ router.get("/", async (req, res) => {
         productDetails.basePrice = products[i].productBasePrice;
         productDetails.img = products[i].productImage;
         productDetails.shipment = products[i].shipmentFrom;
-
+        //productDetails.dist = geolib.getDistance({ latitude:user.atitude,longitude: User.Longitude}, { latitude:products[i].shipmentFromLatitude,longitude: products[i].shipmentFromLongitude});
+        
          let formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
          day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].endDateTime);
 
