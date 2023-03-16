@@ -47,7 +47,6 @@ export default function ProductPage(props) {
         aucEnd: res.data.aucEnd,
       };
     });
-    console.log("eh", product.aucEnd, "k");
     
   };
 

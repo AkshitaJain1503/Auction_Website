@@ -14,7 +14,7 @@ export const StyledEvent = styled.span`
   margin: 0 3px;
   border-radius: 10px;
   font-size: 13px;
-  cursor: pointer;
+  // cursor: pointer;
   text-transform: capitalize;
 `;
 

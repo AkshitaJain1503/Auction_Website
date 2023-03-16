@@ -20,6 +20,7 @@
     "joi": "^17.7.0",
     "joi-password-complexity": "^5.1.0",
     "jsonwebtoken": "^9.0.0",
+    "moment": "^2.29.4",
     "mongoose": "^6.9.0",
     "multer": "^1.4.5-lts.1",
     "node-schedule": "^2.1.1",

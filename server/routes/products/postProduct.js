@@ -9,8 +9,13 @@ const { User } = require("../../models/user");
 var ObjectId = require("mongoose").Types.ObjectId;
 const { cloudinary } = require("./cloudinary");
 require("dotenv").config();
+<<<<<<< HEAD
 const schedule = require("node-schedule");
 var nodemailer = require("nodemailer");
+=======
+// const schedule = require('node-schedule');
+const auctionsScheduler = require("../auctionSpace/auctionsScheduler");
+>>>>>>> f468057b38cf672395bba67d25c782f887961b66
 
 const storage = multer.diskStorage({
   // destination: function(req, file, cb) {
@@ -126,12 +131,21 @@ router.post("/", upload.single("productImage"), async (req, res) => {
   // const subscribers = auction.subscribers;
   // console.log(subscribers);
 
-    await Auction.findOneAndUpdate(
-      { _id: auction._id },
-      {
-        auctionStarted: true,
-        auctionLive: true,
-      }
+    const productImage = result.secure_url;
+
+//Adding product details and sellerID in the product model.
+    const product = await new Product({ ... req.body, productImage: productImage, seller: sellerId}).save();
+
+    const auction = await new Auction({product: product._id, productName:product.productName , startDateTime, startDate:startDate, endDateTime:endDateTime, productCurrentPrice: product.productBasePrice}).save();
+
+    //scheduling start and end of this auction
+    auctionsScheduler.scheduleStart(auction);
+    auctionsScheduler.scheduleEnd(auction);
+    
+//adding ProductID against the specific seller in the user model. 
+    await User.findOneAndUpdate(
+        { _id: ObjectId(sellerId) }, 
+        { $push: { postedProducts: ObjectId(product._id) }}
     );
   });
   // scheduling the auction to end at the end time
@@ -169,89 +183,6 @@ router.post("/", upload.single("productImage"), async (req, res) => {
         }
       );
 
-      const soldTo = await User.findOne({ _id: maxBidder });
-      const soldToName = soldTo.name;
-      // const soldToEmail = soldTo.email;
-      const soldToEmail = "shreyasristi2003@gmail.com";
-      const soldToProduct = product.productName;
-      console.log(endDateTime, soldToEmail, soldToName, soldToProduct);
-
-      var transporter = nodemailer.createTransport({
-        service: "gmail",
-        auth: {
-          user: "auctionwebsitedesisproject@gmail.com",
-          pass: "mcwxzkykchkgwyaj",
-        },
-      });
-
-      var mailOptions = {
-        from: "auctionwebsitedesisproject@gmail.com",
-        to: `${soldToEmail}`,
-        subject: `Auction of ${soldToProduct} has ended`,
-        text: `Dear ${soldToName}, \n Congratulations! ${soldToProduct} has been sold to ${soldToName} at a price of ${auction.productCurrentPrice}.`,
-      };
-
-      transporter.sendMail(mailOptions, function (error, info) {
-        if (error) {
-          console.log(error);
-        } else {
-          console.log("Email sent: " + info.response);
-        }
-      });
-    }
-  });
-
-  //     async function endAuction () {
-  //         console.log(`Auction has ended for ${product.productName}!`);
-  //         auction.auctionEnded= true;
-  //         auction.auctionLive= false;
-  //         if( auction.bids.length )
-  //         {
-  //             auction.soldTo= auction.currentBidder;
-  //             const soldTo = await User.findOneAndUpdate(
-  //                 {_id: auction.soldTo},
-  //                 {
-  //                     $push: { purchasedProducts: ObjectId(product._id) }
-  //                 }
-  //                 );
-  //         }
-  //     };
-
-  // // setting timer for this auction
-  // function startTimer( callback) {
-
-  //     let timerInterval = setInterval(() => {
-
-  //     if( auction.duration.minutes )
-  //     {
-  //         auction.duration.minutes--;
-  //     }
-  //     else if (auction.duration.hours)
-  //     {
-  //         auction.duration.hours--;
-  //         auction.duration.minutes+=59;
-  //     }
-  //     else if(auction.duration.days)
-  //     {
-  //         auction.duration.days--;
-  //         auction.duration.hours+=23;
-  //         auction.duration.minutes+=59;
-  //     }
-  //     else {
-  //         clearInterval(timerInterval);
-  //         callback();
-  //       }
-  //       console.log(`${auction.duration.days}:${auction.duration.hours}:${auction.duration.minutes}`);
-  //     }, 60000); // every 1 minute
-  //   }
-
-  //     startTimer( () => {
-  //     console.log("Timer ended!");
-  //     endAuction();
-  //   });
-
-  // req.id = product._id;
-  res.json(product._id);
-  // console.log(req.body);
+    res.json(product._id);
 });
 module.exports = router;
