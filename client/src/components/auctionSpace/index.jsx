@@ -165,15 +165,28 @@ useEffect(() => {
 }, [auction.auctionEnded]);
 
 
-// displaying all the bids of the current product
-  const bidTable = bids.map((bid) => (
-    <tr key={bid._id}>
+const [viewAll,setViewAll]=useState(false)
+function changeClick(e){
+  setViewAll(!viewAll);
+}
+
+const DisplayRow = ({ bid }) => {
+  return (<tr key={bid._id}>
       <td>
       <a href={`/userProfile?id=${bid.bidder}`} > {bid.bidderName} </a>
       </td>
       <td> {bid.price} </td>
       <td> {bid.time} </td>
-    </tr>
+
+    </tr>);
+}
+
+// displaying all the bids of the current product
+  const bidTable = viewAll? bids.map((bid) => (
+    <DisplayRow bid={bid}/>
+        ))
+    : bids.slice(0,5).map((bid) => (
+      <DisplayRow bid={bid}/>
   ));
 
   return (
@@ -227,6 +240,7 @@ useEffect(() => {
               </thead>
               <tbody>{bidTable}</tbody>
             </table>
+            <button className="btn btn-primary bid-btn" onClick={changeClick}>{viewAll?"View Less": "View More"}</button>
           </div>
         </div>
         
