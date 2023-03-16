@@ -59,7 +59,15 @@ useEffect(() => {
             onClick={() => 
               handleOnClickEvent(date) }
             >
-              see more...
+              View All
+            </SeeMore>
+          )}
+          {childLength <3 && (
+            <SeeMore
+            onClick={() => 
+              handleOnClickEvent(date) }
+            >
+              View
             </SeeMore>
           )}
         </>
@@ -138,7 +146,7 @@ useEffect(() => {
                     )
                   ) && (
                     <StyledEvent
-                      onClick={() => handleOnClickEvent(ev.date)}
+                      // onClick={() => handleOnClickEvent(ev.date)}
                       className="StyledEvent"
                       id={`${ev.color}`}
                       key={ev.id}
