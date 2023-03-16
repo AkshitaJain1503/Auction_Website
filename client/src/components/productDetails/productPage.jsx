@@ -39,7 +39,7 @@ export default function ProductPage(props) {
         productName: res.data.productName,
         productDescription: res.data.productDescription,
         productImage: res.data.productImage,
-        shipmentFrom: res.data.shipmentFrom,
+        shipmentFromPlace: res.data.shipmentFromPlace,
         basePrice: res.data.productBasePrice,
         name: res.data.sellerName,
         sellerId: res.data.sellerId,
@@ -91,7 +91,7 @@ export default function ProductPage(props) {
           <div className={styles.details}>
             <span className={styles.desc}>{product.productDescription}</span>
             <span className={styles.ship}>
-              Shipment from {product.shipmentFrom}
+              Shipment from {product.shipmentFromPlace}
             </span>
             <span> Base Price: {product.basePrice}</span>
            <span> Seller : <a href={`/userProfile?id=${product.sellerId}`} className={styles.links}>{product.name} </a></span>

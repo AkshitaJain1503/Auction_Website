@@ -126,7 +126,7 @@ const PostProduct = () => {
     }).catch((err) => console.log(err));
 
     const data = await res.json();
-    if (data.status === 404 || !data) {
+    if (res.status === 404 || !res) {
       window.location = "/signup";
     } else {
       alert("Product details submitted!");
