@@ -47,7 +47,6 @@ export default function ProductPage(props) {
         aucEnd: res.data.aucEnd,
       };
     });
-    console.log("eh", product.aucEnd, "k");
     
   };
 
@@ -99,7 +98,7 @@ export default function ProductPage(props) {
            <span> End Time of auction: {product.aucEnd} </span>
            <div className={styles.btns}>
               <button onClick={handleClick} className={styles.button}>Auction Space</button>
-              <button onClick={addToWatchList} className={styles.button}>Add to Cart</button>
+              <button onClick={addToWatchList} className={styles.button}>Add to Watch List</button>
            </div>
           </div>
         </div>

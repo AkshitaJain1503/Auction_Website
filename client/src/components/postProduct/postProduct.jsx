@@ -68,7 +68,6 @@ const PostProduct = () => {
 
   const postData = async (e) => {
     e.preventDefault();
-    alert("Please wait! Product is getting posted.");
     const {
       productName,
       productDescription,

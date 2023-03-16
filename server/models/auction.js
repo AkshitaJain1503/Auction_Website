@@ -16,10 +16,14 @@ const auctionSchema = new mongoose.Schema(
         bidder: {
           type: mongoose.Types.ObjectId,
           ref: "User",
+          required: true
+        },
+        bidderName: {
+          type: String,
+          required: true,
         },
         time: {
-          type: Date,
-          default: Date.now,
+          type: String,
         },
         price: {
           type: Number,
