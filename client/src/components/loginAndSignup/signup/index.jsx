@@ -3,25 +3,44 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import NavBar from "../../navbar/index";
+import { Country, State, City }  from 'country-state-city';
+import Select from "react-select";
 
 const Signup = () => {
+  const [selectedCountry, setSelectedCountry] = useState(null);
+  const [selectedState, setSelectedState] = useState(null);
+  const [selectedCity, setSelectedCity] = useState(null);
   const [data, setData] = useState({
     name: "",
     email: "",
     password: "",
-    address: ""
+    address: "",
+    country: "",
+    state: "",
+    city: "",
+    latitude: "",
+    longitude: "",
   });
+
   const [error, setError] = useState("");
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
+  //hitting POST API
   const handleSubmit = async (e) => {
     e.preventDefault();
+      data.country = selectedCountry.name;
+      data.state = selectedState.name;
+      data.city = selectedCity.name;
+      data.latitude = selectedCity.latitude;
+      data.longitude = selectedCity.longitude;
     try {
       const url = "http://localhost:3001/api/register";
       const { data: res } = await axios.post(url, data);
+
+      //setting the JWT token on successful signUp and redirecting to home page
       localStorage.setItem("token", res.data);
       window.location = "/";
     } catch (error) {
@@ -62,14 +81,6 @@ const Signup = () => {
                 required
                 className={styles.input}
               />
-              {/* <input
-                type="text"
-                placeholder="Last Name"
-                name="lastName"
-                onChange={handleChange}
-                value={data.lastName}
-                className={styles.input}
-              /> */}
               <input
                 type="email"
                 placeholder="Email*"
@@ -97,6 +108,61 @@ const Signup = () => {
                 required
                 className={styles.input}
               />
+        
+              <Select
+                placeholder = "Country*"
+                options={Country.getAllCountries()}
+                getOptionLabel={(options) => {
+                  return options["name"];
+                }}
+                getOptionValue={(options) => {
+                  return options["name"];
+                }}
+                value={selectedCountry}
+                onChange={(item) => {
+                  setSelectedCountry(item);
+                }}
+                required
+                className={styles.Select}
+              />
+
+              <Select
+                placeholder = "State*"
+                options={State.getStatesOfCountry(selectedCountry?.isoCode)}
+                getOptionLabel={(options) => {
+                  return options["name"];
+                }}
+                getOptionValue={(options) => {
+                  return options["name"];
+                }}
+                value={selectedState}
+                onChange={(item) => {
+                  setSelectedState(item);
+                }}
+                required
+                className={styles.Select}
+              />
+
+              <Select
+                placeholder = "City*"
+                options={City.getCitiesOfState(
+                  selectedState?.countryCode,
+                  selectedState?.isoCode
+                )}
+                getOptionLabel={(options) => {
+                  return options["name"];
+                }}
+                getOptionValue={(options) => {
+                  return options["name"];
+                }}
+                value={selectedCity}
+                onChange={(item) => {
+                  setSelectedCity(item);
+                }}
+                required
+                className={styles.Select}
+              />
+
               {error && <div className={styles.error_msg}>{error}</div>}
               <button type="submit" className={styles.green_btn}>
                 Sign Up

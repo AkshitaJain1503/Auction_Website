@@ -41,7 +41,6 @@ const GetPastPosts = () => {
 };
 
 //Renders the past posts in a table whose each row on cliking renders the specific product page.
-//(TableControl) 25 rows are shown on one page. Rest are shown via pagination
 const PastPosts = () => {
     const navigate = useNavigate();
     const data = GetPastPosts();
@@ -75,11 +74,13 @@ const PastPosts = () => {
                           hover: true
                       }}
                       totalPosition="none"
+                      pagination = {false}
                   />
                 </div>
             </div>
         );
     }
+    //if no data retrieved yet
     else{
         return (
             <div>

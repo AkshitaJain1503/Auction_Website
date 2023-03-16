@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import styles from "./styles.module.css";
 import NavBar from "../../navbar/index";
 
-//the login component hits the backend authOgin API.
-
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
@@ -14,13 +12,17 @@ const Login = () => {
     setData({ ...data, [input.name]: input.value });
   };
 
+  //hitting POST API
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const url = "http://localhost:3001/api/authLogin";
       const { data: res } = await axios.post(url, data);
+
+      //setting the JWT token on successful login and redirecting to home page
       localStorage.setItem("token", res.data);
       window.location = "/";
+
     } catch (error) {
       if (
         error.response &&
