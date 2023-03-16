@@ -28,9 +28,14 @@ const allProductCarts = require("./routes/Carts/allProductCarts");
 const search = require("./routes/search_page/search");
 const calendar = require("./routes/calendarView/calendar");
 const calendarDetails = require("./routes/calendarView/calendarDetails");
+const auctionsScheduler = require("./routes/auctionSpace/auctionsScheduler");
+
 
 //database connection
 connection();
+
+//auctions start and end event scheduler
+auctionsScheduler.scheduleAll();
 
 //middlewares
 app.use(express.json());
