@@ -33,9 +33,9 @@ const GetSearchResults = () => {
         const handleSort = (e) => {
             setSort(e.target.value);
         }
-        console.log(typeof(data));
-        console.log("hello");
-        console.log(data);
+        // console.log(typeof(data));
+        // console.log("hello");
+        // console.log(data);
         let sortedData = data;
         if (sort === "lowToHigh") {
             sortedData = data.sort((a, b) => a.basePrice - b.basePrice);
@@ -58,10 +58,10 @@ const GetSearchResults = () => {
                 return aEndTime - bEndTime;
         });
     }
-    // else if(sort === "Distance")
-    //     {
-    //         sortedData = data.sort((a, b) => a.dist - b.dist);
-    // }
+    else if(sort === "Distance")
+        {
+            sortedData = data.sort((a, b) => a.dist - b.dist);
+    }
         return { data: sortedData, handleSort,name};
     };
 

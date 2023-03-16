@@ -40,7 +40,10 @@ const PostProduct = () => {
     productName: "",
     productDescription: "",
     productBasePrice: "",
-    shipmentFrom: "",
+    //shipmentFrom: "",
+    shipmentFromPlace: "",
+    shipmentFromLatitude: "",
+    shipmentFromLongitude: "",
     productImage: "",
     startDateTime: "",
     endDateTime: "",
@@ -81,8 +84,10 @@ const PostProduct = () => {
       // hours,
       // minutes
     } = product;
-    const shipmentFrom = selectedCity.name;
-
+   // const shipmentFrom = selectedCity.name;
+   const shipmentFromPlace = selectedCity.name + "," + selectedState.name + "," + selectedCountry.name;
+   const shipmentFromLatitude = selectedCity.latitude;
+   const shipmentFromLongitude = selectedCity.longitude;
     // Validating auction start time and end time
     const now = new Date();
     const startTime = new Date(startDateTime);
@@ -100,7 +105,10 @@ const PostProduct = () => {
     formdata.append("productName", productName);
     formdata.append("productDescription", productDescription);
     formdata.append("productBasePrice", productBasePrice);
-    formdata.append("shipmentFrom", shipmentFrom);
+    //formdata.append("shipmentFrom", shipmentFrom);
+    formdata.append("shipmentFromPlace", shipmentFromPlace);
+    formdata.append("shipmentFromLatitude", shipmentFromLatitude);
+    formdata.append("shipmentFromLongitude", shipmentFromLongitude);
     formdata.append("productImage", productImage);
     formdata.append("startDateTime", startDateTime);
     formdata.append("endDateTime", endDateTime);
