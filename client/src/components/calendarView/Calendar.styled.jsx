@@ -14,7 +14,7 @@ export const StyledEvent = styled.span`
   margin: 0 3px;
   border-radius: 10px;
   font-size: 13px;
-  cursor: pointer;
+  // cursor: pointer;
   text-transform: capitalize;
 `;
 
@@ -76,6 +76,15 @@ export const DateControls = styled.div`
 `;
 
 export const SeeMore = styled.p`
+  font-size: 12px;
+  padding: 0 5px;
+  margin-bottom: 0;
+  cursor: pointer;
+`;
+
+export const View = styled.p`
+text-align: right;
+content-align: bottom;
   font-size: 12px;
   padding: 0 5px;
   margin-bottom: 0;
