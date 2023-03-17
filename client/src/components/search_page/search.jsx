@@ -9,7 +9,6 @@ import './App.css';
 import Card from "./card";
 import styled from "styled-components";
 
-
 // this function returns name that has been searched for by the user
 const GetProductname = () => {
     const useQuery = () => new URLSearchParams(useLocation().search);
@@ -19,6 +18,7 @@ const GetProductname = () => {
 }
 //fetches all data that match the name from GetProductname()
 const GetSearchResults = () => {
+    const navigate = useNavigate();
     const name = GetProductname();
     const [data, setData] = useState([]);
     const [sort, setSort] = useState("none");
@@ -26,6 +26,7 @@ const GetSearchResults = () => {
     const [showUpcoming, setShowUpcoming] = useState(true);
     const [showEnded, setShowEnded] = useState(false);
     const [statusList, setstatusList] = useState(["Present","Future"]);
+    //const history = useHistory();
     useEffect(() => {
         const fetchdata = async () => {
             const url = `http://localhost:3001/api/search?name=${name}`;
@@ -38,11 +39,14 @@ const GetSearchResults = () => {
         }, [ name])
 
         
-        let userLoggedIn= false;
-        if(data.length!==0 && data[0].dist===-1)
+        let LoggedIn= false;
+        //console.log(data);
+        //console.log(typeof(data));
+        if(data.length>0 && data[0].userLoggedIn=== true)
     {
-        userLoggedIn = false;
+        LoggedIn = true;
     }
+    //console.log(LoggedIn);
         const handleShowLiveChange = (event) => {
             const checked = event.target.checked;
             setShowLive(checked);
@@ -74,6 +78,14 @@ const GetSearchResults = () => {
             }
           };
         const handleSort = (e) => {
+            const selectedSort = e.target.value;
+
+    if (selectedSort === "Distance" && LoggedIn === false) {
+        alert("You need to be logged in to sort by shipment Distance!");
+        navigate(`/login`);
+        return;
+    }
+
             setSort(e.target.value);
         }
         let sortedData = data;
@@ -99,14 +111,8 @@ const GetSearchResults = () => {
         });
     }
     else if(sort === "Distance")
-        {
-            if(userLoggedIn===false)
-            {
-                // alert("You need to be logged in to sort by shipment Distance!");
-                // return { data: sortedData, handleSort,name,handleShowEndedChange,handleShowLiveChange,handleShowUpcomingChange,statusList};
-                 window.location = "/login";
-            }
-            sortedData = data.sort((a, b) => a.dist - b.dist);
+    {
+        sortedData = data.sort((a, b) => a.dist - b.dist);
     }
         return { data: sortedData, handleSort,name,handleShowEndedChange,handleShowLiveChange,handleShowUpcomingChange,statusList};
     };
@@ -131,7 +137,7 @@ const GetSearchResults = () => {
                                 <div >
                                     <NavBar />
                                     <h4>Search Results for : '{name}'</h4>
-                                    <h5>Total Matching data: {products.length}</h5>
+                                    {/* <h5>Total Matching data: {products.length}</h5> */}
                 
                                     <div className='cont'>
                     <select onChange={handleSort}>

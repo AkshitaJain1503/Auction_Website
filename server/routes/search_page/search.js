@@ -34,8 +34,12 @@ router.get("/", async (req, res) => {
 
     let userLoggedIn = await isLoggedIn(req);
     let user;
+    let userlatitude,userlongitude;
     if(userLoggedIn!= -1){
+        //console.log("hello");
         user = await User.findOne({_id: ObjectId(userLoggedIn)});
+         userlatitude = user.latitude;
+         userlongitude = user.longitude;
     }
     // console.log("userLoggedIn",userLoggedIn);
     // console.log("user",user);
@@ -67,12 +71,11 @@ router.get("/", async (req, res) => {
 
         if(userLoggedIn!= -1){
             //set latitude longitude
-            let userlatitude = user.latitude;
-            let userlongitude = user.longitude;
-            // productDetails.dist = geolib.getDistance({ latitude: userlatitude,longitude: userlongitude}, 
-            //     { latitude:products[i].shipmentFromLatitude,longitude: products[i].shipmentFromLongitude});
-            productDetails.dist = 100;
-            console.log("productDetails.dist", productDetails.dist)
+            
+             productDetails.dist = geolib.getDistance({ latitude: userlatitude,longitude: userlongitude}, 
+                { latitude:products[i].shipmentFromLatitude,longitude: products[i].shipmentFromLongitude});
+            //productDetails.dist = 100;
+            //console.log("productDetails.dist", productDetails.dist)
             productDetails.userLoggedIn = true;
         }
         else{
