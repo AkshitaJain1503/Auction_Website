@@ -1,7 +1,8 @@
+//Get details of the products corresponding to the searched term: GET
 const router = require("express").Router();
 const {Auction} = require("../../models/auction");
 
-//Get documents from auction db corresponding to the searched product name for calendar display.
+//Get documents from auction collection corresponding to the searched product name for initial calendar display.
 router.get("/", async (req, res) => {
 
     const requestedProductName = req.query.name;
@@ -15,7 +16,7 @@ router.get("/", async (req, res) => {
         return `${year}/${mnth}/${day}`
      }
      
-     //deciding colour which will highlight the calendar according to past, today and future.
+    //deciding colour which will highlight the calendar according to past, today and future.
     function decideColour(todayDate, auctDate){
         if(todayDate < auctDate){
             return "#774dbf";
@@ -28,13 +29,13 @@ router.get("/", async (req, res) => {
 
     let todayDate = dateConverter(String(new Date()));
 
-    //getting auction documents where name LIKE %requestedProductName% and is case insensitive.
+    //getting auction documents where name LIKE %requestedProductName% (sql equivalent) and is case insensitive.
     let AuctionList= await Auction.find({ productName 
         :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' } });
 
     let response =[];
 
-    //final response array of objects.
+    //details needed at the front-end.
     for(var i = 0; i<AuctionList.length; i++){
         let resData = {};
         let auctDate = (AuctionList[i]. startDateTime);
@@ -45,6 +46,7 @@ router.get("/", async (req, res) => {
         response.push(resData);
     };
 
+    //returns array of objects {data: [{},{},{}...]}
     res.status(200).send({data:response});
 });
 

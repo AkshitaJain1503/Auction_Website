@@ -12,7 +12,6 @@ import {
 } from 'mdb-react-ui-kit';
 
 //getting the (myProfile) data from the backend API
-
 const GetProfile = () => {
   const [data, setData] = React.useState({})
 
@@ -48,96 +47,109 @@ const DisplayProfile =()=> {
             <div className={styles.backGroundSpace}>
               <h5>MY PROFILE</h5>
               <hr></hr>
-            <section >
-              <MDBContainer className="py-5">
-              <MDBRow>
-          <MDBCol lg="8">
-            <MDBCard className="mb-4">
-              <MDBCardBody>
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>NAME</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{data.name}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
+              <section >
+                <MDBContainer className="py-5">
+                  <MDBRow>
+                    <MDBCol lg="8">
+                      <MDBCard className="mb-4">
+                        <MDBCardBody>
+                          <MDBRow>
+                            <MDBCol sm="3">
+                              <MDBCardText>NAME</MDBCardText>
+                            </MDBCol>
+                            <MDBCol sm="9">
+                              <MDBCardText className="text-muted">{data.name}</MDBCardText>
+                            </MDBCol>
+                          </MDBRow>
+                          <hr />
                 
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>EMAIL</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{data.email}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>ADDRESS</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{data.address}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>TOTAL POSTS</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{data.totalPosts}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-                <hr />
-                <MDBRow>
-                  <MDBCol sm="3">
-                    <MDBCardText>TOTAL PURCHASES</MDBCardText>
-                  </MDBCol>
-                  <MDBCol sm="9">
-                    <MDBCardText className="text-muted">{data.totalPurchases}</MDBCardText>
-                  </MDBCol>
-                </MDBRow>
-              </MDBCardBody>
-            </MDBCard>
-          </MDBCol>
-        </MDBRow>
-      
-          <MDBRow>
-          <MDBCol lg="4">
-            <MDBCard className="mb-4">
-              <MDBCardBody className="text-center">
+                          <MDBRow>
+                            <MDBCol sm="3">
+                              <MDBCardText>EMAIL</MDBCardText>
+                            </MDBCol>
+                            <MDBCol sm="9">
+                              <MDBCardText className="text-muted">{data.email}</MDBCardText>
+                            </MDBCol>
+                          </MDBRow>
+                          <hr />
+
+                          <MDBRow>
+                            <MDBCol sm="3">
+                              <MDBCardText>ADDRESS</MDBCardText>
+                            </MDBCol>
+                            <MDBCol sm="9">
+                              <MDBCardText className="text-muted">{data.address}</MDBCardText>
+                            </MDBCol>
+                          </MDBRow>
+                          <hr />
+
+                          <MDBRow>
+                            <MDBCol sm="5">
+                              <MDBCardText>COUNTRY, STATE, CITY</MDBCardText>
+                            </MDBCol>
+                            <MDBCol sm="9">
+                              <MDBCardText className="text-muted">{`${data.country}, ${data.state}, ${data.city}`}</MDBCardText>
+                            </MDBCol>
+                          </MDBRow>
+                          <hr />
+
+                          <MDBRow>
+                            <MDBCol sm="3">
+                              <MDBCardText>TOTAL POSTS</MDBCardText>
+                            </MDBCol>
+                            <MDBCol sm="9">
+                              <MDBCardText className="text-muted">{data.totalPosts}</MDBCardText>
+                            </MDBCol>
+                          </MDBRow>
+                          <hr />
+
+                          <MDBRow>
+                            <MDBCol sm="3">
+                              <MDBCardText>TOTAL PURCHASES</MDBCardText>
+                            </MDBCol>
+                            <MDBCol sm="9">
+                              <MDBCardText className="text-muted">{data.totalPurchases}</MDBCardText>
+                            </MDBCol>
+                          </MDBRow>
+                        </MDBCardBody>
+                      </MDBCard>
+                    </MDBCol>
+                  </MDBRow>
+
+                  <MDBRow>
+                    <MDBCol lg="4">
+                      <MDBCard className="mb-4">
+                        <MDBCardBody className="text-center">
+                          <p className="text-muted mb-1">MORE DETAILS</p>
+
+                          <div className="d-flex justify-content-center mb-2">
                 
-                <p className="text-muted mb-1">MORE DETAILS</p>
-                <div className="d-flex justify-content-center mb-2">
-                  
-                <a href="/editProfile">
-                  <button>Edit Profile</button>
-                </a>
+                            <a href="/editProfile">
+                              <button>Edit Profile</button>
+                            </a>
 
-                <a href="/pastPurchases">
-                  <button className="ms-3" >Past Purchases</button>
-                </a>
+                            <a href="/pastPurchases">
+                              <button className="ms-3" >Past Purchases</button>
+                            </a>
 
-                <a href="/pastPosts">
-                <button className="ms-3">Past Posts</button>
-                </a>
-                  
-                </div>
-              </MDBCardBody>
-            </MDBCard>
-
-
-          </MDBCol>
-        </MDBRow>
-      </MDBContainer>
-    </section></div>
-  </div>
-      ) : 
-      (
+                            <a href="/pastPosts">
+                            <button className="ms-3">Past Posts</button>
+                            </a>
+                            
+                          </div>
+                        </MDBCardBody>
+                      </MDBCard>
+                    </MDBCol>
+                  </MDBRow>
+                </MDBContainer>
+              </section>
+            </div>
+          </div>
+        ) : 
+        //if no data is retrieved yet
+        (
         <NavBar/>
-      )}
+        )}
       </div>
     )
   }
