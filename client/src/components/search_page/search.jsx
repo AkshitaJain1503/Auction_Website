@@ -29,11 +29,15 @@ const GetSearchResults = () => {
     useEffect(() => {
         const fetchdata = async () => {
             const url = `http://localhost:3001/api/search?name=${name}`;
-            const response = await axios.get(url);
+            const tokenStr = localStorage.getItem("token");
+            const headers = { "Authorization": "Bearer "+tokenStr };
+            const response = await axios.get(url, { headers });
             setData(response.data);
         };
             fetchdata();
         }, [ name])
+
+        
         let userLoggedIn= false;
         if(data.length!==0 && data[0].dist===-1)
     {
