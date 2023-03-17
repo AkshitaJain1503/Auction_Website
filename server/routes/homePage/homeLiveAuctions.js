@@ -20,7 +20,7 @@ router.get("/", async (req, res) => {
         productDetails.productName = products[i].productName;
         productDetails.basePrice = products[i].productBasePrice;
         productDetails.img = products[i].productImage;
-        productDetails.shipment = products[i].shipmentFromPlace;
+        productDetails.shipment = products[i].shipmentFrom;
          let formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
          day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auctions[i].endDateTime);
         let formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
@@ -39,3 +39,4 @@ router.get("/", async (req, res) => {
     }
   });
   module.exports=router;
+  //

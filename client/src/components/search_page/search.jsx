@@ -22,6 +22,10 @@ const GetSearchResults = () => {
     const name = GetProductname();
     const [data, setData] = useState([]);
     const [sort, setSort] = useState("none");
+    const [showLive, setShowLive] = useState(true);
+    const [showUpcoming, setShowUpcoming] = useState(true);
+    const [showEnded, setShowEnded] = useState(false);
+    const [statusList, setstatusList] = useState(["Present","Future"]);
     useEffect(() => {
         const fetchdata = async () => {
             const url = `http://localhost:3001/api/search?name=${name}`;
@@ -30,12 +34,44 @@ const GetSearchResults = () => {
         };
             fetchdata();
         }, [ name])
+        let userLoggedIn= false;
+        if(data.length!==0 && data[0].dist===-1)
+    {
+        userLoggedIn = false;
+    }
+        const handleShowLiveChange = (event) => {
+            const checked = event.target.checked;
+            setShowLive(checked);
+        
+            if (checked) {
+              setstatusList([...statusList, "Present"]);
+            } else {
+              setstatusList(statusList.filter(status => status !== "Present"));
+            }
+          };
+        
+          const handleShowUpcomingChange = (event) => {
+            const checked = event.target.checked;
+            setShowUpcoming(checked);
+            if (checked) {
+                setstatusList([...statusList, "Future"]);
+            } else {
+              setstatusList(statusList.filter(status => status !== "Future"));
+            }
+          };
+
+          const handleShowEndedChange = (event) => {
+            const checked = event.target.checked;
+            setShowEnded(checked);
+            if (checked) {
+                setstatusList([...statusList, "Past"]);
+            } else {
+              setstatusList(statusList.filter(status => status !== "Past"));
+            }
+          };
         const handleSort = (e) => {
             setSort(e.target.value);
         }
-        // console.log(typeof(data));
-        // console.log("hello");
-        // console.log(data);
         let sortedData = data;
         if (sort === "lowToHigh") {
             sortedData = data.sort((a, b) => a.basePrice - b.basePrice);
@@ -60,22 +96,33 @@ const GetSearchResults = () => {
     }
     else if(sort === "Distance")
         {
+            if(userLoggedIn===false)
+            {
+                // alert("You need to be logged in to sort by shipment Distance!");
+                // return { data: sortedData, handleSort,name,handleShowEndedChange,handleShowLiveChange,handleShowUpcomingChange,statusList};
+                 window.location = "/login";
+            }
             sortedData = data.sort((a, b) => a.dist - b.dist);
     }
-        return { data: sortedData, handleSort,name};
+        return { data: sortedData, handleSort,name,handleShowEndedChange,handleShowLiveChange,handleShowUpcomingChange,statusList};
     };
 
     
+
+
+
+
      const SearchDetails = () => {
         const navigate = useNavigate();
-    const { data:products, handleSort ,name} = GetSearchResults();
+    const { data:products, handleSort ,name,handleShowEndedChange,handleShowLiveChange,handleShowUpcomingChange,statusList} = GetSearchResults();
     
-    console.log('products', products);
+   // console.log('products', products);
   if (products.length > 0) {
-        const handleOnClickEvent = (product) => {
-            navigate(`/productPage?id=${product.productId}`  );
-          };
-
+        // const handleOnClickEvent = (product) => {
+        //     navigate(`/productPage?id=${product.productId}`  );
+        //   };
+       
+    
             return (
                                 <div >
                                     <NavBar />
@@ -97,9 +144,38 @@ const GetSearchResults = () => {
                 					</button>
                 				</a>
                                 </div>
-                        
+                                <div>
+                                <label>
+                                    <input
+                                    type="checkbox"
+                                    //checked={showEnded}
+                                    onChange={handleShowEndedChange}
+                                    />
+                                    Show ended
+                                </label>
+                                <label>
+                                    <input
+                                    type="checkbox"
+                                    //checked='true'
+                                    defaultChecked={true} 
+                                    onChange={handleShowLiveChange}
+                                    />
+                                    Show live
+                                </label>
+                                <label>
+                                    <input
+                                    type="checkbox"
+                                    //checked={showUpcoming}
+                                    //checked='true'
+                                    defaultChecked={true} 
+                                    onChange={handleShowUpcomingChange}
+                                    />
+                                    Show upcoming
+                                </label>
+                               
+                                </div>
             <Content >
-                {products.map((product) => (
+                {products.filter((product) => statusList.includes(product.status)).map((product) => (
                     <Card
                         key={product.SNo}
                         Product={product}
