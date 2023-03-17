@@ -9,7 +9,7 @@
 
 .signup_form_container {
 	width: 900px;
-	height: 500px;
+	height: 650px;
 	display: flex;
 	border-radius: 10px;
 	box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
@@ -63,6 +63,14 @@
 	padding: 15px;
 	border-radius: 10px;
 	background-color: #edf5f3;
+	margin: 5px 0;
+	font-size: 14px;
+}
+.Select {
+	outline: none;
+	border: none;
+	width: 370px;
+	border-radius: 10px;
 	margin: 5px 0;
 	font-size: 14px;
 }
