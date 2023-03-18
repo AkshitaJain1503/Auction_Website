@@ -109,7 +109,7 @@ export default function ProductPage(props) {
             <span className={styles.ship}>
               Shipment from {product.shipmentFromPlace}
             </span>
-            <span> Base Price: {product.basePrice}</span>
+            <span> Base Price: &#x20b9; {product.basePrice}</span>
             <span>
               {" "}
               Seller :{" "}

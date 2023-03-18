@@ -180,7 +180,7 @@ async function scheduleEnd(auction) {
     emailNotification(
       soldToEmail + "," + sellerEmail,
       "Sorry! The auction has ended late",
-      `The auction of ${auction.productName} has ended now due to a technical glitch. The product has been sold to ${soldToName} by the seller ${sellerName} at a price of ${productCurrentPrice}`
+      `The auction of ${auction.productName} has ended now due to a technical glitch. The product has been sold to ${soldToName} by the seller ${sellerName} at a price of Rupees ${productCurrentPrice}`
     );
   } else {
     // scheduling the auction to end at its end time
@@ -194,7 +194,7 @@ async function scheduleEnd(auction) {
         emailNotification(
           soldToEmail + ", " + sellerEmail,
           "Congratulations! The auction has ended",
-          `The auction of ${auction.productName} has ended now. The product has been sold to ${soldToName} by the seller ${sellerName} at a price of ${productCurrentPrice}`
+          `The auction of ${auction.productName} has ended now. The product has been sold to ${soldToName} by the seller ${sellerName} at a price of Rupees ${productCurrentPrice}`
         );
       }
     );
