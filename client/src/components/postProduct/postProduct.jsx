@@ -25,10 +25,6 @@ const PostProduct = () => {
     productName: "",
     productDescription: "",
     productBasePrice: "",
-<<<<<<< HEAD
-    //shipmentFrom: "",
-=======
->>>>>>> 0adc7d3aba090b10ec6955a33bc61e2949f66c07
     shipmentFromPlace: "",
     shipmentFromLatitude: "",
     shipmentFromLongitude: "",
@@ -62,12 +58,6 @@ const PostProduct = () => {
       startDateTime,
       endDateTime,
     } = product;
-<<<<<<< HEAD
-   // const shipmentFrom = selectedCity.name;
-   const shipmentFromPlace = selectedCity.name + "," + selectedState.name + "," + selectedCountry.name;
-   const shipmentFromLatitude = selectedCity.latitude;
-   const shipmentFromLongitude = selectedCity.longitude;
-=======
 
     // storing the place, latitude and longitude of shipment source using country-state-city npm package attributes
     const shipmentFromPlace =
@@ -75,7 +65,6 @@ const PostProduct = () => {
     const shipmentFromLatitude = selectedCity.latitude;
     const shipmentFromLongitude = selectedCity.longitude;
 
->>>>>>> 0adc7d3aba090b10ec6955a33bc61e2949f66c07
     // Validating auction start time and end time
     const now = new Date();
     const startTime = new Date(startDateTime);
