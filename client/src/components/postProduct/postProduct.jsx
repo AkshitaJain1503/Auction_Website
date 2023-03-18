@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-//import NavLoggedIn from "../navbar/navLoggedIn";
 import "bootstrap/dist/css/bootstrap.min.css";
 import NavBar from "../navbar/index";
 import {
@@ -15,24 +14,10 @@ import {
 import { Country, State, City } from "country-state-city";
 import Select from "react-select";
 
-// import ProductPage from "../productDetails/productPage";
-
-// const convertToBase64 = (file) => {
-//   return new Promise((resolve, reject) => {
-//     const fileReader = new FileReader();
-//     fileReader.readAsDataURL(file);
-//     fileReader.onload = () => {
-//       resolve(fileReader.result);
-//     };
-//     fileReader.onerror = (error) => {
-//       reject(error);
-//     };
-//   });
-// };
-
 const PostProduct = () => {
+  // using navigate for smooth navigation to other page on onclick
   const navigate = useNavigate();
-
+  // using country, state, city attributes and their useState functions
   const [selectedCountry, setSelectedCountry] = useState(null);
   const [selectedState, setSelectedState] = useState(null);
   const [selectedCity, setSelectedCity] = useState(null);
@@ -40,37 +25,35 @@ const PostProduct = () => {
     productName: "",
     productDescription: "",
     productBasePrice: "",
+<<<<<<< HEAD
     //shipmentFrom: "",
+=======
+>>>>>>> 0adc7d3aba090b10ec6955a33bc61e2949f66c07
     shipmentFromPlace: "",
     shipmentFromLatitude: "",
     shipmentFromLongitude: "",
     productImage: "",
     startDateTime: "",
     endDateTime: "",
-    // auctionStartDate: "",
-    // auctionStartTime: "",
-    // days: "",
-    // hours: "",
-    // minutes: ""
   });
+
+  // onchange handlers defined here for all inputs including file inputs
   let name, value;
   const handleInput = (e) => {
-    // console.log(e);
     name = e.target.name;
     value = e.target.value;
     setProduct({ ...product, [name]: value });
-    // console.log(user.productImage);
   };
   const handlePhoto = async (e) => {
     let photo = e.target.name;
-    // const value = await convertToBase64(e.target.files[0]);
-    // let nvalue = JSON.stringify(value);
     setProduct({ ...product, [photo]: e.target.files[0] });
-    // console.log(e.target.files[0]);
   };
 
+  // postData gets on form submission and sends the info to the backend server
   const postData = async (e) => {
     e.preventDefault();
+    
+    // destructuring of all product attributes and storing them in constants
     const {
       productName,
       productDescription,
@@ -78,16 +61,21 @@ const PostProduct = () => {
       productImage,
       startDateTime,
       endDateTime,
-      // auctionStartDate,
-      // auctionStartTime,
-      // days,
-      // hours,
-      // minutes
     } = product;
+<<<<<<< HEAD
    // const shipmentFrom = selectedCity.name;
    const shipmentFromPlace = selectedCity.name + "," + selectedState.name + "," + selectedCountry.name;
    const shipmentFromLatitude = selectedCity.latitude;
    const shipmentFromLongitude = selectedCity.longitude;
+=======
+
+    // storing the place, latitude and longitude of shipment source using country-state-city npm package attributes
+    const shipmentFromPlace =
+      selectedCity.name + ", " + selectedState.name + ", " + selectedCountry.name;
+    const shipmentFromLatitude = selectedCity.latitude;
+    const shipmentFromLongitude = selectedCity.longitude;
+
+>>>>>>> 0adc7d3aba090b10ec6955a33bc61e2949f66c07
     // Validating auction start time and end time
     const now = new Date();
     const startTime = new Date(startDateTime);
@@ -100,23 +88,22 @@ const PostProduct = () => {
       alert("Auction start time must be before the auction end time.");
       return;
     }
-
+    
+    // storing all info in formdata for multi-part formdata encrypted type as image files are also to be transferred to the backend server
     const formdata = new FormData();
     formdata.append("productName", productName);
     formdata.append("productDescription", productDescription);
     formdata.append("productBasePrice", productBasePrice);
-    //formdata.append("shipmentFrom", shipmentFrom);
     formdata.append("shipmentFromPlace", shipmentFromPlace);
     formdata.append("shipmentFromLatitude", shipmentFromLatitude);
     formdata.append("shipmentFromLongitude", shipmentFromLongitude);
     formdata.append("productImage", productImage);
     formdata.append("startDateTime", startDateTime);
     formdata.append("endDateTime", endDateTime);
-    // formdata.append("auctionStartTime", auctionStartTime);
-    // formdata.append("days", days);
-    // formdata.append("hours", hours);
-    // formdata.append("minutes", minutes);
 
+    alert("Please wait! Your product is getting posted.");
+
+    // using post method to post the info to the server side
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
       headers: {
@@ -126,10 +113,16 @@ const PostProduct = () => {
       body: formdata,
     }).catch((err) => console.log(err));
 
+    // data stores the product id obtained from the server side
     const data = await res.json();
-    if (data.status === 404 || !data) {
+
+    // checks if the response status is not found 
+    // also checks for response being null
+    if (res.status === 404 || !res) {
+      // redirects to signup if user not logged in, and hence response not obtained
       window.location = "/signup";
     } else {
+      // product details submitted and navigates to the individual product page
       alert("Product details submitted!");
       navigate(`/productPage?id=${data}`);
     }
@@ -189,31 +182,6 @@ const PostProduct = () => {
                   required
                 />
               </div>
-              {/* <div className="my-3">
-                <Label for="startDate">Start Date*</Label>
-                <Input 
-                 id="startDate"
-                 name="auctionStartDate"
-                 type="date"
-                 value={product.auctionStartDate}
-                 onChange={handleInput}
-                 className="rounded-0"
-                 required
-                /> 
-              </div>
-              <div className="my-3">
-                <Label for="startTime">Start Time*</Label>
-                <Input 
-                 id="startTime"
-                 name="auctionStartTime"
-                 type="time"
-                 value={product.auctionStartTime}
-                 onChange={handleInput}
-                 className="rounded-0"
-                 required
-                /> 
-              </div> */}
-
               <div className="my-3">
                 <Label for="startTime">Auction Start Date and Time*</Label>
                 <Input
@@ -238,63 +206,8 @@ const PostProduct = () => {
                   required
                 />
               </div>
-
-              {/* <div className="my-3">
-                <Label for="duration">Duration*</Label>
-                <br/>
-                
-                <input 
-                 id="duration"
-                 name="days"
-                 type="number"
-                 value={product.days}
-                 onChange={handleInput}
-                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "20px"}}
-                 required
-                /> days
-                <input 
-                 id="duration"
-                 name="hours"
-                 type="number"
-                 value={product.hours}
-                 onChange={handleInput}
-                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
-                  required
-                /> hours
-                <input 
-                 id="duration"
-                 name="minutes"
-                 type="number"
-                 value={product.minutes}
-                 onChange={handleInput}
-                 style={{margin: "10px", borderRadius: "5px", border: "1px solid #c7baba", marginLeft: "50px"}}
-                 required
-                /> minutes 
-                
-              </div> */}
               <div className="my-3">
                 <Label for="place">Shipment from: </Label>
-                {/* <Input
-                  id="place"
-                  name="shipmentFrom"
-                  type="select"
-                  value={product.shipmentFrom}
-                  onChange={handleInput}
-                  placeholder="Enter here"
-                  className="rounded-0"
-                  required
-                >
-                  <option value="choose location">Choose location</option>
-                  <option>Bangalore</option>
-                  <option>Hyderabad</option>
-                  <option>Kolkata</option>
-                  <option>Mumbai</option>
-                  <option>Delhi</option>
-                  <option>Chennai</option>
-                  <option>Ahmedabad</option>
-                  <option>Pune</option>
-                  <option>Surat</option>
-                </Input> */}
                 <br></br>
                 <Label for="country">Country name* </Label>
                 <Select
@@ -309,6 +222,7 @@ const PostProduct = () => {
                   onChange={(item) => {
                     setSelectedCountry(item);
                   }}
+                  required
                 />
                 <Label for="country">State name* </Label>
                 <Select
@@ -323,6 +237,7 @@ const PostProduct = () => {
                   onChange={(item) => {
                     setSelectedState(item);
                   }}
+                  required
                 />
                 <Label for="country">City name* </Label>
                 <Select
@@ -341,6 +256,7 @@ const PostProduct = () => {
                   onChange={(item) => {
                     setSelectedCity(item);
                   }}
+                  required
                 />
               </div>
               <div className="my-3">
@@ -358,9 +274,6 @@ const PostProduct = () => {
                 <Button type="submit" className="rounded-0" color="primary">
                   Post your product
                 </Button>
-                {/* <Button type="submit" className="rounded-0 ms-2" color="danger">
-                  Reset Content
-                </Button> */}
               </Container>
             </Form>
           </CardBody>
