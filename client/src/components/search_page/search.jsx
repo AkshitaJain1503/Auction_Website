@@ -198,7 +198,11 @@ const GetSearchResults = () => {
     }
     else{
         return(
+            <div>
+            <   NavBar />
             <h5>Sorry,No matching products.</h5>
+            </div>
+            
         )
     }
 }
