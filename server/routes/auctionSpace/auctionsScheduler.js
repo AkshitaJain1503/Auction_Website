@@ -3,6 +3,7 @@ const nodemailer = require("nodemailer");
 const { Auction } = require("../../models/auction");
 const { Product } = require("../../models/product");
 const { User } = require("../../models/user");
+require("dotenv").config();
 
 // declaring global variables for usage across different functions
 var subscribers = "";
@@ -51,8 +52,8 @@ const emailNotification = (receiver, subject, text) => {
   var transporter = nodemailer.createTransport({
     service: "gmail",
     auth: {
-      user: "auctionwebsitedesisproject@gmail.com",
-      pass: "mcwxzkykchkgwyaj",
+      user: process.env.SERVICE_PROVIDER_USER,
+      pass: process.env.SERVICE_PROVIDER_PASSKEY,
     },
   });
 
