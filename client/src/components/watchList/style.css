@@ -49,11 +49,16 @@
 .watch-btn {
     justify-content: center;
     align-items: center;
+    background-color: rgb(21, 145, 202);
+    color: white;
+    border: none;
+    box-shadow: 1px 1px 1px rgb(4, 89, 158);
 }
 
 .fa-trash-alt {
     padding: 10px;
     cursor: pointer;
+    color: rgb(228, 6, 6);
 }
 
 .remove-item {
