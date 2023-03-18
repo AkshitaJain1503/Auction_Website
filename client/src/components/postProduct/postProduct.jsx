@@ -61,7 +61,7 @@ const PostProduct = () => {
 
     // storing the place, latitude and longitude of shipment source using country-state-city npm package attributes
     const shipmentFromPlace =
-      selectedCity.name + "," + selectedState.name + "," + selectedCountry.name;
+      selectedCity.name + ", " + selectedState.name + ", " + selectedCountry.name;
     const shipmentFromLatitude = selectedCity.latitude;
     const shipmentFromLongitude = selectedCity.longitude;
 
@@ -90,6 +90,8 @@ const PostProduct = () => {
     formdata.append("startDateTime", startDateTime);
     formdata.append("endDateTime", endDateTime);
 
+    alert("Please wait! Your product is getting posted.");
+
     // using post method to post the info to the server side
     const res = await fetch("http://localhost:3001/api/postProduct", {
       method: "POST",
@@ -99,8 +101,6 @@ const PostProduct = () => {
       },
       body: formdata,
     }).catch((err) => console.log(err));
-
-    alert("Please wait! Your product is getting posted.");
 
     // data stores the product id obtained from the server side
     const data = await res.json();
