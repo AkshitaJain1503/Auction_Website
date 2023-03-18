@@ -30,7 +30,7 @@ router.get("/", async (req, res) => {
         productDetails.StartTime= formattedStartTime;
         productDetails.fEndTime= auction[i].endDateTime;
         productDetails.fStartTime= auction[i].startDateTime;
-        console.log(typeof(productDetails.fStartTime))
+        //console.log(typeof(productDetails.fStartTime))
         responseData.push(productDetails);
     }
  res.status(200).send({data:responseData}); //returns the array of objects
