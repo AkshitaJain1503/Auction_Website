@@ -1,5 +1,4 @@
 import React from "react";
-import "./watchList.css";
 import { useNavigate } from "react-router-dom";
 
 const Items = ({
@@ -57,19 +56,11 @@ const Items = ({
         <div className="product-img">
           <img src={productImage} alt="arrow" onClick={goToProductPage}></img>
         </div>
-        <div className="title">
-          <h2>{productName}</h2>
-        </div>
+        <div className="title">{productName}</div>
         <div className="price">
-          <h3>
-            <span> Current Price: &#x20b9;</span> {currentPrice}
-          </h3>
-          <h3>
-            <span> Start Time: </span> {auctionStartDateTime}
-          </h3>
-          <h3>
-            <span> End Time: </span> {auctionEndDateTime}
-          </h3>
+          <p>Current Price: &#x20b9; {currentPrice} </p>
+          <p>Start Time: {auctionStartDateTime}</p>
+          <p>End Time: {auctionEndDateTime}</p>
         </div>
         <div className="price">
           <button className="watch-btn" onClick={goToAuctionSpace}>

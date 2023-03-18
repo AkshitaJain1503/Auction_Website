@@ -42,7 +42,6 @@ const Container = styled.div`
   width: 100%;
   height:100vh;
   background-color: rgb(234, 237, 237);
-  max-width: 1400px;
   margin: auto;
   height: fit-content;
   align:block;

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
-import "./watchList.css";
+import "./style.css";
+import NavBar from "../navbar/index";
 import Items from "./items";
 import { Scrollbars } from "react-custom-scrollbars-2";
 
@@ -40,18 +41,7 @@ const WatchList = () => {
 
   return (
     <>
-      <header className="header-carts">
-        <div className="continue-shopping">
-          <a href="/">
-            <img src="./arrow.png" alt="arrow" className="arrow-icon" />
-          </a>
-          <h3>Look for other items</h3>
-        </div>
-        <div className="cart-icon">
-          <img src="./cart.png" alt="cart" />
-          <p>{item.length}</p>
-        </div>
-      </header>
+         <NavBar/>
       <section className="main-cart-section">
         <h1>WatchList</h1>
         <p className="total-items">
