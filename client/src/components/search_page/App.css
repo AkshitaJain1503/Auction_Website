@@ -38,6 +38,7 @@
   .display {
     display: flex;
     margin-top: 60px;
+    background-color: gray;
   }
   
   .leftSidebar {
@@ -148,5 +149,7 @@
   {
     padding:10px
   }
-  
+  body {
+    background-color: rgb(220, 218, 218);
+  }
   
