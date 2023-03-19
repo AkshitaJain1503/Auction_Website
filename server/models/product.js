@@ -1,4 +1,3 @@
-// Creating product model
 const mongoose = require("mongoose");
 
 const ProductSchema = new mongoose.Schema({

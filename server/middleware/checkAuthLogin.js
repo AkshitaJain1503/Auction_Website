@@ -11,7 +11,6 @@ const checkAuthLogin = async (req, res, next) => {
             res.status(404).send({error: 'Jwt missing'})
         }
 
-        //if token is invalid (maybe expired or maybe altered)
         const token = req.header('Authorization').replace('Bearer ', '');
         const decoded = jwt.verify(token, process.env.JWTPRIVATEKEY);
         const rootUser = await User.findOne({_id: ObjectId(decoded._id)});
@@ -27,7 +26,7 @@ const checkAuthLogin = async (req, res, next) => {
         next()
 
     } catch (e) {
-        console.log(e);
+        //if JWT is malformed
         res.status(404).send({error: 'Authentication problem!!'})
     }
 };
