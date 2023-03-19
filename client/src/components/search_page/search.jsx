@@ -136,7 +136,7 @@ const GetSearchResults = () => {
             return (
                                 <div >
                                     <NavBar />
-                                    <h4>Search Results for : '{name}'</h4>
+                                    <h1>Search Results for : '{name}'</h1>
                                     {/* <h5>Total Matching data: {products.length}</h5> */}
                 
                                     <div className='cont'>
@@ -153,15 +153,13 @@ const GetSearchResults = () => {
                 						Calendar
                 					</button>
                 				</a>
-                                </div>
-                                <div>
                                 <label>
                                     <input
                                     type="checkbox"
                                     //checked={showEnded}
                                     onChange={handleShowEndedChange}
                                     />
-                                    Show ended
+                                    Show ended     
                                 </label>
                                 <label>
                                     <input
@@ -170,7 +168,7 @@ const GetSearchResults = () => {
                                     defaultChecked={true} 
                                     onChange={handleShowLiveChange}
                                     />
-                                    Show live
+                                    Show live    
                                 </label>
                                 <label>
                                     <input
@@ -180,9 +178,8 @@ const GetSearchResults = () => {
                                     defaultChecked={true} 
                                     onChange={handleShowUpcomingChange}
                                     />
-                                    Show upcoming
+                                    Show upcoming  {" "}  
                                 </label>
-                               
                                 </div>
             <Content >
                 {products.filter((product) => statusList.includes(product.status)).map((product) => (
@@ -197,7 +194,11 @@ const GetSearchResults = () => {
     }
     else{
         return(
+            <div>
+            <   NavBar />
             <h5>Sorry,No matching products.</h5>
+            </div>
+          
         )
     }
 }
