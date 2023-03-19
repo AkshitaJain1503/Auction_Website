@@ -61,12 +61,12 @@ const addBid = async (e) => {
         return;
       }
 // cant place bid if the bidder is same as seller
-      // if(auction.seller==auction.loggedInUser)
-      // {
-      //   alert("You cant place bid on your own product!");
-      //   setInput({price:""});
-      //   return;
-      // }
+      if(auction.seller==auction.loggedInUser)
+      {
+        alert("You cant place bid on your own product!");
+        setInput({price:""});
+        return;
+      }
       
   
   //POST method to send bid price entered by the user
@@ -175,7 +175,7 @@ const DisplayRow = ({ bid }) => {
       <td>
       <a href={`/userProfile?id=${bid.bidder}`} > {bid.bidderName} </a>
       </td>
-      <td> {bid.price} </td>
+      <td> &#x20B9; {bid.price} </td>
       <td> {bid.time} </td>
 
     </tr>);
@@ -198,8 +198,8 @@ const DisplayRow = ({ bid }) => {
       <div className={styles.backGroundSpace}>
         <div>
         <div className={styles.container}>
-        <div className={styles.element}><h6>  Current max price: {auction.prodCurrentPrice} </h6></div>
-        <div className={styles.element}><h6>  Base Price: {auction.prodBasePrice} </h6></div>
+        <div className={styles.element}><h6>  Current max price: &#x20B9; {auction.prodCurrentPrice} </h6></div>
+        <div className={styles.element}><h6>  Base Price: &#x20B9; {auction.prodBasePrice} </h6></div>
         <div className={styles.element}><h6>  Status: { auction.auctionStatus} </h6></div>
         <div className={styles.element}><h6>  Sold To: { auction.soldTo? auction.soldTo: "--" } </h6></div>
         </div>
