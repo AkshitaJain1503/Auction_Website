@@ -11,7 +11,7 @@ import PastPosts from "./components/pastPosts/pastPosts";
 import PostProduct from "./components/postProduct/postProduct";
 import ProductPage from "./components/productDetails/productPage";
 import Auction from "./components/auctionSpace";
-import AllProductCarts from "./components/addToCart/AllProductCarts";
+import WatchList from "./components/watchList/watchList";
 import { Calendar } from "./components/calendarView/Calendar";
 import CalendarDetails from "./components/calendarView/calendarDetails";
 import ViewAll from "./components/viewAllPages";
@@ -56,28 +56,36 @@ function App() {
 
       {user && <Route path="/auctionSpace" exact element={<Auction />} />}
 
-      {<Route path="/allProductCarts" exact element={<AllProductCarts />} />}
-			{user && <Route path="/userProfile" exact element={<DisplayUserProfile/>}/>}
-			{!user && <Route path="/userProfile" exact element={<Signup/>}/>}
-			
-			{user && <Route path="/auctionSpace" exact element={<Auction/>} />} 
-		  	<Route path="/searchResults" exact element={<SearchDetails/>}/>
+      {<Route path="/watchList" exact element={<WatchList />} />}
+      {user && (
+        <Route path="/userProfile" exact element={<DisplayUserProfile />} />
+      )}
+      {!user && <Route path="/userProfile" exact element={<Signup />} />}
 
 			<Route path="/calendarView" exact element={<Calendar/>}/>
 			<Route path="/calendarDetails" exact element={<CalendarDetails/>}/>
 			
 			{user && <Route path="/postProduct" exact element={<PostProduct/>}/>}
-			<Route path="/LiveAuctions" exact element={<ViewAll/>}/>
-			<Route path="/PastAuctions" exact element={<ViewAll/>}/>
-			<Route path="/UpcomingAuctions" exact element={<ViewAll/>}/>
+			<Route path="/liveAuctions" exact element={<ViewAll/>}/>
+			<Route path="/pastAuctions" exact element={<ViewAll/>}/>
+			<Route path="/upcomingAuctions" exact element={<ViewAll/>}/>
      
       {user && <Route path="/chat" exact element={<Chat />} />}
       {!user && <Route path="/chat" exact element={<Signup />} />}
       {user && <Route path="/myChats" exact element={<MyChat />} />}
       {!user && <Route path="/myChats" exact element={<Signup />} />}
+      {user && <Route path="/auctionSpace" exact element={<Auction />} />}
+      <Route path="/searchResults" exact element={<SearchDetails />} />
 
-		</Routes>
-	);
+      <Route path="/calendarView" exact element={<Calendar />} />
+      <Route path="/calendarDetails" exact element={<CalendarDetails />} />
+
+      {user && <Route path="/postProduct" exact element={<PostProduct />} />}
+      <Route path="/LiveAuctions" exact element={<ViewAll />} />
+      <Route path="/PastAuctions" exact element={<ViewAll />} />
+      <Route path="/UpcomingAuctions" exact element={<ViewAll />} />
+    </Routes>
+  );
 }
 
 export default App;

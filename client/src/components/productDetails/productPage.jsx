@@ -4,13 +4,15 @@ import NavBar from "../navbar/index";
 import styles from "./styles.module.css";
 
 export default function ProductPage(props) {
+  // using navigate for smooth navigation across pages
   const navigate = useNavigate();
+
+  // used to obtain the product id sent through client url
   const useQuery = () => new URLSearchParams(useLocation().search);
   const query = useQuery();
+  const id = query.get("id");
 
-  const id = query.get('id');
-  console.log(id);
-
+  // setting product object attributes to null initially
   const [product, setProduct] = useState({
     productName: "",
     productDescription: "",
@@ -23,23 +25,29 @@ export default function ProductPage(props) {
     aucEnd: "",
   });
 
+  // getProducts function call so that product details get rendered successfully on product page
   const getProducts = async () => {
+    // fetching product details from backend server
     const response = await fetch(
       "http://localhost:3001/api/productDetails?id=" + id
     );
+
+    // storing info in json format
     const res = await response.json();
 
-    if(res.status === 404 || !res) {
+    // checking if response not obtained due to user authentication issue
+    if (response.status === 404 || !response) {
       window.location = "/signup";
     }
-    // console.log(res.data.productName);
+
+    // assigning the product details' values to the product object attributes
     setProduct((previousState) => {
       return {
         ...product,
         productName: res.data.productName,
         productDescription: res.data.productDescription,
         productImage: res.data.productImage,
-        shipmentFrom: res.data.shipmentFrom,
+        shipmentFromPlace: res.data.shipmentFromPlace,
         basePrice: res.data.productBasePrice,
         name: res.data.sellerName,
         sellerId: res.data.sellerId,
@@ -47,32 +55,40 @@ export default function ProductPage(props) {
         aucEnd: res.data.aucEnd,
       };
     });
-    console.log("eh", product.aucEnd, "k");
-    
   };
 
   useEffect(() => {
     getProducts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // addToWatchList function call for adding the given product to the watchlist of the logged in user
   const addToWatchList = async () => {
+    // defining headers for get request
     const myHeaders = new Headers({
       Authorization: "Bearer " + localStorage.getItem("token"),
     });
-    const res = await fetch("http://localhost:3001/api/carts?id=" + id, {
-      method: "GET",
-      headers: myHeaders,
-    });
 
-    if(res.status === 404 || !res) {
+    // adding the product to the watchList array in the server side by making a GET request
+    const res = await fetch(
+      "http://localhost:3001/api/addToWatchList?id=" + id,
+      {
+        method: "GET",
+        headers: myHeaders,
+      }
+    );
+
+    // if response not obtained due to user authentication issue, redirect to signup page
+    if (res.status === 404 || !res) {
       window.location = "/signup";
     }
 
-    navigate(`/AllProductCarts`);
+    // otherwise go to watchlist page
+    navigate(`/watchList`);
   };
 
   const handleClick = () => {
-    navigate(`/auctionSpace?id=`+ id);
+    navigate(`/auctionSpace?id=` + id);
   };
  
   const chatWithSeller = () => {
@@ -94,17 +110,32 @@ export default function ProductPage(props) {
           <div className={styles.details}>
             <span className={styles.desc}>{product.productDescription}</span>
             <span className={styles.ship}>
-              Shipment from {product.shipmentFrom}
+              Shipment from {product.shipmentFromPlace}
             </span>
-            <span> Base Price: {product.basePrice}</span>
-           <span> Seller : <a href={`/userProfile?id=${product.sellerId}`} className={styles.links}>{product.name} </a></span>
-           <span> Start Time of auction: {product.aucStart}</span>
-           <span> End Time of auction: {product.aucEnd} </span>
-           <div className={styles.btns}>
-              <button onClick={handleClick} className={styles.button}>Auction Space</button>
-              <button onClick={addToWatchList} className={styles.button}>Add to Watch List</button>
-              <button onClick={chatWithSeller} className={styles.button}>Chat with Seller</button>
-           </div>
+            <span> Base Price: &#x20b9; {product.basePrice}</span>
+            <span>
+              {" "}
+              Seller :{" "}
+              <a
+                href={`/userProfile?id=${product.sellerId}`}
+                className={styles.links}
+              >
+                {product.name}{" "}
+              </a>
+            </span>
+            <span> Start Time of auction: {product.aucStart}</span>
+            <span> End Time of auction: {product.aucEnd} </span>
+            <div className={styles.btns}>
+              <button onClick={handleClick} className={styles.button}>
+                Auction Space
+              </button>
+              <button onClick={addToWatchList} className={styles.button}>
+                Add to Watch List
+              </button>
+              <button onClick={chatWithSeller} className={styles.button}>
+                Chat with Seller
+                </button>
+            </div>
           </div>
         </div>
       </div>
