@@ -181,10 +181,6 @@ const GetSearchResults = () => {
                                     Show upcoming  {" "}  
                                 </label>
                                 </div>
-                                <div>
-                                
-                               
-                                </div>
             <Content >
                 {products.filter((product) => statusList.includes(product.status)).map((product) => (
                     <Card
@@ -202,7 +198,7 @@ const GetSearchResults = () => {
             <   NavBar />
             <h5>Sorry,No matching products.</h5>
             </div>
-            
+          
         )
     }
 }
