@@ -39,7 +39,7 @@ export default function ViewAll() {
       return(
         <div>
           <NavBar/>
-          <h5>Sorry,No auctions available right now.</h5>
+          <h5>Sorry,No {url.replace(/([a-z0-9])([A-Z])/g, '$1 $2')} available right now.</h5>
         </div>
       )
       

@@ -28,6 +28,10 @@ const allProductCarts = require("./routes/Carts/allProductCarts");
 const search = require("./routes/search_page/search");
 const calendar = require("./routes/calendarView/calendar");
 const calendarDetails = require("./routes/calendarView/calendarDetails");
+const contacts=require("./routes/contact/index");
+// const getMessage=require("./routes/chat/getMessage");
+// const postMessage=require("./routes/chat/postMessage");
+//const chatRoute = require("./routes/chat/conversation");
 
 //database connection
 connection();
@@ -58,7 +62,10 @@ app.use("/api/auctionSpace", checkAuthLogin, auctionSpace);
 app.use("/api/carts", checkAuthLogin, cart);
 app.use("/api/removeItem", checkAuthLogin, deleteItem);
 app.use("/api/AllProductCarts", checkAuthLogin, allProductCarts);
-
+app.use("/api/myChats",checkAuthLogin,contacts);
+// app.use("/api/postMessage",checkAuthLogin,postMessage);
+// app.use("/api/getMessage",checkAuthLogin,postMessage);
+// app.use("/api/chat",checkAuthLogin,chatRoute);
 app.use("/api/userProfile", checkAuthLogin, userProfile);
 
 const port = process.env.PORT || 3001;

@@ -11,6 +11,7 @@ const Card = ({Product}) => {
   var startTime=Product.StartTime;
   const navigate = useNavigate();
   const viewPage = () => {
+    console.log(shipmentFrom);
     window.location.href="/productPage?id="+id;
   }
   const addToWatchList = async () => {

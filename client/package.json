@@ -16,8 +16,10 @@
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.1",
     "react-scripts": "5.0.1",
+    "react-scroll-to-bottom": "^4.2.0",
     "react-select": "^5.7.0",
     "reactstrap": "^9.1.5",
+    "socket.io-client": "^4.6.1",
     "styled-components": "^5.3.8",
     "web-vitals": "^2.1.4"
   },

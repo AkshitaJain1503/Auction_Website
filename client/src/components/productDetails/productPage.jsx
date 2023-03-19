@@ -74,7 +74,10 @@ export default function ProductPage(props) {
   const handleClick = () => {
     navigate(`/auctionSpace?id=`+ id);
   };
-
+ 
+  const chatWithSeller = () => {
+    navigate(`/chat?id=`+product.sellerId+"&name="+product.name);
+  }
   return (
     <>
       <NavBar />
@@ -100,6 +103,7 @@ export default function ProductPage(props) {
            <div className={styles.btns}>
               <button onClick={handleClick} className={styles.button}>Auction Space</button>
               <button onClick={addToWatchList} className={styles.button}>Add to Watch List</button>
+              <button onClick={chatWithSeller} className={styles.button}>Chat with Seller</button>
            </div>
           </div>
         </div>

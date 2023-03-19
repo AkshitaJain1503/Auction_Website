@@ -35,6 +35,11 @@ const NavLoggedIn = () => {
 						My Profile
 					</button>
 				</a>
+				<a href="myChats">
+					<button className={styles.white_btn}>
+						My Chats
+					</button>
+				</a>
 				<button className={styles.white_btn} onClick={handleLogout}>
 					Logout
 				</button>
