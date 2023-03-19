@@ -38,6 +38,7 @@
   .display {
     display: flex;
     margin-top: 60px;
+    background-color: gray;
   }
   
   .leftSidebar {
@@ -74,8 +75,15 @@
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
   }
   .card-content {
-    padding: 10px;
+    /* padding: 10px; */
+    width: 90%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  flex: 0.7;
   }
+  
   .card-image {
     width: 200px;
     height: 150px;
@@ -97,10 +105,17 @@
     margin-bottom: 5px;
   }
   .card-image img {
-    width: 100%;
+    /* width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: top;
+    object-position: top; */
+    width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+  flex: 0.3;
   }
   .card-grid {
     display: grid;
@@ -134,5 +149,78 @@
   {
     padding:10px
   }
+  body {
+    background-color: rgb(220, 218, 218);
+  }
+  label {
+    display: block;
+    margin-bottom: 10px;
+    margin-left: 10px;
+  }
   
+  input[type="checkbox"] {
+    display: inline-block;
+    vertical-align: middle;
+    margin-right: 10px;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    cursor: pointer;
+  }
+  
+  input[type="checkbox"]:checked {
+    background-color: #0066ff;
+    border-color: #0066ff;
+  }
+  
+  input[type="checkbox"]:focus {
+    outline: none;
+    border-color: #0066ff;
+  }
+  label span {
+    margin-left: 5px;
+  }
+  label {
+    margin-right: 20px;
+  }  
+   
+  label:nth-child(3) {
+    margin-right: 20px;
+  }
+  select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 200px;
+    height: 40px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #555;
+    background-color: #fff;
+    cursor: pointer;
+    margin-right :20px;
+  }
+  
+  select:focus {
+    outline: none;
+    border-color: #0066ff;
+  }
+  
+  option {
+    font-weight: normal;
+    color: #555;
+  }
+  
+  option:first-child {
+    color: #ccc;
+  }
+
   

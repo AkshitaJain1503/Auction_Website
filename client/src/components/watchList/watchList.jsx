@@ -1,45 +1,47 @@
 import React, { useEffect, useState } from "react";
-import "./cart.css";
+import "./style.css";
+import NavBar from "../navbar/index";
 import Items from "./items";
 import { Scrollbars } from "react-custom-scrollbars-2";
 
-const AllProductCarts = () => {
+const WatchList = () => {
+  // setting the item array as null initially and using useState for changing its value later
   const [item, setItem] = useState([]);
 
+  // obtaining all product items of the watchlist from the backend server
   const getItems = async () => {
+    // setting headers
     const myHeaders = new Headers({
       "Content-Type": "application/json",
       Authorization: "Bearer " + localStorage.getItem("token"),
     });
-    const response = await fetch("http://localhost:3001/api/AllProductCarts", {
+
+    // obtaining response from get request
+    const response = await fetch("http://localhost:3001/api/watchList", {
       method: "GET",
       headers: myHeaders,
     });
+
+    // obtaining json data from response
     const res = await response.json();
-    if(res.status === 404 || !res) {
+
+    // if response not obtained, go to signup page
+    if (response.status === 404 || !response) {
       window.location = "/signup";
     }
+
+    // setting the item array as the json data obtained from backend server (item contains all the product details of watchlist products)
     setItem(res.data);
   };
 
+  // useEffect used for getting the watchlist products on first render only
   useEffect(() => {
     getItems();
   }, []);
 
   return (
     <>
-      <header>
-        <div className="continue-shopping">
-          <a href="/">
-            <img src="./arrow.png" alt="arrow" className="arrow-icon" />
-          </a>
-          <h3>Look for other items</h3>
-        </div>
-        <div className="cart-icon">
-          <img src="./cart.png" alt="cart" />
-          <p>{item.length}</p>
-        </div>
-      </header>
+         <NavBar/>
       <section className="main-cart-section">
         <h1>WatchList</h1>
         <p className="total-items">
@@ -60,4 +62,4 @@ const AllProductCarts = () => {
   );
 };
 
-export default AllProductCarts;
+export default WatchList;

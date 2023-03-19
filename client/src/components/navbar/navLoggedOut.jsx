@@ -2,6 +2,8 @@ import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
 import React from 'react';
 import {useState} from 'react';
+import {BiSearchAlt} from "react-icons/bi";
+
 const NavLoggedOut = () => {
 	const navigate = useNavigate();
 	const[value, setValue] = useState(""); 
@@ -19,20 +21,16 @@ const NavLoggedOut = () => {
 					</button>
 				</a>
 
-				<form >
-        <label htmlFor="header-search">
-            <span className="visually-hidden">Search blog posts</span>
-        </label>
-        <input
-            type="text"
-            id="header-search"
-            placeholder="Search anything"
-            name="name" 
-			onChange={(e) => {setValue(e.target.value)}}
-			
-        />
-        <button onClick={handleSearch}>Search</button>
-    </form>
+				
+	<form action="" className={styles.search_bar}>
+					<input type="text" placeholder="search anything" name="name"  onChange={(e) => {
+              setValue(e.target.value);
+            }}/>
+					<button	type="submit" onClick={handleSearch}>
+						{/* <img src="./search-icon.png"  alt=""/> */}
+           < BiSearchAlt> </BiSearchAlt>
+					</button>
+				</form>
 				<h1>
 					<a href="/" style={{textDecoration:"none",color:"inherit"}}>
 						BidKaro!!!!!
