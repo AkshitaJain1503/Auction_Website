@@ -7,7 +7,8 @@ import {
   HeadDays,
   DateControls,
   StyledEvent,
-  SeeMore
+  SeeMore,
+  View
 } from "./Calendar.styled";
 import {
   datesAreOnSameDay,

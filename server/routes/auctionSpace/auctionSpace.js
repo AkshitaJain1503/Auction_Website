@@ -3,25 +3,10 @@ const { User } = require("../../models/user");
 const { Product } = require("../../models/product");
 var ObjectId = require('mongoose').Types.ObjectId;
 const router = require("express").Router() ;
-  
-  
-router.get("/", async (req, res) => {
 
-  try {
-    const productId = req.query.id;
-    const product= await Product.findOne({_id: productId});
-    const auction = await Auction.findOne( { product: productId } );
-    const bidsList= auction.bids;
-    const responseData={};
-
-    // sorting bids in descending order of price
-    bidsList.sort((a, b) => {
-      return b.price-a.price;
-    });
-    
-    // getting status of the auction
-    var auctionStatus;
-    if(!auction.auctionStarted)
+function getStatus(auction) {
+  var auctionStatus;
+  if(!auction.auctionStarted)
     {
       auctionStatus="Yet to start";
     }
@@ -33,6 +18,22 @@ router.get("/", async (req, res) => {
     {
       auctionStatus="Ended";
     }
+    return auctionStatus;
+}
+
+  
+router.get("/", async (req, res) => {
+
+  try {
+    const productId = req.query.id;
+    const product= await Product.findOne({_id: productId});
+    const auction = await Auction.findOne( { product: productId } );
+    const bidsList= auction.bids;
+    const responseData={};
+    
+    // getting status of the auction
+    var auctionStatus= getStatus(auction);
+    
 
     const formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.endDateTime);
@@ -51,9 +52,6 @@ router.get("/", async (req, res) => {
     responseData.auctionStatus=auctionStatus;
     responseData.seller=product.seller;
     responseData.loggedInUser= req.id;
-    const timeLeft=  auction.endDateTime- new Date;
-    responseData.timeLeft= timeLeft;
-    responseData.endTime= auction.endDateTime;
 
     
     if(auction.soldTo){
@@ -78,34 +76,51 @@ router.post("/", async (req, res) => {
     const postedPrice= req.body.price;
     const formattedCurrentTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(new Date());
-    
-    const auction = await Auction.findOneAndUpdate(
-        { product: productId }, 
-        { 
-          //pushing the posted bid in the auction object
-          $push: { bids: {
-            bidder: ObjectId(bidderId),
-            bidderName: bidder.name,
-            price: req.body.price,
-            time: formattedCurrentTime
-          }},
-      }
-    );
+//new bid object
+    const bid = {
+      bidder: ObjectId(bidderId),
+      bidderName: bidder.name,
+      price: req.body.price,
+      time: formattedCurrentTime
+    };
+
+    const auction = await Auction.findOne({ product: productId })
     const maxPrice= auction.productCurrentPrice;
-    // when the current bid is the highest bid so far
-    if(postedPrice>maxPrice)
-    {
-      await Auction.findOneAndUpdate(
-        { product: productId }, 
-        { 
-          //updating the product current price
-          productCurrentPrice: req.body.price,
-          //updating the current highest bidder
-          currentBidder: req.id,
+    await Auction.findOneAndUpdate(
+      { product: productId }, 
+      { 
+        $push: { 
+                bids: {
+                  $each: [bid],
+                  $position: binarySearch(auction.bids, bid.price)
+                }
+              },
+          // when the current bid is the highest bid so far
+        ...(postedPrice > maxPrice ? {
+          $set: {
+            //updating the product current price and highest bidder
+            productCurrentPrice: req.body.price,
+            currentBidder: req.id,
+          }
+        } : {})
       }
     );
-      
-  }
+
+    // Binary search to find the index where the new bid should be inserted
+    function binarySearch(bids, price) {
+      let low = 0, high = bids.length - 1;
+      while (low <= high) {
+        let mid = Math.floor((low + high) / 2);
+        if (bids[mid].price >= price) {
+          low = mid + 1;
+        } 
+        else {
+          high = mid - 1;
+        }
+      }
+      return low;
+    }
+
     res.json(req.body);
 });
 
@@ -118,25 +133,8 @@ router.get("/onlyAuction", async (req, res) => {
     const bidsList= auction.bids;
     const responseData={};
 
-    // sorting bids in descending order of price
-    bidsList.sort((a, b) => {
-      return b.price-a.price;
-    });
-    
     // getting status of the auction
-    var auctionStatus;
-    if(!auction.auctionStarted)
-    {
-      auctionStatus="Yet to start";
-    }
-    else if (!auction.auctionEnded)
-    {
-      auctionStatus="Ongoing";
-    }
-    else 
-    {
-      auctionStatus="Ended";
-    }
+    var auctionStatus= getStatus(auction);
 
     responseData.bidsList= bidsList;
     responseData.currPrice=auction.productCurrentPrice;
@@ -168,7 +166,6 @@ router.get("/onlyAuction", async (req, res) => {
       const timeLeft=  new Date(auction.endDateTime)- new Date();
       responseData.timeLeft= timeLeft;
       responseData.endTime= auction.endDateTime;
-      responseData.startTime=auction.startDateTime;
       res.json(responseData);
       
       } catch (error) {

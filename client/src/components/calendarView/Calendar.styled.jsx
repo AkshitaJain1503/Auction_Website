@@ -81,3 +81,12 @@ export const SeeMore = styled.p`
   margin-bottom: 0;
   cursor: pointer;
 `;
+
+export const View = styled.p`
+text-align: right;
+content-align: bottom;
+  font-size: 12px;
+  padding: 0 5px;
+  margin-bottom: 0;
+  cursor: pointer;
+`;
