@@ -2,8 +2,7 @@
 // }
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-import axios from "axios";
-import { io } from "socket.io-client";
+
 function Chat({socket,username,room}) {
         const params = new Proxy(new URLSearchParams(window.location.search),{
             get : (searchParams,prop) => searchParams.get(prop),
@@ -19,14 +18,13 @@ function Chat({socket,username,room}) {
         from: username,
         to: contactName,
         messageBody: currentMessage,
-        // time:
-        //   new Date(Date.now()).getHours() +
-        //   ":" +
-        //   new Date(Date.now()).getMinutes(),
+        time:
+          new Date(Date.now()).getHours() +
+          ":" +
+          new Date(Date.now()).getMinutes(),
       };
       setMessageList((list) => [...list, messageData]);
-      await socket.emit("send_message", messageData);
-      
+      socket.emit("send_message", messageData);
       setCurrentMessage("");
     }
   };
@@ -71,7 +69,7 @@ function Chat({socket,username,room}) {
                     <p>{messageContent.messageBody}</p>
                   </div>
                   <div className="message-meta">
-                    {/* <p id="time">{messageContent.time}</p> */}
+                    <p id="time">{messageContent.time}</p>
                     <p>{messageContent.from}</p>
                   </div>
                 </div>
@@ -87,9 +85,6 @@ function Chat({socket,username,room}) {
           placeholder="Hey..."
           onChange={(event) => {
             setCurrentMessage(event.target.value);
-          }}
-          onClick={(event) => {
-            sendMessage();
           }}
         />
         <button onClick={sendMessage}>&#9658;</button>

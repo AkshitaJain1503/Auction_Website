@@ -31,7 +31,7 @@ const NavLoggedIn = () => {
         </a>
         <a href="myChats">
 					<button className={styles.white_btn}>
-						My Chats
+						Buyer Queries
 					</button>
 				</a>
         <button className={styles.white_btn} onClick={handleLogout}>

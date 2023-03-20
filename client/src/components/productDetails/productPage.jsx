@@ -132,6 +132,8 @@ export default function ProductPage(props) {
               <button onClick={addToWatchList} className={styles.button}>
                 Add to Watch List
               </button>
+              </div>
+              <div className={styles.btn}>
               <button onClick={chatWithSeller} className={styles.button}>
                 Chat with Seller
                 </button>

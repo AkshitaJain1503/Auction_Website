@@ -1,7 +1,7 @@
 .App {
     width: 100vw;
     height: 100vh;
-    background: #fff;
+    background-color: rgb(234, 237, 237);
     color: #212121;
     font-family: "Open Sans", sans-serif;
     display: grid;
@@ -51,8 +51,8 @@
   }
   
   .chat-window {
-    width: 300px;
-    height: 420px;
+    width: 600px;
+    height: 800px;
   }
   
   .chat-window p {

@@ -16,7 +16,7 @@ import { Calendar } from "./components/calendarView/Calendar";
 import CalendarDetails from "./components/calendarView/calendarDetails";
 import ViewAll from "./components/viewAllPages";
 import Chat from "./components/chat/app"
-import MyChat from "./components/myChat";
+import MyChat from "./components/buyerQueries";
 function App() {
   const user = localStorage.getItem("token");
 

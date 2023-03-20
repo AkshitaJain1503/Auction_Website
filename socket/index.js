@@ -24,9 +24,16 @@ var messageSchema = new mongoose.Schema({
         type: String,
         //  required: true,
       },
+       time: { // when was this message created
+        type:String,
+        // type: Date,
+        // default: new Date(Date.now()).getHours() +
+        //      ":" +
+        //  new Date(Date.now()).getMinutes(),
+    },
+
    
 });
-
 const Message = mongoose.model("message", messageSchema);
 const express = require("express");
 const app = express();

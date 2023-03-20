@@ -49,7 +49,6 @@ function App() {
     <div>
       <NavBar/>
     <div className="App">
-    
         <Chat socket={socket} username={username} room={room} />
     </div>
     </div>

@@ -25,8 +25,9 @@ var messageSchema = new mongoose.Schema({
         default: new Date(Date.now()).getHours() +
              ":" +
             new Date(Date.now()).getMinutes(),
+            required: true,
     },
-    required: true,
+  
 
 });
 
