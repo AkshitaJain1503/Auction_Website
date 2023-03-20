@@ -55,17 +55,16 @@ function App() {
       {!user && <Route path="/userProfile" exact element={<Signup />} />}
 
       {user && <Route path="/auctionSpace" exact element={<Auction />} />}
-			
+
       {<Route path="/watchList" exact element={<WatchList />} />}
       {user && (
         <Route path="/userProfile" exact element={<DisplayUserProfile />} />
       )}
       {!user && <Route path="/userProfile" exact element={<Signup />} />}
-      
-			{user && <Route path="/auctionSpace" exact element={<Auction/>} />} 
-      {!user && <Route path="/auctionSpace" exact element={<Signup />} />}
 
-		  <Route path="/searchResults" exact element={<SearchDetails/>}/>
+      {user && <Route path="/auctionSpace" exact element={<Auction />} />}
+      {!user && <Route path="/auctionSpace" exact element={<Signup />} />}
+      <Route path="/searchResults" exact element={<SearchDetails />} />
 
       <Route path="/calendarView" exact element={<Calendar />} />
       <Route path="/calendarDetails" exact element={<CalendarDetails />} />
