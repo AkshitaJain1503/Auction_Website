@@ -51,8 +51,8 @@
   }
   
   .chat-window {
-    width: 600px;
-    height: 800px;
+    width: 800px;
+    height: 500px;
   }
   
   .chat-window p {
@@ -100,7 +100,7 @@
     width: auto;
     height: auto;
     min-height: 40px;
-    max-width: 120px;
+    max-width: 450px;
     background-color: #43a047;
     border-radius: 5px;
     color: white;

@@ -26,6 +26,14 @@ const contactSchema = new mongoose.Schema({
     type:String,
     unique: true,
     required: true,
+  },
+  userReadStatus:{
+    type:Boolean,
+    default: false,
+  },
+  contactReadStatus:{
+    type:Boolean,
+    default: true,
   }
 });
 const Contact = mongoose.model("contact", contactSchema);

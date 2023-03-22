@@ -3,7 +3,7 @@ import io from "socket.io-client";
 import { useState,useEffect } from "react";
 import Chat from "./chat";
 import { GetProfile } from "../myProfile/getProfile";
-
+import { useNavigate } from "react-router-dom";
 import NavBar from "../navbar";
 
 
@@ -14,6 +14,7 @@ function App() {
         })
         let idSeller = params.id;
         let sellerName=params.name;
+        let val=params.bool;
         let user=GetProfile();
         let idUser = user._id;
        
@@ -31,19 +32,45 @@ function App() {
     //console.log(idSeller);
     var username=user.name;
     //console.log(room);
-  
+  useEffect(()=>{
     const addContact = async (e) => {
-    const res = await fetch("http://localhost:3001/api/myChats" , {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": "Bearer "+localStorage.getItem("token")
-      },
-      body: JSON.stringify({idSeller,sellerName,room,username,idUser})
-    }).catch((err)=> console.log(err));
-  }
-  addContact();
+      var userStatus,contactStatus;
+      if(val=="t"){
+        contactStatus=true;
+          userStatus=false;
+          
+        }
+        else{
+          contactStatus=false;
+            userStatus=true;
+            [idSeller,idUser]=[idUser,idSeller];
+          [username,sellerName]=[sellerName,username]
+        }
+      const res = await fetch("http://localhost:3001/api/myChats" , {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer "+localStorage.getItem("token")
+        },
+        body: JSON.stringify({idSeller,sellerName,room,username,idUser,userStatus,contactStatus})
+      }).catch((err)=> console.log(err));
+     
+  
+    // const url = "http://localhost:3001/api/myChats?roomId="+room;
+    // const tokenStr = localStorage.getItem("token");
+    // const headers = { "Authorization": "Bearer "+tokenStr };
+    // const ress = await axios.patch(url, newData, { headers });
+    // //if there is an authentication problem, redirect to signup page      
+    // if (ress.status === 404 || !ress) {
+    //   navigate("/signup");
+    // }
+  
+    }
+    addContact();
+  })
+  
   const socket = io.connect("http://localhost:8900");
+  
   
   return (
     <div>

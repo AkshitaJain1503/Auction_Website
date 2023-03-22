@@ -2,12 +2,15 @@
 // }
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 function Chat({socket,username,room}) {
+        const navigate=useNavigate();
         const params = new Proxy(new URLSearchParams(window.location.search),{
             get : (searchParams,prop) => searchParams.get(prop),
         })
         let contactName = params.name;
+        let contactId =params.id;
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   socket.emit("join_room", room);
@@ -24,33 +27,20 @@ function Chat({socket,username,room}) {
           new Date(Date.now()).getMinutes(),
       };
       setMessageList((list) => [...list, messageData]);
-      socket.emit("send_message", messageData);
+      await socket.emit("send_message", messageData);
       setCurrentMessage("");
     }
   };
   //useEffect(()=>{
   
     socket.on('history', (messages) => {
-      //if(Object.keys(messages).length > 0){
-      //console.log(messages);
+      
+    
       setMessageList((list) => messages);
-      //}
     });
-
-  //})
-  //useEffect(() => {
     socket.on("receive_message", (data) => {
-      //console.log(data);
-      if(data && !messageList.includes(data)){
-      setMessageList((list) => [...list, data]);}
+      setMessageList((list) => [...list, data]);
     });
- // }, [socket]);
-
-//   useEffect(()=>{
-//     socket.emit("join_room", room);
-//     socket.emit("join_room", userId);
-//   })
-//console.log(messageList);
   return (
     <div className="chat-window">
       <div className="chat-header">

@@ -27,7 +27,7 @@ const NavLoggedIn = () => {
           <button className={styles.white_btn}>Post Product</button>
         </a>
         <a href="/myProfile">
-          <button className={styles.white_btn}>My Profile</button>
+          <button className={styles.white_btn}>My Account</button>
         </a>
         <a href="myChats">
 					<button className={styles.white_btn}>

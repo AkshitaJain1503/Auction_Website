@@ -35,6 +35,7 @@ var messageSchema = new mongoose.Schema({
    
 });
 const Message = mongoose.model("message", messageSchema);
+module.exports = {Message};
 const express = require("express");
 const app = express();
 const http = require("http");
@@ -59,6 +60,7 @@ io.on("connection",(socket) => {
     try {
       const messages = await Message.find({roomId:data});
       socket.emit('history', messages);
+      // socket.emit('update_read_status',true);
     } catch (err) {
       // Handle this error properly.
       console.error(err);
