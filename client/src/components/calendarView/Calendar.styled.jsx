@@ -79,7 +79,6 @@ export const SeeMore = styled.p`
   font-size: 12px;
   padding: 0 5px;
   margin-bottom: 0;
-  cursor: pointer;
 `;
 
 export const View = styled.p`
