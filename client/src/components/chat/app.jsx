@@ -8,7 +8,6 @@ import NavBar from "../navbar";
 
 
 function App() {
-    
         const params = new Proxy(new URLSearchParams(window.location.search),{
             get : (searchParams,prop) => searchParams.get(prop),
         })
@@ -28,10 +27,7 @@ function App() {
     else{
       room=idSeller+"|"+idUser;
     }
-
-    //console.log(idSeller);
     var username=user.name;
-    //console.log(room);
   useEffect(()=>{
     const addContact = async (e) => {
       var userStatus,contactStatus;
@@ -54,17 +50,6 @@ function App() {
         },
         body: JSON.stringify({idSeller,sellerName,room,username,idUser,userStatus,contactStatus})
       }).catch((err)=> console.log(err));
-     
-  
-    // const url = "http://localhost:3001/api/myChats?roomId="+room;
-    // const tokenStr = localStorage.getItem("token");
-    // const headers = { "Authorization": "Bearer "+tokenStr };
-    // const ress = await axios.patch(url, newData, { headers });
-    // //if there is an authentication problem, redirect to signup page      
-    // if (ress.status === 404 || !ress) {
-    //   navigate("/signup");
-    // }
-  
     }
     addContact();
   })

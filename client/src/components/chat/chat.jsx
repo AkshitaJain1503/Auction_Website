@@ -1,8 +1,6 @@
 
-// }
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 function Chat({socket,username,room}) {
         const navigate=useNavigate();
@@ -31,11 +29,8 @@ function Chat({socket,username,room}) {
       setCurrentMessage("");
     }
   };
-  //useEffect(()=>{
   
     socket.on('history', (messages) => {
-      
-    
       setMessageList((list) => messages);
     });
     socket.on("receive_message", (data) => {

@@ -10,8 +10,7 @@ export default function MyChat() {
     let user=GetProfile();
     let id=(user._id);
     const getBuyerContacts = async () => {
-      if(Object.keys(buyerContacts).length === 0){
-      console.log(id);
+      if(Object.keys(buyerContacts).length === 0){;
       fetch("http://localhost:3001/api/myChats?id=" + id , {
             headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
           })
@@ -26,7 +25,6 @@ export default function MyChat() {
   }
   const getSellerContacts = async () => {
     if(Object.keys(sellerContacts).length === 0){
-    console.log(id);
     fetch("http://localhost:3001/api/myChats/seller?id=" + id , {
           headers: { "Authorization": "Bearer "+localStorage.getItem("token")}
         })
@@ -37,23 +35,12 @@ export default function MyChat() {
         }
       )
       .catch(error => console.error(error));
-      console.log("hi");
     }
 }
     if(id){
       getBuyerContacts();
       getSellerContacts();
     }
-    
-      // if(Object.keys(buyerContacts).length <= 0){
-      //   return(
-      //       <div>
-      //         <NavBar/>
-      //         <h1>Your Contacts</h1>
-      //           <h3>Sorry,you haven't been contacted by anyone yet.</h3>
-      //       </div>
-      //   )
-      // }
         return (
             <Container>
                 <NavBar/>
@@ -63,42 +50,8 @@ export default function MyChat() {
               <h1>Seller Contacts</h1>
               <Contact
                 contacts={sellerContacts} str="seller"/>
-              {/* <NavBar/>
-              <h1>Buyer Contacts</h1>
-              {!buyerContacts &&
-              <h3>Sorry,you haven't been contacted by anyone yet.</h3>}
-                    {buyerContacts &&
-                buyerContacts?.map((contact) => (
-                    <Hbar 
-                      key={contact._id}
-                      >
-                        <h4>{contact.contactName}</h4>
-                        {!contact.userReadStatus && <h5>New Messages!</h5>}
-                        {contact.userReadStatus && <h5>no new messages</h5>}
-                        <a href={"/chat?id="+contact.contactUserId+"&name="+contact.contactName+"&bool=f"}>
-                        <Button>Chat with buyer</Button>
-                        </a>
-                        </Hbar>
-                ))}
-                <h1>Seller Contacts</h1>
-                {!sellerContacts &&
-              <h3>Sorry,you haven't been contacted by anyone yet.</h3>}
-                {sellerContacts &&
-                sellerContacts?.map((contact) => (
-                    <Hbar 
-                      key={contact._id}
-                      >
-                        <h4>{contact.contactName}</h4>
-                        {!contact.userReadStatus && <h5>New Messages!</h5>}
-                        {contact.userReadStatus && <h5>no new messages</h5>}
-                        <a href={"/chat?id="+contact.contactUserId+"&name="+contact.contactName+"&bool=f"}>
-                        <Button>Chat with seller</Button>
-                        </a>
-                        </Hbar>
-                ))} */}
             </Container>
         )
-
 }
 
 const Hbar = styled.div`

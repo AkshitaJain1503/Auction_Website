@@ -2,10 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
 const Contact = ({contacts,str}) => {
-    var b="f";
     var bool=true;
   if(str=="seller"){
-    b="t";
     bool=false;
   }
   if(Object.keys(contacts).length <= 0){

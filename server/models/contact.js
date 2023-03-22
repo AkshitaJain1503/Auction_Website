@@ -21,8 +21,6 @@ const contactSchema = new mongoose.Schema({
     required: true,
   },
   chatRoomId:{
-    // type: mongoose.Types.ObjectId,
-    // ref: 'ChatRoom'
     type:String,
     unique: true,
     required: true,
