@@ -42,8 +42,8 @@ const Card = ({ Product }) => {
         </Image>
         <Description>
           <h5>{title}</h5>
-          <h6>Base Price ₹{price}</h6>
-          <p>Shipment From {partsOfShipment[0]}</p>
+          <h6>Base Price : ₹{price}</h6>
+          <p>Shipment From : {partsOfShipment[0]}</p>
           <p>Begins on : {startTime}</p>
           <p>Concludes on : {endTime}</p>
         </Description>

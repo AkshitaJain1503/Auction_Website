@@ -54,19 +54,14 @@ const NavLoggedIn = () => {
           <button onClick={handleSearch}>Search</button>
         </form> */}
         <form action="" className={styles.search_bar}>
-          <input
-            type="text"
-            placeholder="search anything"
-            name="name"
-            onChange={(e) => {
+					<input type="text" placeholder="search anything" name="name"  onChange={(e) => {
               setValue(e.target.value);
-            }}
-          />
-          <button type="submit" onClick={handleSearch}>
-            {/* <img src="./search-icon.png"  alt=""/> */}
-            <BiSearchAlt> </BiSearchAlt>
-          </button>
-        </form>
+            }}/>
+					<button	type="submit" onClick={handleSearch}>
+						{/* <img src="./search-icon.png"  alt=""/> */}
+           < BiSearchAlt> </BiSearchAlt>
+					</button>
+				</form>
         <h1>
           <a href="/" style={{ textDecoration: "none", color: "inherit" }}>
             <img
