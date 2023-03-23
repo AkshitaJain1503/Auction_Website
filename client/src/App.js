@@ -11,11 +11,7 @@ import PastPosts from "./components/pastPosts/pastPosts";
 import PostProduct from "./components/postProduct/postProduct";
 import ProductPage from "./components/productDetails/productPage";
 import Auction from "./components/auctionSpace";
-<<<<<<< HEAD
-import AllProductCarts from "./components/addToCart/AllProductCarts";
-=======
 import WatchList from "./components/watchList/watchList";
->>>>>>> 2d47e85f8663fcac522270df0a785cafc2e1674a
 import { Calendar } from "./components/calendarView/Calendar";
 import CalendarDetails from "./components/calendarView/calendarDetails";
 import ViewAll from "./components/viewAllPages";

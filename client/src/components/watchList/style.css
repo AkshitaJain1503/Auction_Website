@@ -25,17 +25,19 @@
 .product-img {
     width: 200px;
     height: 100px;
+    margin-bottom: 12px;
 }
 
 .product-img img {
     width: 200px;
-    height: 130px;
-    padding: 20px;
+    height: 150px;
+    padding: 25px;
 }
 
 .title {
     font-size: 20px;
     padding: 20px;
+    margin-top: 20px;
 }
 
 .price {
@@ -53,6 +55,8 @@
     color: white;
     border: none;
     box-shadow: 1px 1px 1px rgb(4, 89, 158);
+    padding: 5px;
+    border-radius: 5px;
 }
 
 .fa-trash-alt {
