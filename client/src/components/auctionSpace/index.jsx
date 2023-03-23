@@ -61,12 +61,12 @@ const addBid = async (e) => {
         return;
       }
 // cant place bid if the bidder is same as seller
-      // if(auction.seller==auction.loggedInUser)
-      // {
-      //   alert("You cant place bid on your own product!");
-      //   setInput({price:""});
-      //   return;
-      // }
+      if(auction.seller==auction.loggedInUser)
+      {
+        alert("You cant place bid on your own product!");
+        setInput({price:""});
+        return;
+      }
       
   
   //POST method to send bid price entered by the user
