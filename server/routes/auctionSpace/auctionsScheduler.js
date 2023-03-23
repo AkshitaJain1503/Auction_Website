@@ -331,12 +331,10 @@ function scheduleAll() {
     // finding all auctions that will start within 1 hour
     const auctions = await Auction.find({
       startDateTime: {
-        //  $gte: new Date(),
         $lte: new Date(new Date().getTime() + 60 * 60 * 1000),
       },
       auctionStarted: false,
     });
-    console.log("start-", auctions.length);
 
     for (var i = 0; i < auctions.length; i++) {
       scheduleStart(auctions[i]);
@@ -347,12 +345,10 @@ function scheduleAll() {
     // find all auctions that will end within 1 hour
     const auctions = await Auction.find({
       endDateTime: {
-        //  $gte: new Date(),
         $lte: new Date(new Date().getTime() + 60 * 60 * 1000),
       },
       auctionEnded: false,
     });
-    console.log("end-", auctions.length);
 
     for (var i = 0; i < auctions.length; i++) {
       scheduleEnd(auctions[i]);

@@ -28,7 +28,6 @@ const NavLoggedOut = () => {
             }}
           />
           <button type="submit" onClick={handleSearch}>
-            {/* <img src="./search-icon.png"  alt=""/> */}
             <BiSearchAlt> </BiSearchAlt>
           </button>
         </form>
@@ -38,7 +37,7 @@ const NavLoggedOut = () => {
               src="./website_icon.png"
               width={"200px"}
               height={"100px"}
-			  alt={"website icon"}
+              alt={"website icon"}
               style={{ marginTop: "10px" }}
             />
           </a>
