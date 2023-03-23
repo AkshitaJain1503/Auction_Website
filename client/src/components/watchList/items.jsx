@@ -9,6 +9,10 @@ const Items = ({
   currentPrice,
   auctionStartDateTime,
   auctionEndDateTime,
+  auctionStatus,
+  dayDifference,
+  minutesDifference,
+  hourDifference
 }) => {
   // navigate is used for smooth navigation to product page or auction space when required by onclick
   const navigate = useNavigate();
@@ -50,14 +54,37 @@ const Items = ({
     navigate(`/productPage?id=${product_id}`);
   };
 
+  console.log(dayDifference, hourDifference, minutesDifference);
+
   return (
     <>
       <div className="items-info">
+        <div
+          style={{
+            backgroundColor:
+              auctionStatus === "Live Auction"
+                ? "green"
+                : auctionStatus === "Past Auction"
+                ? "grey"
+                : "purple",
+            height: "30px",
+            marginTop: "40px",
+            padding: "15px",
+            borderRadius: "15px",
+            color: "white",
+            paddingTop: "2px",
+            width: "180px",
+            textAlign: "center"
+          }}
+        >
+          {auctionStatus}
+        </div>
         <div className="product-img">
           <img src={productImage} alt="arrow" onClick={goToProductPage}></img>
         </div>
         <div className="title">{productName}</div>
         <div className="price">
+         { auctionStatus === "Upcoming Auction" && <p>Starts in {dayDifference} days, {hourDifference} hours, {minutesDifference} minutes </p>}
           <p>Current Price: &#x20b9; {currentPrice} </p>
           <p>Start Time: {auctionStartDateTime}</p>
           <p>End Time: {auctionEndDateTime}</p>
