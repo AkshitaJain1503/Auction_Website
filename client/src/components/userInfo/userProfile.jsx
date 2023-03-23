@@ -130,11 +130,11 @@ const DisplayUserProfile =()=> {
                           
 
                           <a href={`/pastPurchases?id=${id}`}>
-                            <button className="ms-3" >Past Purchases</button>
+                            <button className="ms-3 btn btn-dark bid-btn" >Past Purchases</button>
                           </a>
 
                           <a href={`/pastPosts?id=${id}`}>
-                          <button className="ms-3">Past Posts</button>
+                          <button className="ms-3 btn btn-dark bid-btn">Past Posts</button>
                           </a>
                             
                           </div>

@@ -125,15 +125,15 @@ const DisplayProfile =()=> {
                           <div className="d-flex justify-content-center mb-2">
                 
                             <a href="/editProfile">
-                              <button>Edit Profile</button>
+                              <button className="btn btn-dark bid-btn">Edit Profile</button>
                             </a>
 
                             <a href="/pastPurchases">
-                              <button className="ms-3" >Past Purchases</button>
+                              <button className="ms-3 btn btn-dark bid-btn" >Past Purchases</button>
                             </a>
 
                             <a href="/pastPosts">
-                            <button className="ms-3">Past Posts</button>
+                            <button className="ms-3 btn btn-dark bid-btn">Past Posts</button>
                             </a>
                             
                           </div>

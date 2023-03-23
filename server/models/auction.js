@@ -31,13 +31,9 @@ const auctionSchema = new mongoose.Schema(
         },
       },
     ],
-    productCurrentPrice: {
+    basePrice: {
       type: Number,
       required: true,
-    },
-    currentBidder: {
-      type: mongoose.Types.ObjectId,
-      ref: "User",
     },
     startDateTime: {
       type: Date,
@@ -51,20 +47,6 @@ const auctionSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
-    // duration: {
-    //     days: {
-    //         type: Number,
-    //         required: true
-    //     },
-    //     hours:{
-    //         type: Number,
-    //         required: true
-    //     },
-    //     minutes:{
-    //         type: Number,
-    //         required: true
-    //     }
-    // },
     auctionLive: {
       type: Boolean,
       default: false,

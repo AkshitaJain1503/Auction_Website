@@ -56,21 +56,12 @@ useEffect(() => {
         <>
           {children}
           {childLength > 2 && (
-            <SeeMore
-            onClick={() => 
-              handleOnClickEvent(date) }
-            >
-              View All
+            <SeeMore >
+              +{childLength-2} more
             </SeeMore>
           )}
-          {childLength <3 && (
-            <SeeMore
-            onClick={() => 
-              handleOnClickEvent(date) }
-            >
-              View
-            </SeeMore>
-          )}
+          <View onClick={() => 
+              handleOnClickEvent(date) }> Expand </View>
         </>
       );
   };
