@@ -2,20 +2,20 @@ import styled from "styled-components";
 
 export const Wrapper = styled.div`
   // border: 1px solid;
-  height: 99vh;
+  height: 79vh;
   padding: 15px ;
 `;
 
 export const StyledEvent = styled.span`
   background: ${({ bgColor }) => bgColor};
-  // color: white;
-  // text-align: left !important;
-  // padding: 2px 10px;
+  color: white;
+  text-align: left !important;
+  padding: 2px 10px;
   margin: 0 3px;
   border-radius: 10px;
-  // font-size: 13px;
-  cursor: pointer;
-  // text-transform: capitalize;
+  font-size: 13px;
+  // cursor: pointer;
+  text-transform: capitalize;
 `;
 
 export const SevenColGrid = styled.div`
@@ -30,7 +30,6 @@ export const SevenColGrid = styled.div`
     border: 1px solid;
     ${StyledEvent} {
       display: none;
-      height: 25px;
     }
     ${StyledEvent}:nth-child(-n + 3) {
       display: block;
@@ -76,47 +75,18 @@ export const DateControls = styled.div`
   }
 `;
 
-// export const SeeMore = styled.p`
-//   font-size: 12px;
-//   padding: 0 5px;
-//   margin-bottom: 0;
-//   cursor: pointer;
-// `;
+export const SeeMore = styled.p`
+  font-size: 12px;
+  padding: 0 5px;
+  margin-bottom: 0;
+  cursor: pointer;
+`;
 
-export const PortalWrapper = styled.div`
-  background: white;
-  position: absolute;
-  width: 60%;
-  height: 200px;
-  top: 50%;
-  left: 50%;
-  /* border: 1px solid; */
-  border-radius: 6px;
-  transform: translate(-50%, -50%);
-  box-shadow: 10px 10px 20px black;
-  padding: 40px;
-
-  h2 {
-    font-size: 3rem;
-  }
-
-  ion-icon {
-    font-size: 2rem;
-    color: red;
-    background: lightblue;
-    padding: 10px 20px;
-    border-radius: 6px;
-  }
-
-  p {
-    margin-bottom: 15px;
-  }
-
-  ion-icon[name="close-outline"] {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: red;
-    color: lightblue;
-  }
+export const View = styled.p`
+text-align: right;
+content-align: bottom;
+  font-size: 12px;
+  padding: 0 5px;
+  margin-bottom: 0;
+  cursor: pointer;
 `;

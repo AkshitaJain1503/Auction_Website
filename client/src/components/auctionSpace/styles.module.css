@@ -17,11 +17,12 @@ h1{
   
 }
 .link{
-  text-decoration: none;
+  text-decoration: underline !important;
   color: black;
+  padding: 3px;
 }
 .link:hover{
-  color:rgb(42, 56, 64)
+  color:rgb(0, 67, 250);
 }
 
 table {

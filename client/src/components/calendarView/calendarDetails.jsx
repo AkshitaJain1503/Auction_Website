@@ -1,9 +1,8 @@
 import React,{ useEffect,useState} from 'react';
 import { useLocation, useNavigate } from "react-router-dom";
 import NavBar from "../navbar/index";
-import { Link } from 'react-router-dom';
-import styles from "../auctionSpace/styles.module.css";
 import './calendarDetails.css';
+import moment from 'moment';
 
  const CalendarDetails = () => {
     const navigate = useNavigate();
@@ -11,6 +10,7 @@ import './calendarDetails.css';
     const query = useQuery();
     const productName = query.get('name');
     const date = query.get('date');
+    const formattedDate = moment(date, 'YYYY-MM-DD').format('DD-MM-YYYY');
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -32,14 +32,13 @@ import './calendarDetails.css';
         <div>
             <NavBar />
              <div>
+             <h1>Search results for "{productName}" on {formattedDate}</h1>
                  <h5>Total Matching Products: {data.length}</h5> 
             </div>
             <hr />
-            {/* <div className={styles.backGroundSpace}> */}
             <ul className="card-grid">
                 {data.map((product) => (
                     <li key={product.productId}>
-                        {/* <Link to={"/"} className="card-link"> */}
                             <div onClick={() => handleOnClickEvent(product)} >
                             <article className="card" key={product.productId}  >
                             <div className="card-image">
@@ -65,11 +64,9 @@ import './calendarDetails.css';
                                 </div>
                         </article>
                         </div>
-                    {/* </Link> */}
                 </li>
             ))}
         </ul> 
-        {/* </div> */}
     </div>
 );
 } 

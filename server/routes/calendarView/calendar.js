@@ -1,18 +1,12 @@
+//Get details of the products corresponding to the searched term: GET
 const router = require("express").Router();
 const {Auction} = require("../../models/auction");
 
-//Get unique dates from auction db corresponding to the searched product name for calendar display.
+//Get documents from auction collection corresponding to the searched product name for initial calendar display.
 router.get("/", async (req, res) => {
 
     const requestedProductName = req.query.name;
-    let response =[];
 
-    let todayDate = dateConverter(String(new Date()));
-
-    //getting distinct DATE-TIME where name LIKE %requestedProductName%.
-    let AuctionList= await Auction.find().distinct("startDateTime",
-    { productName :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' } });
-    
     //to extract only date from the date-time type format
     function dateConverter(str){
         var date = new Date(str),
@@ -22,53 +16,41 @@ router.get("/", async (req, res) => {
         return `${year}/${mnth}/${day}`
      }
      
-     //deciding colour which will highlight the calendar according to past, today and future.
+    //deciding colour which will highlight the calendar according to past, today and future.
     function decideColour(todayDate, auctDate){
         if(todayDate < auctDate){
-            colour = "#774dbf";
+            return "#774dbf";
         }
-        else if(todayDate > auctDate){
-            colour = "#bf6d4d";
+        if(todayDate > auctDate){
+            return "#7f7c82";
         }
-        else{
-            colour = "#9bbf4d";
-        }
-        return colour;
+        return "#2c9119";
     }
 
+    let todayDate = dateConverter(String(new Date()));
 
-    //only if AuctionList contains something.
-    if(AuctionList.length!=0){
-        AuctionList.sort();
-        let uniqueDate = dateConverter(String(AuctionList[0]));
-        let resData = {date: (AuctionList[0]), color: decideColour(todayDate, uniqueDate)};
-        response.push(resData); 
+    //getting auction documents where name LIKE %requestedProductName% (sql equivalent) and is case insensitive.
+    let AuctionList= await Auction.find({ productName 
+        :{ $regex : '.*'+ requestedProductName + '.*', $options: 'i' } });
 
-        //getting only UNIQUE DATES
-        for(var i=0 ; i < AuctionList.length; i++){
-            let resData = {};
-            let currentDate = dateConverter(String(AuctionList[i]));
+    let response =[];
 
-            if(currentDate == uniqueDate){
-                continue;
-            }
-            else{
-                uniqueDate = currentDate
-            }
+    //details needed at the front-end.
+    for(var i = 0; i<AuctionList.length; i++){
+        let resData = {};
+        let auctDate = (AuctionList[i]. startDateTime);
+        resData.date = auctDate;
+        resData.title = AuctionList[i]. productName;
+        resData.color = decideColour(todayDate,dateConverter(auctDate));
+        resData.id = AuctionList[i]._id;
+        response.push(resData);
+    };
 
-            resData.date = (AuctionList[i]);
-
-            let colour = decideColour(todayDate,currentDate);
-            resData.color = colour;
-            
-            response.push(resData)
-
-        }
-    }
+    //returns array of objects {data: [{},{},{}...]}
     res.status(200).send({data:response});
 });
 
-
 module.exports = router;
+
 
 

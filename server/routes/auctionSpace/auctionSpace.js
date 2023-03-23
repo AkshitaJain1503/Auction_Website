@@ -3,71 +3,64 @@ const { User } = require("../../models/user");
 const { Product } = require("../../models/product");
 var ObjectId = require('mongoose').Types.ObjectId;
 const router = require("express").Router() ;
-  
-  
-router.get("/", async (req, res) => {
 
-    try {
-      const productId = req.query.id;
-      const product= await Product.findOne({_id: productId});
-      const auction = await Auction.findOne( { product: productId } );
-
-      // list of bids of the requested product
-      const bids= auction.bids;
-      const responseData={};
-      const bidsList=[];
-      const bidsLength= bids.length;
-
-      for(var i=bidsLength-1 ; i >=0; i--){
-        // converting the date into standard date-time format 
-        const formattedTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
-        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(bids[i].time);
-
-        const bidder = await User.findOne({_id: bids[i].bidder});
-
-        const bid={};
-        bid.id=bids[i]._id;
-        bid.price= bids[i].price;
-        bid.time= formattedTime;
-        bid.bidderName= bidder.name;
-        bid.bidderId=bids[i].bidder;
-
-        bidsList.push(bid);
-    }
-    var status;
-    if(!auction.auctionStarted)
+function getStatus(auction) {
+  var auctionStatus;
+  if(!auction.auctionStarted)
     {
-      status="Yet to start";
+      auctionStatus="Yet to start";
     }
     else if (!auction.auctionEnded)
     {
-      status="Ongoing";
+      auctionStatus="Ongoing";
     }
     else 
     {
-      status="Ended";
+      auctionStatus="Ended";
     }
+    return auctionStatus;
+}
+
+  
+router.get("/", async (req, res) => {
+
+  try {
+    const productId = req.query.id;
+    const product= await Product.findOne({_id: productId});
+    const auction = await Auction.findOne( { product: productId } );
+    const bidsList= auction.bids;
+    const responseData={};
+    
+    // getting status of the auction
+    var auctionStatus= getStatus(auction);
+    
 
     const formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.endDateTime);
     const formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction.startDateTime);
-    const soldTo = await User.findOne({_id: auction.soldTo});
+    
 
     responseData.bidsList= bidsList;
     responseData.currPrice=auction.productCurrentPrice;
+    responseData.basePrice=product.productBasePrice;
     responseData.productName=product.productName;
     responseData.auctionLive= auction.auctionLive;
     responseData.endDateTime= formattedEndTime;
     responseData.startDateTime= formattedStartTime;
     responseData.auctionEnded= auction.auctionEnded;
-    if(soldTo)
-    responseData.soldTo= soldTo.name;
-    // responseData.duration= auction.duration;
-    responseData.status=status;
+    responseData.auctionStatus=auctionStatus;
+    responseData.seller=product.seller;
+    responseData.loggedInUser= req.id;
 
-    // sending the bid data with the required attributes
-      res.json(responseData);
+    
+    if(auction.soldTo){
+      const soldToUser = await User.findOne({_id: auction.soldTo});
+      responseData.soldTo= soldToUser.name;
+    }
+       
+    // sending the response data with the required attributes
+      res.status(200).send({responseData: responseData});
     } catch (error) {
       console.error(error);
       res.status(500).send('Server Error');
@@ -78,22 +71,108 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     const bidderId = req.id ;
+    const bidder= await User.findOne({_id: bidderId});
     const productId= req.body.productId;
+    const postedPrice= req.body.price;
+    const formattedCurrentTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(new Date());
+//new bid object
+    const bid = {
+      bidder: ObjectId(bidderId),
+      bidderName: bidder.name,
+      price: req.body.price,
+      time: formattedCurrentTime
+    };
+
+    const auction = await Auction.findOne({ product: productId })
+    const maxPrice= auction.productCurrentPrice;
     await Auction.findOneAndUpdate(
-        { product: productId }, 
-        { 
-          //pushing the posted bid in the auction object
-          $push: { bids: {
-            bidder: ObjectId(bidderId),
-            price: req.body.price
-          }},
-          //updating the product current price
-          productCurrentPrice: req.body.price,
-          //updating the current highest bidder
-          currentBidder: req.id,
+      { product: productId }, 
+      { 
+        $push: { 
+                bids: {
+                  $each: [bid],
+                  $position: binarySearch(auction.bids, bid.price)
+                }
+              },
+          // when the current bid is the highest bid so far
+        ...(postedPrice > maxPrice ? {
+          $set: {
+            //updating the product current price and highest bidder
+            productCurrentPrice: req.body.price,
+            currentBidder: req.id,
+          }
+        } : {})
       }
     );
+
+    // Binary search to find the index where the new bid should be inserted
+    function binarySearch(bids, price) {
+      let low = 0, high = bids.length - 1;
+      while (low <= high) {
+        let mid = Math.floor((low + high) / 2);
+        if (bids[mid].price >= price) {
+          low = mid + 1;
+        } 
+        else {
+          high = mid - 1;
+        }
+      }
+      return low;
+    }
+
     res.json(req.body);
 });
+
+
+router.get("/onlyAuction", async (req, res) => {
+
+  try {
+    const productId = req.query.id;
+    const auction = await Auction.findOne( { product: productId } );
+    const bidsList= auction.bids;
+    const responseData={};
+
+    // getting status of the auction
+    var auctionStatus= getStatus(auction);
+
+    responseData.bidsList= bidsList;
+    responseData.currPrice=auction.productCurrentPrice;
+    responseData.auctionLive= auction.auctionLive;
+    responseData.auctionEnded= auction.auctionEnded;
+    responseData.auctionStatus=auctionStatus;
+    
+    if(auction.soldTo){
+      const soldToUser = await User.findOne({_id: auction.soldTo});
+      responseData.soldTo= soldToUser.name;
+    }
+       
+    // sending the response data with the required attributes
+    res.status(200).send({responseData: responseData});
+    } catch (error) {
+      console.error(error);
+      res.status(500).send('Server Error');
+    }
+    
+  });
+
+  router.get("/timer", async (req, res) => {
+
+    try {
+      const productId = req.query.id;
+      const auction = await Auction.findOne( { product: productId } );
+      const responseData={};
+
+      const timeLeft=  new Date(auction.endDateTime)- new Date();
+      responseData.timeLeft= timeLeft;
+      responseData.endTime= auction.endDateTime;
+      res.json(responseData);
+      
+      } catch (error) {
+        console.error(error);
+        res.status(500).send('Server Error');
+      }
+      
+    });
 
 module.exports = router;
