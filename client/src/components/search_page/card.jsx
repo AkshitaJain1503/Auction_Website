@@ -1,31 +1,38 @@
 import React from "react";
 import styled from "styled-components";
 import { useNavigate, useLocation } from "react-router-dom";
-const Card = ({Product}) => {
-  var shipmentFrom=Product.shipment;
-  var title=Product.productName;
-  var price=Product.basePrice;
-  var id=Product.productId;
-  var image=Product.img;
-  var endTime=Product.EndTime;
-  var startTime=Product.StartTime;
+const Card = ({ Product }) => {
+  var shipmentFrom = Product.shipment;
+  if(shipmentFrom){
+    var partsOfShipment=shipmentFrom.split(',')}
+  else{
+    var partsOfShipment=" ";
+  }
+  
+  var title = Product.productName;
+  var price = Product.basePrice;
+  var id = Product.productId;
+  var image = Product.img;
+  var endTime = Product.EndTime;
+  var startTime = Product.StartTime;
+  var dist = Product.dist/1000;
   const navigate = useNavigate();
   const viewPage = () => {
-    window.location.href="/productPage?id="+id;
-  }
+    window.location.href = "/productPage?id=" + id;
+  };
   const addToWatchList = async () => {
     const myHeaders = new Headers({
       Authorization: "Bearer " + localStorage.getItem("token"),
     });
-    const res = await fetch("http://localhost:3001/api/carts?id=" + id, {
+    const res = await fetch("http://localhost:3001/api/addToWatchList?id=" + id, {
       method: "GET",
       headers: myHeaders,
     });
 
-    if(res.status === 404 || !res) {
+    if (res.status === 404 || !res) {
       window.location = "/signup";
     }
-    navigate('/AllProductCarts');
+    navigate("/watchList");
   };
 
   return (
@@ -36,16 +43,17 @@ const Card = ({Product}) => {
         </Image>
         <Description>
           <h5>{title}</h5>
-          <h6>Base Price  ₹{price}</h6>
-          <p>Shipment From {shipmentFrom}</p>
-          <p>Begins on        : {startTime}</p>
-          <p>Concludes on  : {endTime}</p>
+          <h6>Base Price : ₹{price}</h6>
+          <p>Shipment From : {partsOfShipment[0]}</p>
+          <p>Shipment Distance : {dist} km</p>
+          <p>Begins on : {startTime}</p>
+          <p>Concludes on : {endTime}</p>
         </Description>
       </div>
       <button onClick={addToWatchList}>Add to Watch List</button>
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   width: 100%;
@@ -54,11 +62,12 @@ const Container = styled.div`
   flex-direction: column;
   background-color: #fff;
   z-index: 10;
-  margin-top:50px;
+  margin-top: 50px;
   button {
     width: 100%;
     height: 33px;
-    background-color: #ccf67f;
+    background-color: black;
+    color:white;
     border: none;
     border-radius: 10px;
     cursor: pointer;
@@ -88,7 +97,7 @@ const Description = styled.div`
     font-size: 19px;
     font-weight: 600;
   }
-  h6{
+  h6 {
     color: #00332d;
     font-size: 17px;
     font-weight: 500;
@@ -97,8 +106,7 @@ const Description = styled.div`
     font-size: 16px;
     font-weight: 600;
     white-space: pre;
-    color:#545479;
+    color: #545479;
   }
-
 `;
 export default Card;

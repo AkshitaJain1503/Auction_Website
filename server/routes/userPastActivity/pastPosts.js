@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
     // to avoid hitting the DB query in a loop, writing a SQL equivalent IN query. 
     //product and auction documents corresponding to all posted productIDs
     let products = await Product.find({_id: postedProducts});
-    let auction = await Auction.find({product: postedProducts});
+    let auctions = await Auction.find({product: postedProducts});
 
     //loop from last to display the latest posts on top
     //details to be sent at the front-end.
@@ -43,9 +43,9 @@ router.get("/", async (req, res) => {
         productDetails.basePrice = products[i].productBasePrice;
 
         let formattedStartTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
-        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].startDateTime);
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auctions[i].startDateTime);
         let formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
-        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].endDateTime);
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auctions[i].endDateTime);
 
         productDetails.startTime= formattedStartTime;
         productDetails.endTime= formattedEndTime;

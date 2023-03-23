@@ -42,7 +42,7 @@ router.get("/", async (req, res) => {
     
 
     responseData.bidsList= bidsList;
-    responseData.currPrice=auction.productCurrentPrice;
+    responseData.currPrice= bidsList.length ? bidsList[0].price : auction.basePrice;
     responseData.basePrice=product.productBasePrice;
     responseData.productName=product.productName;
     responseData.auctionLive= auction.auctionLive;
@@ -72,8 +72,8 @@ router.get("/", async (req, res) => {
 router.post("/", async (req, res) => {
     const bidderId = req.id ;
     const bidder= await User.findOne({_id: bidderId});
+    const auction = await Auction.findOne({ product: productId });
     const productId= req.body.productId;
-    const postedPrice= req.body.price;
     const formattedCurrentTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(new Date());
 //new bid object
@@ -84,8 +84,6 @@ router.post("/", async (req, res) => {
       time: formattedCurrentTime
     };
 
-    const auction = await Auction.findOne({ product: productId })
-    const maxPrice= auction.productCurrentPrice;
     await Auction.findOneAndUpdate(
       { product: productId }, 
       { 
@@ -95,14 +93,6 @@ router.post("/", async (req, res) => {
                   $position: binarySearch(auction.bids, bid.price)
                 }
               },
-          // when the current bid is the highest bid so far
-        ...(postedPrice > maxPrice ? {
-          $set: {
-            //updating the product current price and highest bidder
-            productCurrentPrice: req.body.price,
-            currentBidder: req.id,
-          }
-        } : {})
       }
     );
 
@@ -137,7 +127,7 @@ router.get("/onlyAuction", async (req, res) => {
     var auctionStatus= getStatus(auction);
 
     responseData.bidsList= bidsList;
-    responseData.currPrice=auction.productCurrentPrice;
+    responseData.currPrice= bidsList.length ? bidsList[0].price : auction.basePrice;
     responseData.auctionLive= auction.auctionLive;
     responseData.auctionEnded= auction.auctionEnded;
     responseData.auctionStatus=auctionStatus;
