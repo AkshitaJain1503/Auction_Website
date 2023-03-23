@@ -4,7 +4,8 @@ import { useLocation } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import NavBar from "../navbar/index";
 import './App.css';
-import Card from "./card";
+import Card from "../home/card";
+import Card1 from "./card";
 import styled from "styled-components";
 
 // this function returns name that has been searched for by the user
@@ -110,13 +111,13 @@ const GetSearchResults = () => {
         {
             sortedData = data.sort((a, b) => a.dist - b.dist);
         }
-     return { data: sortedData, handleSort,name,handleShowEndedChange,handleShowLiveChange,handleShowUpcomingChange,statusList};
+     return { data: sortedData, handleSort,name,handleShowEndedChange,handleShowLiveChange,handleShowUpcomingChange,statusList,LoggedIn};
     };
 
 // renders the sorted data on frontend
 const SearchDetails = () => {
-     const { data:products, handleSort ,name,handleShowEndedChange,handleShowLiveChange,handleShowUpcomingChange,statusList} = GetSearchResults();
-     if (products.length > 0) {
+     const { data:products, handleSort ,name,handleShowEndedChange,handleShowLiveChange,handleShowUpcomingChange,statusList,LoggedIn} = GetSearchResults();
+     if (products.length > 0 && LoggedIn) {
             return (
                         <div >
                              <NavBar />
@@ -167,7 +168,7 @@ const SearchDetails = () => {
                             </div>
                             <Content >
                                 {products.filter((product) => statusList.includes(product.status)).map((product) => (
-                                    <Card
+                                    <Card1
                                         key={product.SNo}
                                         Product={product}
                                     />
@@ -176,6 +177,65 @@ const SearchDetails = () => {
                          </div>
                     );
     }
+    else if(products.length > 0)
+    return (
+        <div >
+             <NavBar />
+             <h1>Search Results for : '{name}'</h1>
+             <div className='cont'>
+
+                 <select onChange={handleSort}>
+                    <option value="none" >Sort by:</option>
+                    <option value="lowToHigh">Price Low to High</option>
+                    <option value="highToLow">Price High to Low</option>
+                    <option value="StartTime">Start Time</option>
+                    <option value="EndTime">End Time</option>
+                    <option value="Distance">Distance</option>
+                 </select>
+
+                 <a href={`/calendarView?name=${name}`}>
+                     <button className="white_btn">
+                     Calendar
+                    </button>
+                 </a>
+
+                <label>
+                    <input
+                    type="checkbox"
+                    onChange={handleShowEndedChange}
+                    />
+                    Show ended     
+                </label>
+
+                <label>
+                    <input
+                    type="checkbox"
+                    defaultChecked={true} 
+                    onChange={handleShowLiveChange}
+                    />
+                    Show live    
+                </label>
+
+                <label>
+                    <input
+                    type="checkbox"
+                    defaultChecked={true} 
+                    onChange={handleShowUpcomingChange}
+                    />
+                    Show upcoming  
+                </label>
+
+            </div>
+            <Content >
+                {products.filter((product) => statusList.includes(product.status)).map((product) => (
+                    <Card
+                        key={product.SNo}
+                        Product={product}
+                    />
+                ))}
+            </Content>
+         </div>
+    );
     else{
         return(
             <div>
