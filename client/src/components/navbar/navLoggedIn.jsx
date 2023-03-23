@@ -2,7 +2,7 @@ import styles from "./styles.module.css";
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { useState } from "react";
-import {BiSearchAlt} from "react-icons/bi";
+import { BiSearchAlt } from "react-icons/bi";
 
 const NavLoggedIn = () => {
   const navigate = useNavigate();
@@ -27,8 +27,13 @@ const NavLoggedIn = () => {
           <button className={styles.white_btn}>Post Product</button>
         </a>
         <a href="/myProfile">
-          <button className={styles.white_btn}>My Profile</button>
+          <button className={styles.white_btn}>My Account</button>
         </a>
+        <a href="myChats">
+					<button className={styles.white_btn}>
+						Buyer Queries
+					</button>
+				</a>
         <button className={styles.white_btn} onClick={handleLogout}>
           Logout
         </button>
@@ -59,7 +64,13 @@ const NavLoggedIn = () => {
 				</form>
         <h1>
           <a href="/" style={{ textDecoration: "none", color: "inherit" }}>
-            BidKaro!!!!!
+            <img
+              src="./website_icon.png"
+              alt={"website icon"}
+              width={"200px"}
+              height={"100px"}
+              style={{ marginTop: "10px" }}
+            />
           </a>
         </h1>
       </nav>

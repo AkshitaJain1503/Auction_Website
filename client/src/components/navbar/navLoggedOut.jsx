@@ -5,15 +5,18 @@ import {useState} from 'react';
 import {BiSearchAlt} from "react-icons/bi";
 
 const NavLoggedOut = () => {
-	const navigate = useNavigate();
-	const[value, setValue] = useState(""); 
+  const navigate = useNavigate();
+  const [value, setValue] = useState("");
 
-	const handleSearch = ()  => {
-		navigate(`/searchResults?name=${value}`)
-	};
-	return (
-		<div className={styles.home_container}>
-			<nav className={styles.navbar}>
+  const handleSearch = () => {
+    navigate(`/searchResults?name=${value}`);
+  };
+  return (
+    <div className={styles.home_container}>
+      <nav className={styles.navbar}>
+        <a href="/login">
+          <button className={styles.white_btn}>Login / Signup</button>
+        </a>
 
 				<a href="/login">
 					<button className={styles.white_btn}>

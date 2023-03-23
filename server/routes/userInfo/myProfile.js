@@ -5,10 +5,9 @@ const {User} = require("../../models/user");
 //Get my profile data.
 router.get("/", async (req, res) => {
     var userData = {}
-
     //getting data corresponding to user ID from the token via middleware for my Profile
     const user = await User.findOne({_id: req.id});
-
+    userData._id=user._id;
     userData.name = user.name;
     userData.email = user.email;
     userData.address = user.address;
