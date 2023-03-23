@@ -39,4 +39,7 @@ npm start
 
 On the third terminal :
 ```
+cd .\socket\ 
+npm i
+npm start
 ```
