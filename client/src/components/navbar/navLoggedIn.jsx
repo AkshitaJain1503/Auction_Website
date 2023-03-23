@@ -39,7 +39,11 @@ const NavLoggedIn = () => {
         </button>
 
         <form action="" className={styles.search_bar}>
-					<input type="text" placeholder="search anything" name="name"  onChange={(e) => {
+          <input
+            type="text"
+            placeholder="search anything"
+            name="name"
+            onChange={(e) => {
               setValue(e.target.value);
             }}/>
 					<button	type="submit" onClick={handleSearch}>
