@@ -13,9 +13,9 @@ const checkAuthLogin = require("./middleware/checkAuthLogin");
 const postProduct = require("./routes/products/postProduct");
 const productDetails = require("./routes/products/productDetails");
 const auctionSpace = require("./routes/auctionSpace/auctionSpace");
-const homeUpcomingAuction = require("./routes/homePage/homeUpcomingAuction");
-const homePastAuction = require("./routes/homePage/homePastAuctions");
-const homeLiveAuction = require("./routes/homePage/homeLiveAuctions");
+const homeUpcomingAuction = require("./routes/home/homeUpcomingAuction");
+const homePastAuction = require("./routes/home/homePastAuctions");
+const homeLiveAuction = require("./routes/home/homeLiveAuctions");
 const liveAuctions = require("./routes/viewAllPage/liveAuctions");
 const pastAuctions = require("./routes/viewAllPage/pastAuctions");
 const upcomingAuctions = require("./routes/viewAllPage/upcomingAuctions");
@@ -25,14 +25,10 @@ app.use(bodyParser.urlencoded({ limit: "50mb", extended: true }));
 const addToWatchList = require("./routes/watchList/addToWatchList");
 const deleteItem = require("./routes/watchList/deleteItem");
 const watchList = require("./routes/watchList/watchList");
-const search = require("./routes/search_page/search");
+const search = require("./routes/search/search");
 const calendar = require("./routes/calendarView/calendar");
 const calendarDetails = require("./routes/calendarView/calendarDetails");
 const contacts=require("./routes/contact/index");
-
-// const getMessage=require("./routes/chat/getMessage");
-// const postMessage=require("./routes/chat/postMessage");
-//const chatRoute = require("./routes/chat/conversation");
 const auctionsScheduler = require("./routes/auctionSpace/auctionsScheduler");
 
 //database connection
@@ -44,6 +40,7 @@ auctionsScheduler.scheduleAll();
 //middlewares
 app.use(express.json());
 app.use(cors());
+
 //routes
 app.use("/api/LiveAuctions", liveAuctions);
 app.use("/api/PastAuctions", pastAuctions);
@@ -66,11 +63,8 @@ app.use("/api/postProduct", checkAuthLogin, postProduct);
 app.use("/api/auctionSpace", checkAuthLogin, auctionSpace);
 app.use("/api/addToWatchList", checkAuthLogin, addToWatchList);
 app.use("/api/removeItem", checkAuthLogin, deleteItem);
-//app.use("/api/AllProductCarts", checkAuthLogin, allProductCarts);
 app.use("/api/myChats",checkAuthLogin,contacts);
-
 app.use("/api/watchList", checkAuthLogin, watchList);
-
 app.use("/api/userProfile", checkAuthLogin, userProfile);
 
 const port = process.env.PORT || 3001;

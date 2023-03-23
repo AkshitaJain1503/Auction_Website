@@ -38,27 +38,12 @@ const NavLoggedIn = () => {
           Logout
         </button>
 
-        {/* <form>
-          <label htmlFor="header-search">
-            <span className="visually-hidden">Search blog posts</span>
-          </label>
-          <input
-            type="text"
-            id="header-search"
-            placeholder="Search anything"
-            name="name"
-            onChange={(e) => {
-              setValue(e.target.value);
-            }}
-          />
-          <button onClick={handleSearch}>Search</button>
-        </form> */}
         <form action="" className={styles.search_bar}>
 					<input type="text" placeholder="search anything" name="name"  onChange={(e) => {
               setValue(e.target.value);
             }}/>
 					<button	type="submit" onClick={handleSearch}>
-						{/* <img src="./search-icon.png"  alt=""/> */}
+
            < BiSearchAlt> </BiSearchAlt>
 					</button>
 				</form>
