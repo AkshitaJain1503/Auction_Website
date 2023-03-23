@@ -194,9 +194,9 @@ const SearchDetails = () => {
                  </select>
 
                  <a href={`/calendarView?name=${name}`}>
-                     <button className="white_btn">
-                     Calendar
-                    </button>
+                    <button className="cal_btn btn btn-dark bid-btn">
+                		Calendar View
+                	</button>
                  </a>
 
                 <label>

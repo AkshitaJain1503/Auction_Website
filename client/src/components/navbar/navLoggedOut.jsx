@@ -17,14 +17,7 @@ const NavLoggedOut = () => {
         <a href="/login">
           <button className={styles.white_btn}>Login / Signup</button>
         </a>
-
-				<a href="/login">
-					<button className={styles.white_btn}>
-						Login / Signup
-					</button>
-				</a>
-
-				
+			
 	<form action="" className={styles.search_bar}>
 					<input type="text" placeholder="search anything" name="name"  onChange={(e) => {
               setValue(e.target.value);

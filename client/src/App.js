@@ -64,27 +64,27 @@ function App() {
 
 			<Route path="/calendarView" exact element={<Calendar/>}/>
 			<Route path="/calendarDetails" exact element={<CalendarDetails/>}/>
-			
-			{user && <Route path="/postProduct" exact element={<PostProduct/>}/>}
-			<Route path="/liveAuctions" exact element={<ViewAll/>}/>
-			<Route path="/pastAuctions" exact element={<ViewAll/>}/>
-			<Route path="/upcomingAuctions" exact element={<ViewAll/>}/>
-     
+			   
       {user && <Route path="/chat" exact element={<Chat />} />}
       {!user && <Route path="/chat" exact element={<Signup />} />}
+
       {user && <Route path="/myChats" exact element={<MyChat />} />}
       {!user && <Route path="/myChats" exact element={<Signup />} />}
+
       {user && <Route path="/auctionSpace" exact element={<Auction />} />}
       {!user && <Route path="/auctionSpace" exact element={<Signup />} />}
+
+      {user && <Route path="/postProduct" exact element={<PostProduct />} />}
+      {!user && <Route path="/postProduct" exact element={<Signup />}/>}
+
       <Route path="/searchResults" exact element={<SearchDetails />} />
 
       <Route path="/calendarView" exact element={<Calendar />} />
       <Route path="/calendarDetails" exact element={<CalendarDetails />} />
 
-      {user && <Route path="/postProduct" exact element={<PostProduct />} />}
-      <Route path="/LiveAuctions" exact element={<ViewAll />} />
-      <Route path="/PastAuctions" exact element={<ViewAll />} />
-      <Route path="/UpcomingAuctions" exact element={<ViewAll />} />
+      <Route path="/liveAuctions" exact element={<ViewAll/>}/>
+			<Route path="/pastAuctions" exact element={<ViewAll/>}/>
+			<Route path="/upcomingAuctions" exact element={<ViewAll/>}/>
     </Routes>
   );
 }
