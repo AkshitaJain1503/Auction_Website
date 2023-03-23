@@ -143,14 +143,23 @@ async function scheduleStart(auction) {
     startAuction(auction);
 
     // finds the time difference
-    var timeDifference = new Date(new Date() - auction.startDateTime);
+    var timeDifference = (new Date().getTime() - new Date(auction.startDateTime).getTime());
+    var msec = timeDifference;
+    var days = Math.floor(msec / 1000 / 60 / (60 * 24));
+    msec -= days * 1000 * 60 * 60 * 24;
+    var hh = Math.floor(msec / 1000 / 60 / 60);
+    msec -= hh * 1000 * 60 * 60;
+    var mm = Math.floor(msec / 1000 / 60);
+    msec -= mm * 1000 * 60;
+    var ss = Math.floor(msec / 1000);
+    msec -= ss * 1000;
 
     // sends emails to the subscribers
     emailNotification(
       subscribers,
       `Sorry, the auction of ${auction.productName} started late`,
       `<h4> Dear Subscriber, <h4> </br> <p>The auction of ${auction.productName
-      } started ${timeDifference.getDate() - 1} days, ${timeDifference.getHours() - 5} hours, ${timeDifference.getMinutes() - 30} minutes, ${timeDifference.getSeconds()} seconds late due to a technical glitch.</p>
+      } started ${days} days, ${hh} hours, ${mm} minutes, ${ss} seconds late due to a technical glitch.</p>
       <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product
       }">Auction Details</a> </h5>`
     );
@@ -161,7 +170,7 @@ async function scheduleStart(auction) {
       `Sorry! the auction of ${auction.productName} started late`,
       `<h4>Dear ${seller.name
       }, </h4> </br> <p> The auction of your product <b>${auction.productName
-      }</b> started ${timeDifference.getDate() - 1} days, ${timeDifference.getHours() - 5} hours, ${timeDifference.getMinutes() - 30} minutes, ${timeDifference.getSeconds()} seconds late due to a technical glitch.</p>
+      }</b> started ${days} days, ${hh} hours, ${mm} minutes, ${ss} seconds late due to a technical glitch.</p>
       <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product
       }">Auction Details</a> </h5>`
     );
@@ -206,7 +215,17 @@ async function scheduleEnd(auction) {
     var updatedAuction = await updateAuction(auction);
     var productCurrentPrice = updatedAuction.productCurrentPrice;
 
-    var timeDifference = new Date(new Date() - auction.endDateTime);
+    // finds the time difference
+    var timeDifference = (new Date().getTime() - auction.startDateTime.getTime());
+    var msec = timeDifference;
+    var days = Math.floor(msec / 1000 / 60 / (60 * 24));
+    msec -= days * 1000 * 60 * 60 * 24;
+    var hh = Math.floor(msec / 1000 / 60 / 60);
+    msec -= hh * 1000 * 60 * 60;
+    var mm = Math.floor(msec / 1000 / 60);
+    msec -= mm * 1000 * 60;
+    var ss = Math.floor(msec / 1000);
+    msec -= ss * 1000;
 
     // if the auction did not happen for that product, as in, if no bids were placed
     // send mail to seller informing the issue
@@ -215,9 +234,8 @@ async function scheduleEnd(auction) {
         seller.email,
         `Sorry! The auction of ${auction.productName} has ended late but product not sold`,
         `<h4>Dear ${seller.name},</h4> </br> <p>The product ${auction.productName
-        } has ended ${timeDifference.getDate() - 1} days, ${timeDifference.getHours() - 5
-        } hours, ${timeDifference.getMinutes() - 30
-        } minutes late due to a technical glitch. But we regret to inform you that not even a single bid got placed on your product, thereby, the product went as not sold.</p>
+        } has ended ${days} days, ${hh
+        } hours, ${mm} minutes late due to a technical glitch. But we regret to inform you that not even a single bid got placed on your product, thereby, the product went as not sold.</p>
       <h5>To know more about your product auction status, visit <a href="http://localhost:3000/auctionSpace?id=${auction.product
         }">Auction Details</a> </h5>`
       );
@@ -227,8 +245,8 @@ async function scheduleEnd(auction) {
         buyer.email,
         `Sorry! The auction of ${auction.productName} has ended late`,
         `<h4> Dear ${buyer.name}, </h4> </br> <p>The product ${auction.productName
-        } has ended ${timeDifference.getDate() - 1} days, ${timeDifference.getHours() - 5
-        } hours, ${timeDifference.getMinutes() - 30
+        } has ended ${days} days, ${hh
+        } hours, ${mm
         } minutes late due to a technical glitch. The product has been sold to you by the seller ${seller.name
         } at a price of &#8377; ${productCurrentPrice}</p><h5>To know more about your product auction status, visit <a href="http://localhost:3000/auctionSpace?id=${auction.product
         }">Auction Details</a> </h5>`
@@ -238,8 +256,8 @@ async function scheduleEnd(auction) {
         seller.email,
         `Sorry! The auction of ${auction.productName} has ended late`,
         `<h4> Dear ${seller.name}, </h4> </br> <p>The product ${auction.productName
-        } has ended ${timeDifference.getDate() - 1} days, ${timeDifference.getHours() - 5
-        } hours, ${timeDifference.getMinutes() - 30
+        } has ended ${days} days, ${hh
+        } hours, ${mm
         } minutes late due to a technical glitch. Your product has been sold to ${buyer.name
         } at a price of &#8377; ${productCurrentPrice}</p><h5>To know more about your product auction status, visit <a href="http://localhost:3000/auctionSpace?id=${auction.product
         }">Auction Details</a> </h5>`

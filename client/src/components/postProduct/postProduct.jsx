@@ -261,7 +261,7 @@ const PostProduct = () => {
                 />
               </div>
               <Container className="text-center">
-                <Button type="submit" className="rounded-0" color="primary">
+                <Button type="submit" className="rounded-0" color="dark">
                   Post your product
                 </Button>
               </Container>

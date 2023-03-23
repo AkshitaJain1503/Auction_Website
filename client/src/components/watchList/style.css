@@ -51,10 +51,10 @@
 .watch-btn {
     justify-content: center;
     align-items: center;
-    background-color: rgb(21, 145, 202);
+    background-color: black;
     color: white;
     border: none;
-    box-shadow: 1px 1px 1px rgb(4, 89, 158);
+    box-shadow: 1px 1px 1.3px rgba(1, 10, 16, 0.089);
     padding: 5px;
     border-radius: 5px;
 }
