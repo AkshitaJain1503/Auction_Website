@@ -60,12 +60,16 @@
   }
   .chat-window .chat-header {
     height: 45px;
+    justify-content: space-between;
+    display: flex;
     border-radius: 6px;
     background: #263238;
     position: relative;
     cursor: pointer;
   }
   .chat-window .chat-header p {
+    margin-left:10px;
+    margin-right:10px;
     display: block;
     padding: 0 1em 0 2em;
     color: #fff;

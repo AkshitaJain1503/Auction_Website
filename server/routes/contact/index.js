@@ -33,6 +33,7 @@ router.put("/", async (req, res) => {
     contact.contactUserId=ObjectId(req.body.idUser);
     contact.contactReadStatus=req.body.contactStatus;
     contact.userReadStatus=req.body.userStatus;
+    contact.productName=req.body.productName;
     const contct = await Contact.findOne({chatRoomId: contact.chatRoomId});
     if(contct!=null){
     Contact.findOneAndUpdate({chatRoomId: contact.chatRoomId},contact,async function(err){
@@ -43,11 +44,11 @@ router.put("/", async (req, res) => {
                     res.status(200).send({data:"updated successfully"});
               }
         )
-            }
-            else{
-                  const contct = await new Contact(contact).save();
-                  res.json(req.body);
-            }
+    }
+    else{
+      const contct = await new Contact(contact).save();
+      res.json(req.body);
+    }
   }
   catch(error){
     res.status(200).send("contact already present");

@@ -25,6 +25,10 @@ const contactSchema = new mongoose.Schema({
     unique: true,
     required: true,
   },
+  productName:{
+    type:String,
+    required:true,
+  },
   userReadStatus:{
     type:Boolean,
     default: false,

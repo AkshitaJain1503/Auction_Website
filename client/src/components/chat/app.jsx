@@ -3,9 +3,7 @@ import io from "socket.io-client";
 import { useState,useEffect } from "react";
 import Chat from "./chat";
 import { GetProfile } from "../myProfile/getProfile";
-import { useNavigate } from "react-router-dom";
 import NavBar from "../navbar";
-
 
 function App() {
         const params = new Proxy(new URLSearchParams(window.location.search),{
@@ -13,10 +11,10 @@ function App() {
         })
         let idSeller = params.id;
         let sellerName=params.name;
+        let productName=params.product;
         let val=params.bool;
         let user=GetProfile();
         let idUser = user._id;
-       
     // make sure id1 is the smaller value for
     // consistency of generation of roomId
     var room;
@@ -33,13 +31,12 @@ function App() {
       var userStatus,contactStatus;
       if(val=="t"){
         contactStatus=true;
-          userStatus=false;
-          
+        userStatus=false;
         }
         else{
           contactStatus=false;
-            userStatus=true;
-            [idSeller,idUser]=[idUser,idSeller];
+          userStatus=true;
+          [idSeller,idUser]=[idUser,idSeller];
           [username,sellerName]=[sellerName,username]
         }
       const res = await fetch("http://localhost:3001/api/myChats" , {
@@ -48,7 +45,7 @@ function App() {
           "Content-Type": "application/json",
           "Authorization": "Bearer "+localStorage.getItem("token")
         },
-        body: JSON.stringify({idSeller,sellerName,room,username,idUser,userStatus,contactStatus})
+        body: JSON.stringify({idSeller,sellerName,room,username,idUser,userStatus,contactStatus,productName})
       }).catch((err)=> console.log(err));
     }
     addContact();
@@ -61,7 +58,7 @@ function App() {
     <div>
       <NavBar/>
     <div className="App">
-        <Chat socket={socket} username={username} room={room} />
+        <Chat socket={socket} username={username} room={room} contactName={sellerName} product={productName}/>
     </div>
     </div>
   );

@@ -92,7 +92,7 @@ export default function ProductPage(props) {
   };
  
   const chatWithSeller = () => {
-    navigate(`/chat?id=`+product.sellerId+"&name="+product.name+"&bool=t");
+    navigate(`/chat?id=`+product.sellerId+"&name="+product.name+"&bool=t&product="+product.productName);
   }
   return (
     <>

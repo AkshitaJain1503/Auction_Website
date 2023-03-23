@@ -54,40 +54,7 @@ export default function MyChat() {
         )
 }
 
-const Hbar = styled.div`
-  margin-top:5px;
-  margin-bottom: 15px;
-  outline-style:solid;
-	width: 100%;
-  max-width:5000px;
-	height: 60px;
-	background-color: #ffffff;
-	display: flex;
-	align-items: center;
-  h4{
-    margin-left:auto;
-    margin-right:auto;
-    color:#334b48
-  }
-  h5{
-    color: #78E9A6;
-    margin-right: 50px;
-  }
-  justify-content: space-between;
-`;
-const Button = styled.button`
-  border: none;
-	outline: none;
-	padding: 1px 0;
-	background-color: #3bb19b; 
-	border-radius: 20px;
-	width: 100px;
-	font-weight: bold;
-	font-size: 14px;
-	cursor: pointer;
-	// margin-right: auto;
-	margin-left:auto;
-`
+
 const Container =styled.div`
   background-color: rgb(234, 237, 237);
   height: 100dvh;

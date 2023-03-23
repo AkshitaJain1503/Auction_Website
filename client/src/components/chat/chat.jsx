@@ -1,14 +1,8 @@
 
 import React, { useEffect, useState } from "react";
 import ScrollToBottom from "react-scroll-to-bottom";
-import { useNavigate } from "react-router-dom";
-function Chat({socket,username,room}) {
-        const navigate=useNavigate();
-        const params = new Proxy(new URLSearchParams(window.location.search),{
-            get : (searchParams,prop) => searchParams.get(prop),
-        })
-        let contactName = params.name;
-        let contactId =params.id;
+
+function Chat({socket,username,room,contactName,product}) {
   const [currentMessage, setCurrentMessage] = useState("");
   const [messageList, setMessageList] = useState([]);
   socket.emit("join_room", room);
@@ -22,7 +16,7 @@ function Chat({socket,username,room}) {
         time:
           new Date(Date.now()).getHours() +
           ":" +
-          new Date(Date.now()).getMinutes(),
+          String(new Date(Date.now()).getMinutes()).padStart(2, "0"),
       };
       setMessageList((list) => [...list, messageData]);
       await socket.emit("send_message", messageData);
@@ -39,7 +33,8 @@ function Chat({socket,username,room}) {
   return (
     <div className="chat-window">
       <div className="chat-header">
-        <p>{contactName}</p>
+        <p>Name : {contactName} </p>
+        <p>Product :{product}</p>
       </div>
       <div className="chat-body">
         <ScrollToBottom className="message-container">
@@ -47,7 +42,7 @@ function Chat({socket,username,room}) {
             return (
               <div
                 className="message"
-                id={username === messageContent.from ? "you" : "other"}
+                id={username === messageContent.from ? "other" : "you"}
               >
                 <div>
                   <div className="message-content">
@@ -55,7 +50,7 @@ function Chat({socket,username,room}) {
                   </div>
                   <div className="message-meta">
                     <p id="time">{messageContent.time}</p>
-                    <p>{messageContent.from}</p>
+                    <p id="author">{messageContent.from}</p>
                   </div>
                 </div>
               </div>
@@ -70,6 +65,9 @@ function Chat({socket,username,room}) {
           placeholder="Hey..."
           onChange={(event) => {
             setCurrentMessage(event.target.value);
+          }}
+          onKeyUp={(event) => {
+            event.key === "Enter" && sendMessage();
           }}
         />
         <button onClick={sendMessage}>&#9658;</button>

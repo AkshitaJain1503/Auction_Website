@@ -21,18 +21,19 @@ const Contact = ({contacts,str}) => {
             <Hbar 
               key={contact._id}
               >
-                {bool && <h4>{contact.contactName}</h4>}
-                {!bool && <h4>{contact.myName}</h4>}
+                <h4>Product : {contact.productName}</h4>
+                {bool && <h4>Name : {contact.contactName}</h4>}
+                {!bool && <h4>Name : {contact.myName}</h4>}
                 {!contact.userReadStatus && bool && <h5>You may have new messages!</h5>}
                 {!contact.contactReadStatus && !bool && <h5>You may have new messages!</h5>}
                 {/* {contact.userReadStatus && <h5>no new messages</h5>} */}
                 {bool &&
-                <a href={"/chat?id="+contact.contactUserId+"&name="+contact.contactName+"&bool=f"}>
+                <a href={"/chat?id="+contact.contactUserId+"&name="+contact.contactName+"&bool=f&product="+contact.productName}>
                 <Button>Chat with buyer</Button>
                 </a>
                 }
                 {!bool &&
-                <a href={"/chat?id="+contact.userId+"&name="+contact.myName+"&bool=t"}>
+                <a href={"/chat?id="+contact.userId+"&name="+contact.myName+"&bool=t&product="+contact.productName}>
                 <Button>Chat with seller</Button>
                 </a>
                     }
@@ -56,8 +57,7 @@ const Hbar = styled.div`
 	display: flex;
 	align-items: center;
   h4{
-    margin-left:auto;
-    margin-right:auto;
+     margin-left: 20px;
     color:#334b48
   }
   h5{
