@@ -8,9 +8,7 @@ router.get("/", async (req, res) => {
     //getting user Id from params
     const requested_id = req.query.id;
     var userData = {}
-
     const user = await User.findOne({_id: requested_id});
-    
     userData.name = user.name;
     userData.email = user.email;
     userData.country = user.country;

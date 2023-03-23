@@ -8,6 +8,7 @@ export default function ViewAll() {
     var url;
     url=window.location.pathname;
     url=url.substring(1);
+    url=url.charAt(0).toUpperCase()+url.slice(1);
     useEffect(() => {
         const fetchdata = async () => {
         const data = await axios.get("http://localhost:3001/api/"+url);
@@ -39,7 +40,7 @@ export default function ViewAll() {
       return(
         <div>
           <NavBar/>
-          <h5>Sorry,No auctions available right now.</h5>
+          <h5>Sorry,No {url.replace(/([a-z0-9])([A-Z])/g, '$1 $2')} available right now.</h5>
         </div>
       )
       
