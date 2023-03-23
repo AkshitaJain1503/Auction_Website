@@ -149,8 +149,8 @@ const GetSearchResults = () => {
                                             <option value="Distance">Distance</option>
                                         </select>
                                         <a href={`/calendarView?name=${name}`}>
-                					<button className="white_btn">
-                						Calendar
+                					<button className="cal_btn btn btn-dark bid-btn">
+                						Calendar View
                 					</button>
                 				</a>
                                 <label>

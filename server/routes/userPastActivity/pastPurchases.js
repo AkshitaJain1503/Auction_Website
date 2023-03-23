@@ -23,13 +23,13 @@ router.get("/", async (req, res) => {
     //finiding user corresponding to the user ID
     const user = await User.findOne({_id: requested_id});
 
-    // array of product ids posted by the user
+    // array of product ids purchased by the user
     let purchasedProducts = user.purchasedProducts;
 
     // to avoid hitting the DB query in a loop, writing a SQL equivalent IN query. 
     //product and auction documents corresponding to all purchased productIDs
     let products = await Product.find({_id: purchasedProducts});
-    let auction = await Auction.find({product: purchasedProducts});
+    let auctions = await Auction.find({product: purchasedProducts});
 
     //loop from last to display the latest posts on top
     //details to be sent at the front-end.
@@ -41,10 +41,10 @@ router.get("/", async (req, res) => {
         productDetails.productId = products[i]._id;
         productDetails.productName = products[i].productName;
         productDetails.basePrice = products[i].productBasePrice;
-        productDetails.soldAt = auction[i].productCurrentPrice;
+        productDetails.soldAt = auctions[i].bids[0].price;
 
         let formattedEndTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
-        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auction[i].endDateTime);
+        day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(auctions[i].endDateTime);
 
         productDetails.wonOn= formattedEndTime;
         

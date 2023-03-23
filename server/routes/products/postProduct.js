@@ -63,7 +63,7 @@ router.post("/", upload.single("productImage"), async (req, res) => {
     startDateTime,
     startDate: startDate,
     endDateTime: endDateTime,
-    productCurrentPrice: product.productBasePrice,
+    basePrice: product.productBasePrice,
   }).save();
 
   //scheduling start and end of this auction

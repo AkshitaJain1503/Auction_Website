@@ -35,7 +35,7 @@ router.get("/", async (req, res) => {
     // storing product name, description, current price, product image, auction id, product id, and auction start date time and end date time in an object `eachProduct`
     var eachProduct = {};
     eachProduct.productName = productdB[i].productName;
-    eachProduct.currentPrice = auctionList[i].productCurrentPrice;
+    eachProduct.currentPrice = auctionList[i].bids.length? auctionList[i].bids[0].price : auctionList[i].basePrice ;
     eachProduct.productImage = productdB[i].productImage;
     eachProduct.auction_id = auctionList[i]._id;
     eachProduct.product_id = productdB[i]._id;
