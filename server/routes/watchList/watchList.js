@@ -39,6 +39,21 @@ router.get("/", async (req, res) => {
     eachProduct.productImage = productdB[i].productImage;
     eachProduct.auction_id = auctionList[i]._id;
     eachProduct.product_id = productdB[i]._id;
+    if (auctionList[i].auctionLive == true) {
+      eachProduct.auctionStatus = "Live Auction";
+    }
+    else if (auctionList[i].auctionEnded == true && auctionList[i].auctionStarted == true) {
+      eachProduct.auctionStatus = "Past Auction";
+    }
+    else {
+      eachProduct.auctionStatus = "Upcoming Auction";
+    }
+
+    var timeDifference = new Date((auctionList[i].startDateTime) - new Date());
+    eachProduct.dayDifference = timeDifference.getDate() - 1;
+    eachProduct.hourDifference = timeDifference.getHours() - 5;
+    eachProduct.minutesDifference = timeDifference.getMinutes() - 30;
+
     const formattedStartTime = new Intl.DateTimeFormat("en-GB", {
       year: "numeric",
       month: "2-digit",

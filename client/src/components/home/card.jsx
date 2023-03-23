@@ -64,7 +64,7 @@ const Container = styled.div`
   button {
     width: 100%;
     height: 33px;
-    background-color: #334B48;
+    background-color: black;
     color:white;
     border: none;
     border-radius: 10px;
