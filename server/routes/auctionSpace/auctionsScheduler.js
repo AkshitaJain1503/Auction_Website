@@ -96,8 +96,8 @@ async function endAuction(auction) {
   );
   // check to see if there is atleast 1 bid, at the end time (i.e., in current auction )
   if (currAuction.bids.length) {
-    const maxBidder = currAuction.currentBidder;
-    productCurrentPrice = currAuction.productCurrentPrice;
+    const maxBidder = currAuction.bids[0].bidder;
+    productCurrentPrice = currAuction.bids[0].price;
     // product sold to the max bidder
     await Auction.findOneAndUpdate(
       { _id: auction._id },
