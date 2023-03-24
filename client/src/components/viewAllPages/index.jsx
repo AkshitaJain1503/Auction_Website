@@ -8,7 +8,6 @@ export default function ViewAll() {
     var url;
     url=window.location.pathname;
     url=url.substring(1);
-    url=url.charAt(0).toUpperCase()+url.slice(1);
     useEffect(() => {
         const fetchdata = async () => {
         const data = await axios.get("http://localhost:3001/api/"+url);
@@ -16,6 +15,7 @@ export default function ViewAll() {
       };
       fetchdata();
     }, []);
+    url=url.charAt(0).toUpperCase()+url.slice(1);
     if(Object.keys(products).length > 0){
       return (
         <div>
