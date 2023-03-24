@@ -9,8 +9,6 @@
 * The **real-time chat** feature is enabled to make communication between buyer and seller effective and effortless. 
 * In the **My profile** section, the users can view and edit their details such as username/address, etc, and can also view their own past purchases as well as posts.
 
-[Link to the website](https://add_link_here.com)
-
 ## Few screenshots from the website: 
 
 Home Page :
@@ -41,6 +39,17 @@ MyProfile/UserProfile :
 SearchResults : 
 
 ![Screenshot (168)](https://user-images.githubusercontent.com/121486345/227552662-9bfce7bf-ff19-4fa8-bf1f-7e8d342a01ca.png)
+
+
+Calendar View for Search Results: 
+
+![Screenshot (170)](https://user-images.githubusercontent.com/121486345/227554986-d7fe2618-329f-49ec-9193-b2c6cac7a369.png)
+
+
+Chat System :
+
+![Screenshot (161)](https://user-images.githubusercontent.com/121486345/227554887-c759d6ea-d7b5-44ac-98d2-c1e9fd84d462.png)
+
 
 
 ## Setting up the project on local System:
