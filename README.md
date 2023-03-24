@@ -41,5 +41,5 @@ On the third terminal :
 ```
 cd .\socket\ 
 npm i
-npm start
+node index.js
 ```
