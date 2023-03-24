@@ -33,10 +33,6 @@ const Items = ({ auction_id, product_id, productImage, productName, productDescr
     // removedItem(id);
     getItems();
   }
-
-  // console.log(`${new Date(auctionStartDateTime).getDate()}/${new Date(auctionStartDateTime).getMonth()}/${new Date(auctionStartDateTime).getFullYear}`);
-
-
   const GoToAuction = () => {
     navigate(`/auctionSpace?id=${product_id}`);
   }

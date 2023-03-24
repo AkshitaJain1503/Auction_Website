@@ -34,8 +34,7 @@ let upload = multer({ storage, fileFilter });
 
 router.post("/", upload.single("productImage"), async (req, res) => {
   // posting the product details in the backend server for storing in products and auctions document
-  console.log("data fetched");
-
+  
   // obtaining the seller id from the logged in user id
   const sellerId = req.id;
   const startDateTime = req.body.startDateTime;
