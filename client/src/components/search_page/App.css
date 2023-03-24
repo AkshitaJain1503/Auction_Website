@@ -7,7 +7,7 @@
     display: flex;
     align-items: center;
     background-color: #0B6AFF;
-    color: #fff;
+    /* color: #fff; */
     height: 52px;
     font-size: 15px;
     letter-spacing: 0.05rem;
@@ -21,16 +21,18 @@
   .datasearch {
     margin-left: auto;
     margin-right: auto;
+    color: #424242;
   }
   
   .datasearch .searchbox {
     min-width: 400px;
     border-radius: 30px;
     padding: 5px 16px 5px 30px;
+    color: #424242;
   }
   
   .suggestionlist {
-    color: #424242;
+    background-color: gray;
     width: 90%;
     margin-left: 5%;
   }
@@ -49,6 +51,7 @@
     left: 0;
     right: 0;
     border-right: 1px solid #f0f0f0;
+    background-color: gray;
   }
   
   .mainBar {
@@ -56,7 +59,7 @@
     position: relative;
     left: 320px;
     padding: 0px 30px;
-    background-color: #fefefe;
+    /* background-color: #fefefe; */
   }
   
   .result-data .result-image {
@@ -127,23 +130,8 @@
     text-decoration: none;
     cursor: pointer;
   }
-  .white_btn{
-    border: none;
-    outline: none;
-    padding: 10px ;
-    background-color: black;
-    border-radius: 20px;
-    width: 110px;
-    font-weight: bold;
-    font-size: 14px;
-    cursor: pointer;
-    margin-right: 10px;
-    margin-left:auto;
-    color: #ddd;
+  .cal_btn{
     float:right;
-    margin-bottom: 20px;
-    padding-top: 10px;
-    margin-top: 0px;
   }
   .cont
   {

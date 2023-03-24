@@ -45,6 +45,7 @@ const Container = styled.div`
   margin: auto;
   height: fit-content;
   align:block;
+  padding-bottom: 25px;
 `;
 
 const Hbar = styled.div`

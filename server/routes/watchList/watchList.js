@@ -35,10 +35,36 @@ router.get("/", async (req, res) => {
     // storing product name, description, current price, product image, auction id, product id, and auction start date time and end date time in an object `eachProduct`
     var eachProduct = {};
     eachProduct.productName = productdB[i].productName;
-    eachProduct.currentPrice = auctionList[i].productCurrentPrice;
+    eachProduct.currentPrice = auctionList[i].bids.length ? auctionList[i].bids[0].price : auctionList[i].basePrice;
     eachProduct.productImage = productdB[i].productImage;
     eachProduct.auction_id = auctionList[i]._id;
     eachProduct.product_id = productdB[i]._id;
+    if (auctionList[i].auctionLive == true) {
+      eachProduct.auctionStatus = "Live Auction";
+    }
+    else if (auctionList[i].auctionEnded == true && auctionList[i].auctionStarted == true) {
+      eachProduct.auctionStatus = "Past Auction";
+    }
+    else {
+      eachProduct.auctionStatus = "Upcoming Auction";
+    }
+
+    // finds the time difference
+    var timeDifference = (new Date(auctionList[i].startDateTime).getTime() - new Date().getTime());
+    var msec = timeDifference;
+    var days = Math.floor(msec / 1000 / 60 / (60 * 24));
+    msec -= days * 1000 * 60 * 60 * 24;
+    var hh = Math.floor(msec / 1000 / 60 / 60);
+    msec -= hh * 1000 * 60 * 60;
+    var mm = Math.floor(msec / 1000 / 60);
+    msec -= mm * 1000 * 60;
+    var ss = Math.floor(msec / 1000);
+    msec -= ss * 1000;
+
+    eachProduct.dayDifference = days;
+    eachProduct.hourDifference = hh;
+    eachProduct.minutesDifference = mm;
+
     const formattedStartTime = new Intl.DateTimeFormat("en-GB", {
       year: "numeric",
       month: "2-digit",

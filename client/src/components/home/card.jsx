@@ -42,10 +42,10 @@ const Card = ({ Product }) => {
         </Image>
         <Description>
           <h5>{title}</h5>
-          <h6>Base Price ₹{price}</h6>
-          <p>Shipment From {partsOfShipment[0]}</p>
-          <p>Begins on : {startTime}</p>
-          <p>Concludes on : {endTime}</p>
+          <h6>Base Price : ₹{price}</h6>
+          <p>Shipment From : {partsOfShipment[0]}</p>
+          <p>Start Date : {startTime}</p>
+          <p>End Date   : {endTime}</p>
         </Description>
       </div>
       <button onClick={addToWatchList}>Add to Watch List</button>
@@ -64,7 +64,7 @@ const Container = styled.div`
   button {
     width: 100%;
     height: 33px;
-    background-color: #334B48;
+    background-color: black;
     color:white;
     border: none;
     border-radius: 10px;

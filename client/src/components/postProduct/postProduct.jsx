@@ -58,6 +58,7 @@ const PostProduct = () => {
       startDateTime,
       endDateTime,
     } = product;
+    const shipmentFrom = selectedCity.name;
 
     // storing the place, latitude and longitude of shipment source using country-state-city npm package attributes
     const shipmentFromPlace =
@@ -260,7 +261,7 @@ const PostProduct = () => {
                 />
               </div>
               <Container className="text-center">
-                <Button type="submit" className="rounded-0" color="primary">
+                <Button type="submit" className="rounded-0" color="dark">
                   Post your product
                 </Button>
               </Container>
