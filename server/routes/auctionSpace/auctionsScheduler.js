@@ -27,8 +27,11 @@ async function findSubscribersOfThisProduct(auction) {
 async function findSoldToBuyer(auction) {
   // finds buyer of that particular auction product after auction ends
   auction = await updateAuction(auction);
-  const buyerID = auction.bids[0].bidder;
-  const buyer = await User.findOne({ _id: buyerID });
+  var buyer = "null";
+  if (auction.bids.length) {
+    const buyerID = auction.bids[0].bidder;
+    buyer = await User.findOne({ _id: buyerID });
+  }
   return buyer;
 }
 
@@ -119,14 +122,16 @@ async function scheduleReminder(auction) {
       // finds the subscribers of this product
       var subscribers = await findSubscribersOfThisProduct(auction);
       // sends emails to the subscribers
-      emailNotification(
-        subscribers,
-        `Reminder! Auction of ${auction.productName} is going to start in 24 hours`,
-        `<h4> Dear Subscriber, <h4> 
+      if (subscribers != "") {
+        emailNotification(
+          subscribers,
+          `Reminder! Auction of ${auction.productName} is going to start in 24 hours`,
+          `<h4> Dear Subscriber, <h4> 
         </br> 
         <p>The auction of ${auction.productName} is going to start in 24 hours<p>
         <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product}">Auction Details</a> </h5>`
-      );
+        );
+      }
     }
   );
 }
@@ -154,14 +159,16 @@ async function scheduleStart(auction) {
     msec -= ss * 1000;
 
     // sends emails to the subscribers
-    emailNotification(
-      subscribers,
-      `Sorry, the auction of ${auction.productName} started late`,
-      `<h4> Dear Subscriber, <h4> </br> <p>The auction of ${auction.productName
-      } started ${days} days, ${hh} hours, ${mm} minutes, ${ss} seconds late due to a technical glitch.</p>
+    if (subscribers != "") {
+      emailNotification(
+        subscribers,
+        `Sorry, the auction of ${auction.productName} started late`,
+        `<h4> Dear Subscriber, <h4> </br> <p>The auction of ${auction.productName
+        } started ${days} days, ${hh} hours, ${mm} minutes, ${ss} seconds late due to a technical glitch.</p>
       <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product
-      }">Auction Details</a> </h5>`
-    );
+        }">Auction Details</a> </h5>`
+      );
+    }
 
     // sends emails to the seller of the product
     emailNotification(
@@ -184,14 +191,16 @@ async function scheduleStart(auction) {
         var subscribers = await findSubscribersOfThisProduct(auction);
         // finds the seller of the product
         var seller = await sellerOfThisProduct(auction);
-        emailNotification(
-          subscribers,
-          `The auction of ${auction.productName} has just started now`,
-          `<h4>Dear Subscriber, </h4>
+        if (subscribers != "") {
+          emailNotification(
+            subscribers,
+            `The auction of ${auction.productName} has just started now`,
+            `<h4>Dear Subscriber, </h4>
           </br>
           <p> The auction of your subscribed product <b>${auction.productName}</b> has just started now </p>
           <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product}">Auction Details</a> </h5>`
-        );
+          );
+        }
         // send emails to the seller of the product
         emailNotification(
           seller.email,
@@ -216,7 +225,9 @@ async function scheduleEnd(auction) {
     var seller = await sellerOfThisProduct(auction);
     // finds product current price
     var updatedAuction = await updateAuction(auction);
-    var productCurrentPrice = updatedAuction.productCurrentPrice;
+    if (buyer != "null") {
+      var productCurrentPrice = updatedAuction.bids[0].price;
+    }
 
     // finds the time difference
     var timeDifference = (new Date().getTime() - auction.startDateTime.getTime());
@@ -232,7 +243,7 @@ async function scheduleEnd(auction) {
 
     // if the auction did not happen for that product, as in, if no bids were placed
     // send mail to seller informing the issue
-    if (!buyer) {
+    if (buyer == "null") {
       emailNotification(
         seller.email,
         `Sorry! The auction of ${auction.productName} has ended late but product not sold`,
@@ -278,12 +289,15 @@ async function scheduleEnd(auction) {
         var seller = await sellerOfThisProduct(auction);
         // finds product current price
         var updatedAuction = await updateAuction(auction);
-        var productCurrentPrice = updatedAuction.basePrice;
+        if (buyer != "null") {
+          var productCurrentPrice = updatedAuction.bids[0].price;
+        }
+
 
 
         // if the auction did not happen for that product, as in, if no bids were placed
         // send mail to seller informing the issue
-        if (!buyer) {
+        if (buyer == "null") {
           emailNotification(
             seller.email,
             `Sorry! The auction of ${auction.productName} has ended now but product not sold`,
