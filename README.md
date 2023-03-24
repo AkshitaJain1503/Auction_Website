@@ -13,6 +13,35 @@
 
 ## Few screenshots from the website: 
 
+Home Page :
+
+![localhost_3000_ (4)](https://user-images.githubusercontent.com/121486345/227543201-ae2baf25-de04-4f40-b55d-0fe3cd3b91f5.png)
+
+
+Product Details :
+
+![Screenshot (154)](https://user-images.githubusercontent.com/121486345/227550862-2c4371f3-1b10-4bcb-99ec-d5321c8efa9f.png)
+
+
+Auction Space For a Product :
+
+![Screenshot (159)](https://user-images.githubusercontent.com/121486345/227543518-3389440f-e6ef-4c4f-bb8d-5a4395e56c91.png)
+
+
+WatchList :
+
+![Screenshot (153)](https://user-images.githubusercontent.com/121486345/227544631-3f91d406-a797-4842-a7ae-6f1b36361156.png)
+
+
+MyProfile/UserProfile :
+
+![Screenshot (163)](https://user-images.githubusercontent.com/121486345/227552240-445c87d2-9927-4e76-81e3-25ad8670f002.png)
+
+
+SearchResults : 
+
+![Screenshot (168)](https://user-images.githubusercontent.com/121486345/227552662-9bfce7bf-ff19-4fa8-bf1f-7e8d342a01ca.png)
+
 
 ## Setting up the project on local System:
 
