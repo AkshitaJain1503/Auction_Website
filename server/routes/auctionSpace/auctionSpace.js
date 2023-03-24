@@ -71,9 +71,9 @@ router.get("/", async (req, res) => {
 
 router.post("/", async (req, res) => {
     const bidderId = req.id ;
+    const productId= req.body.productId;
     const bidder= await User.findOne({_id: bidderId});
     const auction = await Auction.findOne({ product: productId });
-    const productId= req.body.productId;
     const formattedCurrentTime= new Intl.DateTimeFormat('en-GB', {year: 'numeric', month: '2-digit',
         day: '2-digit', hour: '2-digit', minute: '2-digit'}).format(new Date());
 //new bid object

@@ -44,8 +44,8 @@ const Card = ({ Product }) => {
           <h5>{title}</h5>
           <h6>Base Price : ₹{price}</h6>
           <p>Shipment From : {partsOfShipment[0]}</p>
-          <p>Begins on : {startTime}</p>
-          <p>Concludes on : {endTime}</p>
+          <p>Start Date : {startTime}</p>
+          <p>End Date   : {endTime}</p>
         </Description>
       </div>
       <button onClick={addToWatchList}>Add to Watch List</button>
