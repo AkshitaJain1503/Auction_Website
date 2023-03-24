@@ -53,9 +53,6 @@ const Items = ({
   const goToProductPage = () => {
     navigate(`/productPage?id=${product_id}`);
   };
-
-  console.log(dayDifference, hourDifference, minutesDifference);
-
   return (
     <>
       <div className="items-info">

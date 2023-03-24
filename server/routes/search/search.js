@@ -15,7 +15,6 @@ router.get("/", async (req, res) => {
         try{
             //if token is missing
             if(req.header('Authorization') == null || req.header('Authorization') == ""){
-                    console.log("1st")
                 return -1;
             }
 
@@ -24,7 +23,6 @@ router.get("/", async (req, res) => {
             const rootUser = await User.findOne({_id: ObjectId(decoded._id)});
 
             if (!rootUser || rootUser==null) {
-                console.log("expir")
                 return -1;
             }
             return decoded._id;

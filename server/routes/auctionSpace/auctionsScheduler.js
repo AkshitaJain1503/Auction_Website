@@ -13,12 +13,12 @@ async function updateAuction(auction) {
 async function findSubscribersOfThisProduct(auction) {
   // finds subscribers of the given auction product and saves it in the global string subscribers
   auction = await updateAuction(auction);
-  const subscribersOfThatProduct = await auction.subscribers;
+  const subscribersOfThatProduct = auction.subscribers;
   const userDBOfSubscribers = await User.find({
     _id: subscribersOfThatProduct,
   });
   var subscribers = "";
-  for (let i = 0; i < userDBOfSubscribers.length; i++) {
+  for (var i = 0; i < userDBOfSubscribers.length; i++) {
     subscribers += userDBOfSubscribers[i].email + ", ";
   }
   return subscribers;
@@ -27,7 +27,7 @@ async function findSubscribersOfThisProduct(auction) {
 async function findSoldToBuyer(auction) {
   // finds buyer of that particular auction product after auction ends
   auction = await updateAuction(auction);
-  const buyerID = await auction.currentBidder;
+  const buyerID = auction.bids[0].bidder;
   const buyer = await User.findOne({ _id: buyerID });
   return buyer;
 }
@@ -55,7 +55,7 @@ const emailNotification = (receiver, subject, text) => {
   // mailoptions stores the receiver and sender's mail id and the subject along with inside content or text
   var mailOptions = {
     from: "auctionwebsitedesisproject@gmail.com",
-    to: "shreyasristi2003@gmail.com",
+    to: receiver,
     subject: subject,
     html: text,
   };
@@ -64,8 +64,6 @@ const emailNotification = (receiver, subject, text) => {
   transporter.sendMail(mailOptions, function (error, info) {
     if (error) {
       console.log(error);
-    } else {
-      console.log("Email sent: " + info.response);
     }
   });
 };
@@ -134,13 +132,14 @@ async function scheduleReminder(auction) {
 }
 
 async function scheduleStart(auction) {
-  // finds subscribers of the product
-  var subscribers = await findSubscribersOfThisProduct(auction);
-  // finds the seller of the product
-  var seller = await sellerOfThisProduct(auction);
+
   if (auction.startDateTime < new Date()) {
     // notify seller and subscribers that the auction started late
     startAuction(auction);
+    // finds subscribers of the product
+    var subscribers = await findSubscribersOfThisProduct(auction);
+    // finds the seller of the product
+    var seller = await sellerOfThisProduct(auction);
 
     // finds the time difference
     var timeDifference = (new Date().getTime() - new Date(auction.startDateTime).getTime());
@@ -181,6 +180,10 @@ async function scheduleStart(auction) {
       async function () {
         startAuction(auction);
         // sends emails to the subscribers
+        // finds subscribers of the product
+        var subscribers = await findSubscribersOfThisProduct(auction);
+        // finds the seller of the product
+        var seller = await sellerOfThisProduct(auction);
         emailNotification(
           subscribers,
           `The auction of ${auction.productName} has just started now`,
@@ -275,7 +278,7 @@ async function scheduleEnd(auction) {
         var seller = await sellerOfThisProduct(auction);
         // finds product current price
         var updatedAuction = await updateAuction(auction);
-        var productCurrentPrice = updatedAuction.productCurrentPrice;
+        var productCurrentPrice = updatedAuction.basePrice;
 
 
         // if the auction did not happen for that product, as in, if no bids were placed
@@ -312,7 +315,7 @@ async function scheduleEnd(auction) {
   }
 }
 
-function scheduleAll() {
+async function scheduleAll() {
   async function auctionReminderScheduler() {
     // finding all auctions that will start within 24 hours
     const auctions = await Auction.find({
