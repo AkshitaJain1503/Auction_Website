@@ -36,9 +36,7 @@ function App() {
       {user && <Route path="/editProfile" exact element={<EditProfile />} />}
       {!user && <Route path="/editProfile" exact element={<Signup />} />}
 
-      {user && (
-        <Route path="/pastPurchases" exact element={<PastPurchases />} />
-      )}
+      {user && <Route path="/pastPurchases" exact element={<PastPurchases />} />}
       {!user && <Route path="/pastPurchases" exact element={<Signup />} />}
 
       {user && <Route path="/pastPosts" exact element={<PastPosts />} />}
@@ -49,21 +47,13 @@ function App() {
 
       <Route path="/productPage" exact element={<ProductPage />} />
 
-      {user && (
-        <Route path="/userProfile" exact element={<DisplayUserProfile />} />
-      )}
+      {user && <Route path="/userProfile" exact element={<DisplayUserProfile />} />}
       {!user && <Route path="/userProfile" exact element={<Signup />} />}
 
       {user && <Route path="/auctionSpace" exact element={<Auction />} />}
 
-      {<Route path="/watchList" exact element={<WatchList />} />}
-      {user && (
-        <Route path="/userProfile" exact element={<DisplayUserProfile />} />
-      )}
-      {!user && <Route path="/userProfile" exact element={<Signup />} />}
-
-			<Route path="/calendarView" exact element={<Calendar/>}/>
-			<Route path="/calendarDetails" exact element={<CalendarDetails/>}/>
+      {user && <Route path="/watchList" exact element={<WatchList />} />}
+      {!user && <Route path="/watchList" exact element={<Signup />} />}
 			   
       {user && <Route path="/chat" exact element={<Chat />} />}
       {!user && <Route path="/chat" exact element={<Signup />} />}

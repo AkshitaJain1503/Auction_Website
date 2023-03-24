@@ -85,7 +85,7 @@ const PastPurchases = () => {
         return (
             <div>
               <NavBar/>
-              <h5>TOTAL POSTS: {Object.keys(data).length}</h5>
+              <h5>TOTAL PURCHASES: {Object.keys(data).length}</h5>
             </div>
         );
     }
