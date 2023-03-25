@@ -1,4 +1,5 @@
 import { Route, Routes } from "react-router-dom";
+import ProtectedRoute from "./ProtectedRoute";
 import Home from "./components/home";
 import Signup from "./components/loginAndSignup/signup";
 import Login from "./components/loginAndSignup/login";
@@ -30,37 +31,23 @@ function App() {
 
       <Route path="/" exact element={<Home />} />
 
-      {user && <Route path="/myProfile" exact element={<DisplayProfile />} />}
-      {!user && <Route path="/myProfile" exact element={<Signup />} />}
+      <Route path={"/myProfile"} element={<ProtectedRoute Component={DisplayProfile} />} />
+      <Route path={"/editProfile"} element={<ProtectedRoute Component={EditProfile} />} />
+      <Route path={"/userProfile"} element={<ProtectedRoute Component={DisplayUserProfile} />} />
 
-      {user && <Route path="/editProfile" exact element={<EditProfile />} />}
-      {!user && <Route path="/editProfile" exact element={<Signup />} />}
+      <Route path={"/pastPurchases"} element={<ProtectedRoute Component={PastPurchases} />} />
+      <Route path={"/pastPosts"} element={<ProtectedRoute Component={PastPosts} />} />
 
-      {user && <Route path="/pastPurchases" exact element={<PastPurchases />} />}
-      {!user && <Route path="/pastPurchases" exact element={<Signup />} />}
-
-      {user && <Route path="/pastPosts" exact element={<PastPosts />} />}
-      {!user && <Route path="/pastPosts" exact element={<Signup />} />}
-
-      {user && <Route path="/postProduct" exact element={<PostProduct />} />}
-      {!user && <Route path="/postProduct" exact element={<Signup />} />}
+      <Route path={"/postProduct"} element={<ProtectedRoute Component={PostProduct} />} />
 
       <Route path="/productPage" exact element={<ProductPage />} />
 
-      {user && <Route path="/userProfile" exact element={<DisplayUserProfile />} />}
-      {!user && <Route path="/userProfile" exact element={<Signup />} />}
+      <Route path={"/watchList"} element={<ProtectedRoute Component={WatchList} />} />
 
-      {user && <Route path="/watchList" exact element={<WatchList />} />}
-      {!user && <Route path="/watchList" exact element={<Signup />} />}
-			   
-      {user && <Route path="/chat" exact element={<Chat />} />}
-      {!user && <Route path="/chat" exact element={<Signup />} />}
+      <Route path={"/chat"} element={<ProtectedRoute Component={Chat} />} />
+      <Route path={"/myChats"} element={<ProtectedRoute Component={MyChat} />} />
 
-      {user && <Route path="/myChats" exact element={<MyChat />} />}
-      {!user && <Route path="/myChats" exact element={<Signup />} />}
-
-      {user && <Route path="/auctionSpace" exact element={<Auction />} />}
-      {!user && <Route path="/auctionSpace" exact element={<Signup />} />}
+      <Route path={"/auctionSpace"} element={<ProtectedRoute Component={Auction} />} />
 
       <Route path="/searchResults" exact element={<SearchDetails />} />
 
