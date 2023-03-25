@@ -1,8 +1,10 @@
 const schedule = require("node-schedule");
 const nodemailer = require("nodemailer");
+const { subjectStartNow } = require("../../emailContent");
 const { Auction } = require("../../models/auction");
 const { Product } = require("../../models/product");
 const { User } = require("../../models/user");
+const content = require("../../emailContent");
 require("dotenv").config();
 
 // update the auction document so that all the info stays upto date 
@@ -121,15 +123,16 @@ async function scheduleReminder(auction) {
     async function () {
       // finds the subscribers of this product
       var subscribers = await findSubscribersOfThisProduct(auction);
+
+      // email content send to subscribers for reminder of 24 hours
+      var reminderToSubscribersMail = content.reminderToSubscribersMail(auction.productName, auction.product);
+
       // sends emails to the subscribers
       if (subscribers != "") {
         emailNotification(
           subscribers,
-          `Reminder! Auction of ${auction.productName} is going to start in 24 hours`,
-          `<h4> Dear Subscriber, <h4> 
-        </br> 
-        <p>The auction of ${auction.productName} is going to start in 24 hours<p>
-        <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product}">Auction Details</a> </h5>`
+          content.subjectReminder(auction.productName),
+          reminderToSubscribersMail
         );
       }
     }
@@ -158,27 +161,26 @@ async function scheduleStart(auction) {
     var ss = Math.floor(msec / 1000);
     msec -= ss * 1000;
 
+    // email content send to subscribers for late start of auction
+    var emailSubscribersAuctionStartLate = content.emailSubscribersAuctionStartLate(auction.productName, auction.product, days, hh, mm, ss);
+
     // sends emails to the subscribers
     if (subscribers != "") {
       emailNotification(
         subscribers,
-        `Sorry, the auction of ${auction.productName} started late`,
-        `<h4> Dear Subscriber, <h4> </br> <p>The auction of ${auction.productName
-        } started ${days} days, ${hh} hours, ${mm} minutes, ${ss} seconds late due to a technical glitch.</p>
-      <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product
-        }">Auction Details</a> </h5>`
+        content.subjectStartLate(auction.productName),
+        emailSubscribersAuctionStartLate
       );
     }
+
+    // email content of seller about auction late start
+    var emailSellerAuctionStartLate = content.emailSellerAuctionStartLate(seller.name, auction.productName, days, hh, mm, ss, auction.product);
 
     // sends emails to the seller of the product
     emailNotification(
       seller.email,
-      `Sorry! the auction of ${auction.productName} started late`,
-      `<h4>Dear ${seller.name
-      }, </h4> </br> <p> The auction of your product <b>${auction.productName
-      }</b> started ${days} days, ${hh} hours, ${mm} minutes, ${ss} seconds late due to a technical glitch.</p>
-      <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product
-      }">Auction Details</a> </h5>`
+      content.subjectStartLate(auction.productName),
+      emailSellerAuctionStartLate
     );
   } else {
     // scheduling the auction to start at its start time
@@ -186,29 +188,30 @@ async function scheduleStart(auction) {
       auction.startDateTime,
       async function () {
         startAuction(auction);
-        // sends emails to the subscribers
         // finds subscribers of the product
         var subscribers = await findSubscribersOfThisProduct(auction);
         // finds the seller of the product
         var seller = await sellerOfThisProduct(auction);
+
+        // email content send to subscribers about auction start
+        var emailSubscribersAuctionStart = content.emailSubscribersAuctionStart(auction.productName, auction.product);
+
+        // email content for auction start send to seller
+        var emailSellerAuctionStart = content.emailSellerAuctionStart(auction.productName, seller.name, auction.product);
+
+        // sends emails to the subscribers
         if (subscribers != "") {
           emailNotification(
             subscribers,
-            `The auction of ${auction.productName} has just started now`,
-            `<h4>Dear Subscriber, </h4>
-          </br>
-          <p> The auction of your subscribed product <b>${auction.productName}</b> has just started now </p>
-          <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product}">Auction Details</a> </h5>`
+            content.subjectStartNow(auction.productName),
+            emailSubscribersAuctionStart
           );
         }
         // send emails to the seller of the product
         emailNotification(
           seller.email,
-          `The auction of ${auction.productName} has just started now`,
-          `<h4>Dear ${seller.name}, </h4>
-          </br>
-          <p> The auction of your product <b>${auction.productName}</b> has just started now </p>
-          <h5>If you wish to tune in, kindly click here: <a href="http://localhost:3000/auctionSpace?id=${auction.product}">Auction Details</a> </h5>`
+          content.subjectStartNow(auction.productName),
+          emailSellerAuctionStart
         );
       }
     );
@@ -241,40 +244,37 @@ async function scheduleEnd(auction) {
     var ss = Math.floor(msec / 1000);
     msec -= ss * 1000;
 
+    // without buyer email content for seller 
+    var selleremailwithoutbuyer = email.selleremailwithoutbuyer(auction.productName, seller.name, days, hh, mm, auction.product);
+
     // if the auction did not happen for that product, as in, if no bids were placed
     // send mail to seller informing the issue
     if (buyer == "null") {
       emailNotification(
         seller.email,
-        `Sorry! The auction of ${auction.productName} has ended late but product not sold`,
-        `<h4>Dear ${seller.name},</h4> </br> <p>The product ${auction.productName
-        } has ended ${days} days, ${hh
-        } hours, ${mm} minutes late due to a technical glitch. But we regret to inform you that not even a single bid got placed on your product, thereby, the product went as not sold.</p>
-      <h5>To know more about your product auction status, visit <a href="http://localhost:3000/auctionSpace?id=${auction.product
-        }">Auction Details</a> </h5>`
+        content.endLateNotSold(auction.productName),
+        selleremailwithoutbuyer
       );
     } else {
+
+      //email to buyer auction end late
+      var emailBuyerAuctionEndLate = content.emailBuyerAuctionEndLate(auction.productName, buyer.name, days, hh, mm, seller.name, productCurrentPrice, auction.product);
+
+      // email send to seller that product sold auction ended late
+      var emailSellerAuctionEndLate = content.emailSellerAuctionEndLate(auction.productName, seller.name, days, hh, mm, buyer.name, productCurrentPrice, auction.product);
+
       // sends email to the buyer of the product
       emailNotification(
         buyer.email,
-        `Sorry! The auction of ${auction.productName} has ended late`,
-        `<h4> Dear ${buyer.name}, </h4> </br> <p>The product ${auction.productName
-        } has ended ${days} days, ${hh
-        } hours, ${mm
-        } minutes late due to a technical glitch. The product has been sold to you by the seller ${seller.name
-        } at a price of &#8377; ${productCurrentPrice}</p><h5>To know more about your product auction status, visit <a href="http://localhost:3000/auctionSpace?id=${auction.product
-        }">Auction Details</a> </h5>`
+        content.endLate(auction.productName),
+        emailBuyerAuctionEndLate
       );
+
       // send email to the seller of the product
       emailNotification(
         seller.email,
-        `Sorry! The auction of ${auction.productName} has ended late`,
-        `<h4> Dear ${seller.name}, </h4> </br> <p>The product ${auction.productName
-        } has ended ${days} days, ${hh
-        } hours, ${mm
-        } minutes late due to a technical glitch. Your product has been sold to ${buyer.name
-        } at a price of &#8377; ${productCurrentPrice}</p><h5>To know more about your product auction status, visit <a href="http://localhost:3000/auctionSpace?id=${auction.product
-        }">Auction Details</a> </h5>`
+        content.endLate(auction.productName),
+        emailSellerAuctionEndLate
       );
     }
   } else {
@@ -293,35 +293,37 @@ async function scheduleEnd(auction) {
           var productCurrentPrice = updatedAuction.bids[0].price;
         }
 
-
+        // email to seller without buyer
+        var emailSellerAuctionEndWithoutBuyer = content.emailSellerAuctionEndWithoutBuyer(seller.name, auction.productName, auction.product);
 
         // if the auction did not happen for that product, as in, if no bids were placed
         // send mail to seller informing the issue
         if (buyer == "null") {
           emailNotification(
             seller.email,
-            `Sorry! The auction of ${auction.productName} has ended now but product not sold`,
-            `<h4>Dear ${seller.name},</h4> </br> <p>The product ${auction.productName
-            } has ended now. But we regret to inform you that not even a single bid got placed on your product, thereby, the product went as not sold.</p>
-      <h5>To know more about your product auction status, visit <a href="http://localhost:3000/auctionSpace?id=${auction.product
-            }">Auction Details</a> </h5>`
+            content.endNotSold(auction.productName),
+            emailSellerAuctionEndWithoutBuyer
           );
         } else {
+
+          //  email buyer auction ended, product sold to seller
+          var emailBuyerAuctionEnd = content.emailBuyerAuctionEnd(buyer.name, auction.productName, seller.name, productCurrentPrice, auction.product);
+
           // sends email to the buyer 
           emailNotification(
             buyer.email,
-            `Congratulations! The auction of ${auction.productName} has ended now`,
-            `<h4>Dear ${buyer.name},</h4> </br> <p> The auction of ${auction.productName} has ended now.The product has been sold to you by the seller ${seller.name
-            } at a price of &#8377; ${productCurrentPrice}</p><h5>To know more about your product auction status, visit <a href="http://localhost:3000/auctionSpace?id=${auction.product
-            }">Auction Details</a> </h5>`
+            content.end(auction.productName),
+            emailBuyerAuctionEnd
           )
+
+          // email seller auction ended, and product sold to buyer
+          var emailSellerAuctionEnd = content.emailSellerAuctionEnd(seller.name, auction.productName, buyer.name, productCurrentPrice, auction.product);
+
           // sends mail to the seller of the product
           emailNotification(
             seller.email,
-            `Congratulations! The auction of ${auction.productName} has ended now`,
-            `<h4>Dear ${seller.name},</h4> </br> <p> The auction of ${auction.productName} has ended now. Your product has been sold to ${buyer.name
-            } at a price of &#8377; ${productCurrentPrice}</p><h5>To know more about your product auction status, visit <a href="http://localhost:3000/auctionSpace?id=${auction.product
-            }">Auction Details</a> </h5>`
+            content.end(auction.productName),
+            emailSellerAuctionEnd
           );
         }
       }

@@ -40,5 +40,4 @@ const Content = styled.div`
   grid-auto-rows: 420px;
   grid-template-columns: repeat(4, 280px);
   grid-gap: 20px;
-  }
 `;

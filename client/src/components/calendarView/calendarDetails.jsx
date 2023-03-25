@@ -22,6 +22,7 @@ import styled from "styled-components";
             }
           )
           .catch(error => console.error(error));
+          // eslint-disable-next-line react-hooks/exhaustive-deps
       }, []);
 
     return (
@@ -29,7 +30,7 @@ import styled from "styled-components";
             <NavBar />
              <div>
              <h1>Search results for "{productName}" on {formattedDate}</h1>
-                 <h5>Total Matching Products: {data.length}</h5> 
+                 <h5 style={{paddingLeft: "10px"}}>Total Matching Products: {data.length}</h5> 
             </div>
             <hr />
             <Content>
@@ -49,8 +50,8 @@ const Content = styled.div`
   grid-auto-rows: 420px;
   grid-template-columns: repeat(4, 280px);
   grid-gap: 20px;
-  background-color: rgba(147, 147, 147, 0.3);
-  }
+  background-color: rgba(147, 147, 147, 0.3);\
+  padding-bottom: 100px;
 `;
 
 const Container = styled.div`

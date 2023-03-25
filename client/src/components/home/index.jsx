@@ -75,7 +75,7 @@ const Button = styled.button`
 	font-size: 14px;
 	cursor: pointer;
 	// margin-right: auto;
-	margin-left:auto;
+	margin-right: 5px;
 `
 
 
