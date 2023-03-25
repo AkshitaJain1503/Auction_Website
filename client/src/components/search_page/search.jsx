@@ -255,7 +255,8 @@ const Content = styled.div`
   width: 100%;
   grid-auto-rows: 420px;
   grid-template-columns: repeat(4, 280px);
- grid-gap: 20px;
+  grid-gap: 20px;
+  padding-bottom: 100px;
  
   
  background-color: rgb(220, 218, 218);
