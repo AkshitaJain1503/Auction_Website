@@ -1,9 +1,10 @@
 const schedule = require("node-schedule");
 const nodemailer = require("nodemailer");
+const { subjectStartNow } = require("../../emailContent");
 const { Auction } = require("../../models/auction");
 const { Product } = require("../../models/product");
 const { User } = require("../../models/user");
-const content = require("../emailContent/content");
+const content = require("../../emailContent");
 require("dotenv").config();
 
 // update the auction document so that all the info stays upto date 
@@ -130,7 +131,7 @@ async function scheduleReminder(auction) {
       if (subscribers != "") {
         emailNotification(
           subscribers,
-          `Reminder! Auction of ${auction.productName} is going to start in 24 hours`,
+          content.subjectReminder(auction.productName),
           reminderToSubscribersMail
         );
       }
@@ -167,7 +168,7 @@ async function scheduleStart(auction) {
     if (subscribers != "") {
       emailNotification(
         subscribers,
-        `Sorry, the auction of ${auction.productName} started late`,
+        content.subjectStartLate(auction.productName),
         emailSubscribersAuctionStartLate
       );
     }
@@ -178,7 +179,7 @@ async function scheduleStart(auction) {
     // sends emails to the seller of the product
     emailNotification(
       seller.email,
-      `Sorry! the auction of ${auction.productName} started late`,
+      content.subjectStartLate(auction.productName),
       emailSellerAuctionStartLate
     );
   } else {
@@ -202,14 +203,14 @@ async function scheduleStart(auction) {
         if (subscribers != "") {
           emailNotification(
             subscribers,
-            `The auction of ${auction.productName} has just started now`,
+            content.subjectStartNow(auction.productName),
             emailSubscribersAuctionStart
           );
         }
         // send emails to the seller of the product
         emailNotification(
           seller.email,
-          `The auction of ${auction.productName} has just started now`,
+          content.subjectStartNow(auction.productName),
           emailSellerAuctionStart
         );
       }
@@ -251,7 +252,7 @@ async function scheduleEnd(auction) {
     if (buyer == "null") {
       emailNotification(
         seller.email,
-        `Sorry! The auction of ${auction.productName} has ended late but product not sold`,
+        content.endLateNotSold(auction.productName),
         selleremailwithoutbuyer
       );
     } else {
@@ -265,15 +266,15 @@ async function scheduleEnd(auction) {
       // sends email to the buyer of the product
       emailNotification(
         buyer.email,
-        `Sorry! The auction of ${auction.productName} has ended late`,
+        content.endLate(auction.productName),
         emailBuyerAuctionEndLate
       );
 
       // send email to the seller of the product
       emailNotification(
         seller.email,
-        `Sorry! The auction of ${auction.productName} has ended late`,
-         emailSellerAuctionEndLate
+        content.endLate(auction.productName),
+        emailSellerAuctionEndLate
       );
     }
   } else {
@@ -300,8 +301,8 @@ async function scheduleEnd(auction) {
         if (buyer == "null") {
           emailNotification(
             seller.email,
-            `Sorry! The auction of ${auction.productName} has ended now but product not sold`,
-             emailSellerAuctionEndWithoutBuyer
+            content.endNotSold(auction.productName),
+            emailSellerAuctionEndWithoutBuyer
           );
         } else {
 
@@ -311,7 +312,7 @@ async function scheduleEnd(auction) {
           // sends email to the buyer 
           emailNotification(
             buyer.email,
-            `Congratulations! The auction of ${auction.productName} has ended now`,
+            content.end(auction.productName),
             emailBuyerAuctionEnd
           )
 
@@ -321,8 +322,8 @@ async function scheduleEnd(auction) {
           // sends mail to the seller of the product
           emailNotification(
             seller.email,
-            `Congratulations! The auction of ${auction.productName} has ended now`,
-             emailSellerAuctionEnd
+            content.end(auction.productName),
+            emailSellerAuctionEnd
           );
         }
       }

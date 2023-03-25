@@ -1,4 +1,4 @@
-
+// all email content values
 function reminderToSubscribersMail(productName, product) {
   return `<h4> Dear Subscriber, <h4> 
   </br> 
@@ -80,6 +80,34 @@ function emailSellerAuctionEnd(sellername, productName, buyername, productCurren
   }">Auction Details</a> </h5>`;
 }
 
+function subjectReminder(productName) {
+  return `Reminder! Auction of ${productName} is going to start in 24 hours`;
+}
+
+function subjectStartLate(productName) {
+  return `Sorry, the auction of ${productName} started late`;
+}
+
+function subjectStartNow(productName) {
+  return  `The auction of ${productName} has just started now`;
+}
+
+function endLateNotSold(productName) {
+ return `Sorry! The auction of ${productName} has ended late but product not sold`;
+}
+
+function endLate(productName) {
+  return `Sorry! The auction of ${productName} has ended late`;
+}
+
+function endNotSold(productName) {
+  return `Sorry! The auction of ${productName} has ended now but product not sold`;
+}
+
+function end(productName) {
+  return `Congratulations! The auction of ${productName} has ended now`;
+}
+
 module.exports.reminderToSubscribersMail = reminderToSubscribersMail;
 module.exports.emailSubscribersAuctionStartLate = emailSubscribersAuctionStartLate;
 module.exports.emailSellerAuctionStartLate = emailSellerAuctionStartLate;
@@ -91,3 +119,10 @@ module.exports.emailSellerAuctionEndLate = emailSellerAuctionEndLate;
 module.exports.emailSellerAuctionEndWithoutBuyer = emailSellerAuctionEndWithoutBuyer;
 module.exports.emailBuyerAuctionEnd = emailBuyerAuctionEnd;
 module.exports.emailSellerAuctionEnd = emailSellerAuctionEnd;
+module.exports.subjectReminder = subjectReminder;
+module.exports.subjectStartLate = subjectStartLate;
+module.exports.subjectStartNow = subjectStartNow;
+module.exports.endLateNotSold = endLateNotSold;
+module.exports.endLate = endLate;
+module.exports.endNotSold = endNotSold;
+module.exports.end = end;
