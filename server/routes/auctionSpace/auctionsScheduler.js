@@ -245,7 +245,7 @@ async function scheduleEnd(auction) {
     msec -= ss * 1000;
 
     // without buyer email content for seller 
-    var selleremailwithoutbuyer = email.selleremailwithoutbuyer(auction.productName, seller.name, days, hh, mm, auction.product);
+    var selleremailwithoutbuyer = content.selleremailwithoutbuyer(auction.productName, seller.name, days, hh, mm, auction.product);
 
     // if the auction did not happen for that product, as in, if no bids were placed
     // send mail to seller informing the issue
