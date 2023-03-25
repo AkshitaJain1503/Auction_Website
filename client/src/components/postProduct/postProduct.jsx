@@ -250,7 +250,7 @@ const PostProduct = () => {
                 />
               </div>
               <div className="my-3">
-                <Label for="image">Product Image*</Label>
+                <Label for="image">Product Image*<span style={{fontSize: "10px"}}>(JPEG, JPG, WEBP, PNG types are allowed only)</span></Label>
                 <Input
                   required
                   id="image"
